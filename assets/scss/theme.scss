@@ -1,11 +1,5 @@
-// todo remove
-// @import "../vendor/font-awesome/scss/font-awesome";
-
-// variables we neeed for all other scss files
-@import "variables";
-
-// overwrite variables only for this theme 
-@import "theme-variables";
+// bootstrap 4 compatible with the scss version of octobercms
+@import '../vendor/bootstrap/scss/bootstrap.scss';
 
 // browser prefixes rendered in scss
 @import '../vendor/sass-prefix-mixins/scss/prefixes';
@@ -16,9 +10,11 @@
 // fixes for bootstrap we nee
 @import 'fixes';
 
-// bootstrap 4 compatible with the scss version of octobercms
-@import '../vendor/bootstrap-backward/scss/bootstrap';
-// @import '../vendor/bootstrap/scss/bootstrap';
+// variables we neeed for all other scss files
+@import "variables";
+
+// overwrite variables only for this theme 
+@import "theme-variables";
 
 
 // all custom styles for this theme
@@ -30,7 +26,6 @@
 @import "cursor";
 @import "pagination";
 @import "breadcrumb";
-@import "animations";
 @import "images";
 @import "utilities";
 @import "code"; 

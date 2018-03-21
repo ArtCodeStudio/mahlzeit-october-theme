@@ -32,17 +32,14 @@
 
 
 .bg-gray-dark {
-    background-color: $gray-dark !important;
+    background-color: colors('gray-dark') !important;
 }
 .bg-gray {
-    background-color: $gray !important;
+    background-color: colors('gray') !important;
 }
 .bg-gray-light {
-    background-color: $gray-light !important;
+    background-color: colors('gray-light') !important;
 }
 .bg-gray-lighter {
-    background-color: $gray-lighter !important;
-}
-.bg-gray-lightest {
-    background-color: $gray-lightest !important;
+    background-color: colors('gray-lighter') !important;
 }

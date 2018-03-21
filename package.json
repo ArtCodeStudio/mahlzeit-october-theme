@@ -6,15 +6,16 @@
   "homepage": "http://www.jumplink.eu",
   "scripts": {
     "theme_settings": "node ./utilities/bootstrap_theme_settings.js && node ./utilities/merge_theme_settings.js",
-    "doc": "node utilities/doc.js"
+    "doc": "node utilities/doc.js",
+    "style": "node-sass --output-style compressed assets/scss/theme.scss > assets/css/theme.css"
   },
   "author": "Pascal Garber <pascal.jumplink.eu>",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "documentation": "^6.0.0",
     "js-yaml": "^3.6.1",
-    "write-yaml": "^0.2.2",
-    "documentation": "^6.0.0"
+    "node-sass": "^4.7.2",
+    "write-yaml": "^0.2.2"
   }
 }

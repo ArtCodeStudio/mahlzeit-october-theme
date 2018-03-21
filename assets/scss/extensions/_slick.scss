@@ -1,3 +1,21 @@
+$slick-font-path: "../vendor/slick-carousel/slick/fonts/" !default;
+$slick-loader-path: "../vendor/slick-carousel/slick/" !default;
+$slick-font-family: "FontAwesome" !default;
+$slick-arrow-color: colors('gray') !default;
+$slick-dot-color: colors('gray') !default;
+$slick-dot-color-active: $slick-dot-color !default;
+$slick-prev-character: '' default; // $fa-var-chevron-left;
+$slick-next-character: '' default; // $fa-var-chevron-right;
+$slick-dot-character: '' default; // $fa-var-circle-o;
+$slick-active-dot-character: '' default; // $fa-var-circle;
+$slick-dot-size: 9px default;
+$slick-opacity-default: 1 !default;
+$slick-opacity-on-hover: 1 !default;
+$slick-opacity-not-active: 1 !default;
+$slick-arrow-opacity-on-hover: 1 !default;
+$slick-arrow-opacity-disabled: 0.4 !default;
+
+
 /* Slider */
 
 .slick-slider {
@@ -281,3 +299,77 @@
     }
 }
 
+
+
+.slick-dots {
+    li {
+        button {
+            &:before {
+                content: $slick-dot-character;
+            }
+            &:hover {
+                &:before {
+                    content: $slick-active-dot-character;
+                }
+            }
+        }
+        &.slick-active {
+            button {
+                &:before {
+                    content: $slick-active-dot-character;
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Custom
+ */
+.slick-dots-vertical {
+    display: block;
+    top: 0;
+    left: 0;
+    width: 50px;
+}
+
+.slick-prev,
+.slick-next {
+    &:hover, &:focus {
+        &:before {
+            opacity: $slick-arrow-opacity-on-hover;
+        }
+    }
+    &.slick-disabled:before {
+        opacity: $slick-arrow-opacity-disabled;
+    }
+}
+
+// if you use the iconset the slick controls should not have content
+.slick-prev-iconset, .slick-next-iconset {
+    &:before {
+        content: none !important;
+    }
+}
+
+
+
+// colors
+.controls-danger {
+    .slick-prev:before, .slick-next:before,
+    .slick-dots li button:before {
+        color: theme-color('danger') !important;
+    }
+}
+
+.controls-warning {
+    .slick-prev:before, .slick-next:before,
+    .slick-dots li button:before {
+        color: theme-color('warning') !important;
+    }
+}
+
+
+.slick-dots {
+    bottom: -45px;
+}

@@ -14,10 +14,6 @@
                 opacity: 0;
                 transition: opacity .25s ease-in-out;
             }
-            
-            &:not(.content-layer-hover) {
-                
-            }
         }
         
         &:hover {
@@ -81,8 +77,8 @@
             }
             
             .img-wrapper {
-                margin-right: -15px;
-                margin-left: -15px;
+                margin-right: -($grid-gutter-width / 2);
+                margin-left:  -($grid-gutter-width / 2);
             }
 
             .content {

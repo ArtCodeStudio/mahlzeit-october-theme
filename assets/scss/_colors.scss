@@ -6,19 +6,19 @@
 }
 
 @include vp-keyframes(colorChangeDangerWarning) {
-    0%{color: $brand-success;}
-    50%{color: $brand-primary;}
-    100%{color: $brand-warning;}
+    0%{color: theme-color('success');}
+    50%{color: theme-color('primary');}
+    100%{color: theme-color('warning');}
 }
 
 @include vp-keyframes(colorChangeWarningDanger) {
-    0%{color: $brand-success;}
-    50%{color: $brand-primary;}
-    100%{color: $brand-warning;}
+    0%{color: theme-color('success');}
+    50%{color: theme-color('primary');}
+    100%{color: theme-color('warning');}
 }
 
 /**
- * ANimated background, you neet this class in addition to a bg-gradient class like bg-gradient-success-info-warning
+ * Animated background, you neet this class in addition to a bg-gradient class like bg-gradient-success-info-warning
  * @see https://www.gradient-animator.com/
  */
 .animated-gradient {
@@ -26,81 +26,69 @@
     @include vp-animation('animatedBackgroundGradient 9s ease infinite');
 }
 
-.gradient-bg, .bg-gradient-state-success-info-warning {
-    @include vp-linear-gradient(223deg, $state-success-bg, $state-info-bg, $state-warning-bg);
-}
-
-.gradient-bg, .bg-gradient-success-info-warning {
-    @include vp-linear-gradient(223deg, $state-success-text, $state-info-text, $state-warning-text);
-}
-
 .gradient-primary-danger-primary-danger-bg {
-    @include vp-linear-gradient(223deg, $brand-primary, $brand-danger, $brand-primary, $brand-danger);
+    @include vp-linear-gradient(223deg, theme-color('primary'), theme-color('danger'), theme-color('primary'), theme-color('danger'));
 }
 
 .gradient-info-success-info-success-bg {
-    @include vp-linear-gradient(223deg, $brand-info, $brand-success, $brand-info, $brand-success);
+    @include vp-linear-gradient(223deg, theme-color('info'), theme-color('success'), theme-color('info'), theme-color('success'));
 }
 
 // use this only if the gradient should not be animated, see http://www.hongkiat.com/blog/css-gradient-border/
 .gradient-border-warning-danger {
     border: 1px solid transparent;
-    -moz-border-image: -moz-linear-gradient(to bottom left, $brand-warning 0%, $brand-danger 100%);
-    -webkit-border-image: -webkit-linear-gradient(to bottom left, $brand-warning 0%, $brand-danger 100%);
-    border-image: linear-gradient(to bottom left, $brand-warning 0%, $brand-danger 100%);
+    -moz-border-image: -moz-linear-gradient(to bottom left, theme-color('warning') 0%, theme-color('danger') 100%);
+    -webkit-border-image: -webkit-linear-gradient(to bottom left, theme-color('warning') 0%, theme-color('danger') 100%);
+    border-image: linear-gradient(to bottom left, theme-color('warning') 0%, theme-color('danger') 100%);
     border-image-slice: 1;
 }
 
-
-.bg-state-info {
-  background-color: $state-info-bg;
-}
-
-.bg-state-danger {
-  background-color: $state-danger-bg;
-}
-
-.bg-state-success {
-  background-color: $state-success-bg;
-}
-
-.bg-state-warning {
-  background-color: $state-warning-bg;
-}
 
 .bg-body {
   background-color: $body-bg;
 }
 
 .bg-gray {
-    background-color: $gray;
+    background-color: colors('gray');
 }
 
 .bg-gray-light {
-    background-color: $gray-light;
+    background-color: colors('gray-light');
 }
 
 .bg-gray-lighter {
-    background-color: $gray-lighter;
-}
-
-.bg-gray-lightest {
-    background-color: $gray-lightest;
+    background-color: colors('gray-lighter');
 }
 
 .bg-white {
-    background-color: $white;
+    background-color: colors('white');
 }
-
-.bg-gray {
-    background-color: $gray-lighter;
-}
-
 
 .text-black {
-    color: $black !important;
+    color: colors('black') !important;
 }
 
 .text-white {
-    color: $white !important;
+    color: colors('white') !important;
+}
+
+
+.fill-primary {
+    fill: theme-color('primary') !important;
+}
+
+.fill-success {
+    fill: theme-color('success')!important;
+}
+
+.fill-warning {
+    fill: theme-color('warning') !important;
+}
+
+.fill-danger {
+    fill: theme-color('danger') !important;
+}
+
+.fill-info {
+    fill: theme-color('info') !important;
 }

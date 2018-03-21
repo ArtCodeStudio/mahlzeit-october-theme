@@ -4,7 +4,7 @@
     // z-index: $zindex-navbar + 1000 !important;
      z-index: 3004 !important;
     &.under-navbar {
-        z-index: $zindex-navbar - 1 !important;
+        z-index: $zindex-fixed - 1 !important;
     }
 }
 
@@ -27,7 +27,7 @@
 }
 
 .navbar-toggler, .sidebar-toggler {
-    z-index: $zindex-navbar + 1;
+    z-index: $zindex-fixed + 1;
     border: none;
 }
 

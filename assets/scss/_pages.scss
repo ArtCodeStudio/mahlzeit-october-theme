@@ -16,7 +16,7 @@
 
     &:hover, &:focus, &:active, &.selected {
         .bg-as-border-2-px {
-            @extend .gradient-bg;
+            @extend .gradient-info-success-info-success-bg;
             padding: 2px;
         }
         

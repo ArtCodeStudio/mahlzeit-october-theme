@@ -152,16 +152,16 @@
     // gray
     &.gray, &.fill-gray {
         svg {
-            fill: $gray !important;
+            fill: colors('gray') !important;
             * {
-                fill: $gray !important;
+                fill: colors('gray') !important;
             }
         }
     }
     &.stroke-gray {
         svg {
             path {
-                stroke: $gray !important;
+                stroke: colors('gray') !important;
             }
         }
     }
@@ -169,16 +169,16 @@
     // gray-light
     &.gray-light, &.fill-gray-light {
         svg {
-            fill: $gray-light !important;
+            fill: colors('gray-light') !important;
             * {
-                fill: $gray-light !important;
+                fill: colors('gray-light') !important;
             }
         }
     }
     &.stroke-gray-light {
         svg {
             path {
-                stroke: $gray-light !important;
+                stroke: colors('gray-light') !important;
             }
         }
     }
@@ -186,33 +186,16 @@
     // gray-lighter
     &.gray-lighter, &.fill-gray-lighter {
         svg {
-            fill: $gray-lighter !important;
+            fill: colors('gray-lighter') !important;
             * {
-                fill: $gray-lighter !important;
+                fill: colors('gray-lighter')!important;
             }
         }
     }
     &.stroke-gray-lighter {
         svg {
             path {
-                stroke: $gray-lighter !important;
-            }
-        }
-    }
-
-    // gray-lightest
-    &.gray-lightest, &.fill-gray-lightest {
-        svg {
-            fill: $gray-lightest !important;
-            * {
-                fill: $gray-lightest !important;
-            }
-        }
-    }
-    &.stroke-gray-lightest {
-        svg {
-            path {
-                stroke: $gray-lightest !important;
+                stroke: colors('gray-lighter') !important;
             }
         }
     }
@@ -220,102 +203,102 @@
     // whote
     &.fill-white, &.white {
         svg {
-            fill: $white !important;
+            fill: colors('white') !important;
             * {
-                fill: $white !important;
+                fill: colors('white') !important;
             }
         }
     }
     &.stroke-white {
         svg {
-            stroke: $white !important;
+            stroke: colors('white') !important;
             * {
-                stroke: $white !important;
+                stroke: colors('white') !important;
             }
         }
     }
 
     &.fill-primary, &.primary {
         svg {
-            fill: $brand-primary !important;
+            fill: theme-color('primary') !important;
             * {
-                fill: $brand-primary !important;
+                fill: theme-color('primary') !important;
             }
         }
     }
     &.stroke-primary {
         svg {
-            stroke: $brand-primary !important;
+            stroke: theme-color('primary') !important;
             * {
-                stroke: $brand-primary !important;
+                stroke: theme-color('primary') !important;
             }
         }
     }
     
     &.fill-success, &.success {
         svg {
-            fill: $brand-success !important;
+            fill: theme-color('success') !important;
             * {
-                fill: $brand-success !important;
+                fill: theme-color('success') !important;
             }
         }
     }
     &.stroke-success {
         svg {
-            stroke: $brand-success !important;
+            stroke: theme-color('success') !important;
             * {
-                stroke: $brand-success !important;
+                stroke: theme-color('success') !important;
             }
         }
     }
     
     &.fill-info, &.info {
         svg {
-            fill: $brand-info !important;
+            fill: theme-color('info') !important;
             * {
-                fill: $brand-info !important;
+                fill: theme-color('info') !important;
             }
         }
     }
     &.stroke-info {
         svg {
-            stroke: $brand-info !important;
+            stroke: theme-color('info') !important;
             * {
-                stroke: $brand-info !important;
+                stroke: theme-color('info') !important;
             }
         }
     }
     
     &.fill-warning, &.warning {
         svg {
-            fill: $brand-warning !important;
+            fill: theme-color('warning') !important;
             * {
-                fill: $brand-warning !important;
+                fill: theme-color('warning') !important;
             }
         }
     }
     &.stroke-warning {
         svg {
-            stroke: $brand-warning !important;
+            stroke: theme-color('warning') !important;
             * {
-                stroke: $brand-warning !important;
+                stroke: theme-color('warning') !important;
             }
         }
     }
 
     &.fill-danger, &.danger {
         svg {
-            fill: $brand-danger !important;
+            fill: theme-color('danger') !important;
             * {
-                fill: $brand-danger !important;
+                fill: theme-color('danger') !important;
             }
         }
     }
     &.stroke-danger {
         svg {
-            stroke: $brand-danger !important;
+            stroke: theme-color('danger') !important;
             * {
-                stroke: $brand-danger !important;
+                stroke: theme-color('danger') !important;
             }
         }
     }

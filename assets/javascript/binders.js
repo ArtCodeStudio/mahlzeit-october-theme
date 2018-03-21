@@ -57,7 +57,7 @@ rivets.binders.summernote = {
         this.options.callbacks = {
             onChange: this.publish
         };
-        
+        window.jumplink.debug.binders('[summernote] options', this.options);
         this.$el.summernote(this.options);
     },
 

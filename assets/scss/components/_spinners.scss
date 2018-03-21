@@ -27,44 +27,41 @@ spinner {
 }
 
 .bg-white-before:before {
-    background-color: $white !important;
+    background-color: colors('white') !important;
 }
 .bg-black-before:before {
-    background-color: $black !important;
+    background-color: colors('black') !important;
 }
 
 .bg-primary-before:before {
-    background-color: $brand-primary !important;
+    background-color: theme-color('primary') !important;
 }
 
 .bg-success-before:before {
-    background-color: $brand-success !important;
+    background-color: theme-color('success') !important;
 }
 
 .bg-info-before:before {
-    background-color: $brand-info !important;
+    background-color: theme-color('info') !important;
 }
 
 .bg-warning-before:before {
-    background-color: $brand-warning !important;
+    background-color: theme-color('warning') !important;
 }
 
 .bg-danger-before:before {
-    background-color: $brand-danger !important;
+    background-color: theme-color('danger') !important;
 }
 
 .bg-gray-dark-before:before {
-    background-color: $gray-dark !important;
+    background-color: colors('gray-dark') !important;
 }
 .bg-gray-before:before {
-    background-color: $gray !important;
+    background-color: colors('gray') !important;
 }
 .bg-gray-light-before:before {
-    background-color: $gray-light !important;
+    background-color: colors('gray-light') !important;
 }
 .bg-gray-lighter-before:before {
-    background-color: $gray-lighter !important;
-}
-.bg-gray-lightest-before:before {
-    background-color: $gray-lightest !important;
+    background-color: colors('gray-lighter') !important;
 }

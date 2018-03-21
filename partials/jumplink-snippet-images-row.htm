@@ -604,10 +604,10 @@ snippetProperties[ratio4][options][] = ""
 
 {% set columnSpacingClass = 'my-1' %}
 
-<div class="{{containerClass}} {{spacingClass}} jumplink-partial {{partialId}}"
+<div class="{{containerClass}} jumplink-partial {{partialId}}"
     data-partial-name="{{partialId}}"
 >
-    <div class="row">
+    <div class="row {{spacingClass}}">
         {% for index in 1..count %}
             {% if index == 1 %}
                 {# image file source from october media manager #}
@@ -714,7 +714,7 @@ snippetProperties[ratio4][options][] = ""
             <div class="{{columnClass}} {{columnSpacingClass}}">
                 <{{wrapperTag}} class="wrapper" href="{{url | app}}">
                     {# content layer with the selected background color #}
-                    <div class="{{contentLayerClass}} hidden-md-down">
+                    <div class="{{contentLayerClass}} d-none d-lg-block">
                         <div class="content {{contentPostionClass}} {{contentSpacingClass}}">
                             <div class="content-texts {{fontColorClass}}">
                                 <div class="hyphenate content-title">
@@ -726,8 +726,8 @@ snippetProperties[ratio4][options][] = ""
                             </div>
                         </div>
                     </div>
-                    <rv-img src="'{{source}}'" ratio="'{{ratio}}'" alt="'title'" visible-only="false"></rv-img>
-                    <div class="{{contentLayerClass}} hidden-lg-up">
+                    <rv-img src="'{{source}}'" ratio="'{{ratio}}'" alt="'title'" delay="0"></rv-img>
+                    <div class="{{contentLayerClass}} d-block d-lg-none">
                         <div class="content {{contentPostionClass}} {{contentSpacingClass}}">
                             <div class="content-texts {{fontColorClass}}">
                                 <div class="hyphenate content-title">

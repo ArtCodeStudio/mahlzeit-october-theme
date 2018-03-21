@@ -1,46 +1,20 @@
-.btn-outline-dark {
-   @include button-outline-variant($gray-dark);
-}
-
-.btn-outline-light {
-   @include button-outline-variant($gray-light);
-}
-
-.btn-dark {
-   @include button-variant($gray-dark, $gray-dark, $gray-dark);
-}
-
-.btn-light {
-   @include button-variant($gray-light, $gray-light, $gray-light);
-}
-
-
-
+// fix chrome border on focus
 .btn {
-    // font-size: .9rem;
-    font-family: $font-family-second !important;
     &:focus {
         -webkit-box-shadow: none;
         box-shadow: none;
-        border-color: $brand-info;
     }
 }
 
-$border-spacing: 20px;
-
-@include move-border-dashed-keyframes($border-spacing);
-
-// TODO custom class
-.btn-outline-dark {
-    @include border-dashed($gray-dark, $border-spacing, $width: 2px);
+/**
+ * Button with dashed border, animated on hover
+ */
+ @include move-border-dashed-keyframes($btn-outline-dashed-border-spacing);
+.btn-outline-dashed-dark {
+    @include border-dashed(colors('gray-dark'), $btn-outline-dashed-border-spacing, $width: 2px);
     &:hover, &:focus {
         background-color: transparent;
         color: $black;
-        @include move-border-dashed($border-spacing);
+        @include move-border-dashed($btn-outline-dashed-border-spacing);
     }
-}
-
-.btn {
-    // font-size: .9rem;
-    font-family: $font-family-second !important;
 }

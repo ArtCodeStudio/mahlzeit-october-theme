@@ -1,6 +1,6 @@
 firebase-events-table {
     .active {
-        background-color: $brand-info;
+        background-color: theme-color('primary');
     }
     
     [data-sort-property] {

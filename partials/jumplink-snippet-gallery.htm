@@ -1,0 +1,85 @@
+description = "Gallery aus den Theme Settings"
+
+[viewBag]
+snippetCode = "jumplink-snippet-gallery"
+snippetName = "Gallery"
+snippetProperties[handle][title] = "handle"
+snippetProperties[handle][type] = "string"
+snippetProperties[handle][default] = ""
+snippetProperties[handle][options][] = ""
+==
+<?php
+use Debugbar as Debugbar;
+use ToughDeveloper\ImageResizer\Classes\Image;
+
+function OnStart() {
+    
+    $handle = $this->handle;
+    $rootPath = realpath(dirname(__FILE__).'/../../..');
+    // WORKADOUND
+    $rootPath = str_replace('/storage/cms','',$rootPath);
+    $mediaPath = Config::get('cms.storage.media.path');
+    $fullMediaPath = $rootPath.$mediaPath;
+    $this['foundGallery'] = null;
+    
+    Debugbar::info("mediaPath");
+    Debugbar::info($mediaPath);
+    
+    Debugbar::info("rootPath");
+    Debugbar::info($rootPath);
+    
+    Debugbar::info("fullMediaPath");
+    Debugbar::info($fullMediaPath);
+    
+    
+    // find image by handle
+    foreach ($this->theme->page_historie_galleries as $key => $gallery) {
+        Debugbar::info("gallery");
+        Debugbar::info($gallery);
+        if($gallery['handle'] == $handle) {
+            Debugbar::info('FOUND '.$gallery['handle']);
+            
+            // convert images to photoswipe format
+            foreach ($gallery['images'] as $key => &$image) {
+                $image['src'] = $mediaPath.$image['image'];
+                $fullImagePath = $fullMediaPath.$image['image'];
+                list($width, $height) = getimagesize($fullImagePath);
+                $image['w'] = $width;
+                $image['h'] = $height;
+                
+                /**
+                 * generate thumbnail
+                 * @see https://github.com/toughdeveloper/oc-imageresizer-plugin
+                 */
+                $imageObj = new Image($fullImagePath);
+                $imageObj->resize(300, false, [ 'mode' => 'crop' ]);
+                $thumbPath = $imageObj->getCachedImagePath(true);
+                $image['msrc'] = $thumbPath;
+            }
+            
+            $this['foundGallery'] = $gallery;
+            
+            
+        }
+    }
+
+    // Debugbar::info("foundGallery ".$handle);
+    // Debugbar::info($this['foundGallery']);
+}
+?>
+==
+{# foundGallery is defined in the code section #}
+{% if foundGallery is null %}
+    <div class="container">
+        <div class="row">
+            <p class="col-12">
+                Gallery with handle <code>{{handle}}</code> not found, please define this gallery in the theme settings of this theme.
+            </p>
+        </div>
+    </div>
+{% else %}
+    <gallery
+        data="'{{foundGallery | json_encode()}}'"
+        images-path="'{{''| media}}'"
+    ></gallery>
+{% endif %}

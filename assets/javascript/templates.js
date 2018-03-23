@@ -31,7 +31,7 @@ window.jumplink.firstNewPageReadyEvent = true;
 
 window.jumplink.templates.prepairTemplate = function(container, dataset) {
     
-    // console.log('newPageReady');
+    // window.jumplink.debug.templates('newPageReady');
     var data = jumplink.utilities.parseDatasetJsonStrings(dataset);
 
     jumplink.model.dataset = dataset;
@@ -110,101 +110,10 @@ window.jumplink.templates['system-browser-detection'] = function (dataset, data)
 /**
  * Barba.js template
  */
-window.jumplink.templates['index'] = function (dataset, data) {
-    console.log('init home');
+window.jumplink.templates.index = function (dataset, data) {
+    window.jumplink.debug.templates('init home');
     jumplink.setNavActive('home');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.utilities.getNavHeight()+'px');
-    initProductList();
-    jumplink.initCarousel('home-slideshow');
-};
-
-/**
- * Barba.js template
- */
-var initTemplateDoItYourself = function (dataset, data) {
-    console.log('init do it yourself');
-    jumplink.setNavActive('do-it-yourself');
-    jumplink.setNavActive('kreative-werkstatt');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.utilities.getNavHeight()+'px');
-    jumplink.initCarousel('do-it-yourself-slideshow'); 
-};
-
-/**
- * Barba.js template
- */
-var initTemplateKurse = function (dataset, data) {
-    console.log('init kurse');
-    jumplink.setNavActive('kurse');
-    jumplink.setNavActive('kreative-werkstatt');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-};
-
-/**
- * Barba.js template
- */
-var initTemplateWorkshops = function (dataset, data) {
-    console.log('init workshops');
-    jumplink.setNavActive('workshops');
-    jumplink.setNavActive('kreative-werkstatt');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-};
-
-
-/**
- * Barba.js template
- */
-var initTemplateKunstwerke = function (dataset, data) {
-    console.log('init kunstwerke', dataset);
-    jumplink.setNavActive('kunstwerke');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-    initProductList();
-    initProductCarousel();
-};
-
-var initTemplateSprachkurse = function (dataset, data) {
-    console.log('init sprachkurse');
-    jumplink.setNavActive('kontakt');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-    
-};
-
-var initTemplateKontakt = function (dataset, data) {
-    console.log('init kontakt');
-    jumplink.setNavActive(dataset.namespace);
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-    jumplink.initLeadlet('main');
-};
-
-var initTemplateUeber = function (dataset, data) {
-    console.log('init über');
-    jumplink.setNavActive('ueber');
-    jumplink.setNavActive('kreative-werkstatt');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-};
-
-var initTemplateSprachunterrichtKurse = function (dataset, data) {
-    console.log('init über');
-    jumplink.setNavActive('sprachkurse');
-    jumplink.setNavActive('sprachunterricht');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-};
-
-var initTemplateSprachunterrichtNachhilfe = function (dataset, data) {
-    console.log('init über');
-    jumplink.setNavActive('nachhilfe');
-    jumplink.setNavActive('sprachunterricht');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-};
-
-var initTemplateSprachunterrichtKinder = function (dataset, data) {
-    console.log('init über');
-    jumplink.setNavActive('fuer_kinder');
-    jumplink.setNavActive('sprachunterricht');
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
-};
-
-var initTemplateDefault = function (dataset, data) {
-    console.log('init default');
-    jumplink.setNavActive(dataset.namespace);
-    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.tutilities.getNavHeigh()+'px');
+    // jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.utilities.getNavHeight()+'px');
+    // initProductList();
+    // jumplink.initCarousel('home-slideshow');
 };

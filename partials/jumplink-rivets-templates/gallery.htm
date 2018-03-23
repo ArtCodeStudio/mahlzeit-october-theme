@@ -1,0 +1,32 @@
+[viewBag]
+==
+<div
+    
+    rv-class="container"
+>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h2 class="hyphenate text-second" rv-html="headerTitle"></h2>
+            <p rv-html="headerText"></p>
+        </div>
+    </div>
+
+    {# https://getbootstrap.com/docs/4.0/components/card/#card-columns #}
+    <div class="images-row py-5 card-columns">
+        <div rv-each-image="images" class="card">
+            <rv-img
+                src="image.msrc"
+                alt="image.title"
+                width="image.w"
+                height="image.h"
+                index="%image%"
+                ratio="image.ratio"
+                rv-on-click="onThumbnailsClick"
+                visible-only="true"
+            ></rv-img>
+        </div>
+    </div>
+    
+    
+    <rv-photoswipe images="images"></rv-photoswipe>
+</div>

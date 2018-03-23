@@ -21,21 +21,20 @@ default = 0
 <nav class="fixed-top" id="main-navbar" itemscope itemtype="http://schema.org/SiteNavigationElement">
     <div class="navbar navbar-light bg-transparent justify-content-end jumplink-navbar_only-sidebar">
         <div class="navbar-nav">
-            {% if iconStyle == 'tcon' %}
-                <button class="navbar-toggler navbar-toggler-{{position}} sidebar-toggler sidebar-toggler-tcon tcon tcon-menu--xcross hidden-print" type="button" data-toggle="sidebar" data-target="#right-sidebar" aria-controls="right-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
-                    <span class="tcon-menu__lines" aria-hidden="true"></span>
-                    <span class="tcon-visuallyhidden">toggle menu</span>
-                </button>
-            {% endif %}
-            
-            {% if iconStyle == 'text' %}
-                <button class="navbar-toggler navbar-toggler-{{position}} sidebar-toggler sidebar-toggler-text hidden-print" type="button" data-toggle="sidebar" data-target="#right-sidebar" aria-controls="right-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
-                    Menü
-                </button>
+            {% if rightSidebarEnabled %}
+                {% if iconStyle == 'tcon' %}
+                    <button class="d-flex navbar-toggler sidebar-toggler right-sidebar-toggler tcon tcon-menu--xcross hidden-print" type="button" data-toggle="sidebar" data-target="#right-sidebar" aria-controls="right-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
+                        <span class="tcon-menu__lines" aria-hidden="true"></span>
+                        <span class="tcon-visuallyhidden">toggle menu</span>
+                    </button>
+                {% endif %}
+
+                {% if iconStyle == 'text' %}
+                    <button class="navbar-toggler sidebar-toggler right-sidebar-toggler sidebar-toggler-text hidden-print" type="button" data-toggle="sidebar" data-target="#right-sidebar" aria-controls="right-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
+                        Menü
+                    </button>
+                    {% endif %}
             {% endif %}
         </div>
     </div>
 </nav>
-
-<!-- http://dcdeiv.github.io/simpler-sidebar/ -->
-{% partial 'jumplink-navigation/sidebar' mode=mode position=position %}

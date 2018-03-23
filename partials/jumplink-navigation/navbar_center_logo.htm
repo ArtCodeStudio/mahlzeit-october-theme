@@ -1,0 +1,67 @@
+[viewBag]
+
+[staticMenu main]
+code = "main"
+
+[staticMenu second]
+code = "second"
+
+[staticMenu sidebar]
+code = "sidebar"
+==
+<!-- Nav -->
+{% set partialId = 'navbar_center_logo' %}
+
+<nav class="fixed-top {{partialId}}" id="main-navbar"
+  itemscope
+  itemtype="http://schema.org/SiteNavigationElement"
+  data-partial-name="{{partialId}}"
+  >
+    <div class="navbar navbar-background {{navsColorClass}} navbar-expand justify-content-between">
+      
+      {# navbar left #}
+      <div class="d-flex flex-row justify-center-center">
+        {% if leftSidebarEnabled %}
+          <button class="d-flex navbar-toggler sidebar-toggler left-sidebar-toggler tcon tcon-menu--xcross hidden-print" type="button" data-toggle="sidebar" data-target="#left-sidebar" aria-controls="left-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
+              <span class="tcon-menu__lines" aria-hidden="true"></span>
+              <span class="tcon-visuallyhidden">toggle menu</span>
+          </button>
+        {% endif %}
+
+        {% if topSidebarEnabled %}
+            <button class="d-flex navbar-toggler sidebar-toggler top-sidebar-toggler tcon tcon-menu--xcross hidden-print" type="button" data-toggle="sidebar" data-target="#left-sidebar" aria-controls="left-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
+                <span class="tcon-menu__lines" aria-hidden="true"></span>
+                <span class="tcon-visuallyhidden">toggle menu</span>
+            </button>
+        {% endif %}
+
+        {% partial 'jumplink-navigation/navbar-items' items=main.menuItems class='navbar-nav d-none d-md-flex justify-center-center' itemClass='nav-item' %}
+      </div>
+
+      {# navbar center #}
+      <div class="navbar-brand">
+        <a href="/">
+            <img class="img-fluid d-block mx-auto" src="{{'assets/images/logo.svg' | theme}}" alt="{{this.theme.site_name}}">
+        </a>
+      </div>
+
+      {# navbar right #}
+      <div class="d-flex flex-row justify-center-center">
+        {% partial 'jumplink-navigation/navbar-items' items=second.menuItems class='navbar-nav d-none d-md-flex justify-center-center' itemClass='nav-item' %}
+        {% if rightSidebarEnabled %}
+          <button class="d-flex navbar-toggler sidebar-toggler right-sidebar-toggler tcon tcon-menu--xcross hidden-print" type="button" data-toggle="sidebar" data-target="#right-sidebar" aria-controls="right-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
+              <span class="tcon-menu__lines" aria-hidden="true"></span>
+              <span class="tcon-visuallyhidden">toggle menu</span>
+          </button>
+        {% endif %}
+        </div>
+    </div>
+
+    {##
+    # Toggle sidebar from top
+    #}
+    {% if topSidebarEnabled %}
+      <top-sidebar menu-items="'{{sidebar.menuItems | json_encode()}}'"></top-sidebar>
+    {% endif %}
+
+</nav>

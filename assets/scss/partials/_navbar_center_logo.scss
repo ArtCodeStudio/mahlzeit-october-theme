@@ -1,0 +1,28 @@
+.navbar_center_logo {
+
+
+
+  .navbar {
+
+    // left
+    div:first-child {
+      z-index: 1;
+    }
+
+    // center
+    .navbar-brand {
+      margin: 0;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      padding: 0 60px;
+      z-index: 0;
+    }
+
+    // right
+    div:last-child {
+      z-index: 1;
+    }
+
+  }
+}

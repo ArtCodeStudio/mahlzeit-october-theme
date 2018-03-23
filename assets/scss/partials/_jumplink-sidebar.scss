@@ -1,8 +1,7 @@
 .right-sidebar, .left-sidebar {
     display: none;
     
-    // z-index: $zindex-navbar + 1000 !important;
-     z-index: 3004 !important;
+    z-index: $zindex-fixed + 1 !important;
     &.under-navbar {
         z-index: $zindex-fixed - 1 !important;
     }
@@ -12,18 +11,8 @@
 
 }
 
-.right-sidebar {
-    width: 500px !important;
-    right: -500px;
-    @include media-breakpoint-up(lg) {
-         width: 40vw !important;
-         right: -40vw;
-    }
-    
-    @include media-breakpoint-down(sm) {
-         width: 100vw !important;
-         right: -100vw;
-    }
+[data-simplersidebar='mask'] {
+    z-index: $zindex-fixed - 2 !important;
 }
 
 .navbar-toggler, .sidebar-toggler {

@@ -1,0 +1,81 @@
+name: sidebar
+items:
+    -
+        title: Speisekarte
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: kreative-werkstatt
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Aktuelle Events'
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: fuehrungen-spezial
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Location buchen'
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: termine-neu
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Tisch reservieren'
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: kontaktformular
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Schenken Sie Genuss'
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: kontaktformular
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: gutschein
+            isExternal: '0'
+    -
+        title: Team
+        type: url
+        url: /team
+        code: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: team
+            isExternal: '0'
+    -
+        title: Historie
+        type: url
+        url: /historie
+        code: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: historie
+            isExternal: '0'

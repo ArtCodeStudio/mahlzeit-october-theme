@@ -1,0 +1,74 @@
+[viewBag]
+==
+{#
+ # Set variables from theme settings
+ #}
+{% set backgroundColor = this.theme.navigation_navbar_background_color %}
+{% set navsColor = this.theme.navigation_navbar_color %}
+
+{% set navsColorClass = 'navbar-' ~ navsColor %}
+
+{% set leftSidebarEnabled = this.theme.navigation_left_sidebar_enabled %}
+{% set rightSidebarEnabled = this.theme.navigation_right_sidebar_enabled %}
+{% set topSidebarEnabled = this.theme.navigation_top_sidebar_enabled %}
+
+{#
+ # Set Variables depends on navbar type
+ #}
+{% if this.theme.navigation_navbar_type == 'only_sidebar' %}
+    {% set sidebarClass = '' %}
+{% elseif this.theme.navigation_navbar_type == 'center_logo' %}
+    {% set sidebarClass = 'under-navbar' %}
+{% else %}
+    {% set sidebarClass = 'under-navbar' %}
+{% endif %}
+
+{#
+ # Inject navbar type
+ #}
+{% if this.theme.navigation_navbar_type == 'only_sidebar' %}
+    {% partial 'jumplink-fixed-logo' sourceLogo='assets/images/logo-just.svg'
+        sourceText='assets/images/logo-text.svg'
+        position='top-left'
+        width= '10rem'
+        alt='Logo von'~this.theme.site_name
+    %}
+    {% partial 'jumplink-navigation/navbar_only-sidebar' %}
+{% elseif this.theme.navigation_navbar_type == 'center_logo' %}
+    {% partial
+        'jumplink-navigation/navbar_center_logo'
+        navsColorClass=navsColorClass
+        leftSidebarEnabled=leftSidebarEnabled
+        rightSidebarEnabled=rightSidebarEnabled
+        topSidebarEnabled=topSidebarEnabled
+    %}
+{% else %}
+    {% partial
+        'jumplink-navigation/navbar_default'
+        navsColorClass=navsColorClass
+        leftSidebarEnabled=leftSidebarEnabled
+        rightSidebarEnabled=rightSidebarEnabled
+    %}
+{% endif %}
+
+{#
+ # Left sidebar based on http://dcdeiv.github.io/simpler-sidebar/
+#}
+{% if leftSidebarEnabled %}
+    {% partial 'jumplink-navigation/sidebar'
+        mode='toggle'
+        position='left'
+        class=sidebarClass
+    %}
+{% endif %}
+
+{#
+ # Right sidebar based on http://dcdeiv.github.io/simpler-sidebar/
+#}
+{% if rightSidebarEnabled %}
+    {% partial 'jumplink-navigation/sidebar'
+        mode='slide'
+        position='right'
+        class=sidebarClass
+    %}
+{% endif %}

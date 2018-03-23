@@ -4,8 +4,10 @@ template {
 }
 
 @import "browser-detection-bar";
-
+@import "top-sidebar";
 @import 'rv-img';
+@import 'rv-photoswipe';
+@import 'gallery';
 
 @import 'firebase-events-beautiful';
 @import 'firebase-event-beautiful';

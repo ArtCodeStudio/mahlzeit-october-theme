@@ -8,6 +8,10 @@ code = "footer"
 ==
 {% set partialId = 'jumplink-sidebar' %}
 
+{% if class is not defined %}
+    {% set class = '' %}
+{% endif %}
+
 {% if mode is not defined %}
     {% set mode = 'slide' %} {# 'slide' | 'toggle' #}
 {% endif %}
@@ -16,8 +20,12 @@ code = "footer"
     {% set position = 'right' %} {# 'right' | 'left' #}
 {% endif %}
 
+{% if paddingTopByNavbar is not defined %}
+    {% set paddingTopByNavbar = true %}
+{% endif %}
+
 {% if mask is not defined %}
-    {% set mask = true %} {# 'slide' | 'toggle' #}
+    {% set mask = true %}
 {% endif %}
 
 {% if mergeWithFooter is not defined %}
@@ -37,9 +45,9 @@ code = "footer"
     data-items="{{items | json_encode() }}"
     data-mode="{{mode}}"
     data-position="{{position}}"
-    data-padding-top-by-navbar="false"
+    data-padding-top-by-navbar="{{paddingTopByNavbar == true or paddingTopByNavbar == 1}}"
     data-mask="{{mask}}"
-    class="jumplink-partial {{partialId}} {{position}}-sidebar hidden-print bg-white no-select"
+    class="jumplink-partial {{partialId}} {{position}}-sidebar hidden-print bg-white no-select {{class}}"
     itemscope
     itemtype="http://schema.org/WPSideBar"
 >

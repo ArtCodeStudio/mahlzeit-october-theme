@@ -85,6 +85,25 @@ rivets.binders.html = function (el, value) {
   $(el).html(value ? value : '');
 };
 
+rivets.binders.class = {
+   bind: function(el) {
+        this.$el = $(el);
+        this.staticClasses = this.$el.attr('class');
+   },
+   
+    unbind: function(el) {
+        delete this.$el;
+        delete this.staticClasses;
+    },
+    
+    routine: function(el, newValue) {
+        if (newValue) {
+            this.$el.attr('class', this.staticClasses);
+            $(el).addClass(newValue);
+        }
+    }
+};
+
 
 /**
  * TODO support select

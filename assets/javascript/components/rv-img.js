@@ -3,7 +3,6 @@
  */
 rivets.components['rv-img'] = {
   template: function() {
-    // return $('template#rv-img').html();
     return jumplink.templates['rv-img'];
   },
   initialize: function(el, data) {
@@ -15,6 +14,12 @@ rivets.components['rv-img'] = {
     controller.alt = data.alt;
     controller.style = '';
     controller.loaded = false;
+    
+    // workaround used for rv-photoswipe
+    if(jumplink.utilities.isNumber(data.index)) {
+        controller.debug('set data-index');
+        $el.attr('data-index', data.index);
+    }
     
     // default
     if(jumplink.utilities.isUndefined(data.visibleOnly)) {
@@ -35,20 +40,21 @@ rivets.components['rv-img'] = {
     }
     
     if(data.ratio) {
+        controller.debug('set aspect ratio by ratio attribute', data.ratio);
         controller.ratio = data.ratio.split(':');
         controller.ratio[0] = Number(controller.ratio[0]);
         controller.ratio[1] = Number(controller.ratio[1]);
         controller.heightInPercent = (controller.ratio[1] / controller.ratio[0] * 100);
         controller.style = 'padding-top: ' + controller.heightInPercent + '%;';
-    }
-    
-    if(data.width && data.height) {
+    } else if(data.width && data.height) {
+        controller.debug('set aspect ratio by width and height', data.ratio);
         controller.ratio = [];
         controller.ratio[0] = Number(data.width);
         controller.ratio[1] = Number(data.height);
         controller.heightInPercent = (controller.ratio[1] / controller.ratio[0] * 100);
         controller.style = 'padding-top: ' + controller.heightInPercent + '%;';
     }
+    
     
     var options = {
         scrollDirection: data.scrollDirection || 'vertical',
@@ -98,7 +104,7 @@ rivets.components['rv-img'] = {
         },
     };
     
-    controller.debug('initialize', el, data, controller);
+    controller.debug('initialize', $el, data);
         
     /**
      * For lazy loading options see https://github.com/eisbehr-/jquery.lazy#configuration-parameters
@@ -118,7 +124,7 @@ rivets.components['rv-img'] = {
         } else {
             
         }
-    }  
+    };
 
     $el.one('DOMSubtreeModified', function() {
         setTimeout(function() {

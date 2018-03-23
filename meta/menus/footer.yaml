@@ -1,49 +1,69 @@
 name: Footer
 items:
     -
-        title: watt
+        title: Speisen
+        nesting: ''
         type: url
-        url: /fuehrungen/watt
+        url: /speisen
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
-            cssClass: watt
+            cssClass: Speisen
             isExternal: '0'
     -
-        title: land
+        title: Events
+        nesting: ''
         type: url
-        url: /fuehrungen/land
+        url: /events
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
-            cssClass: land
+            cssClass: events
             isExternal: '0'
     -
-        title: fluss
+        title: 'Location buchen'
+        nesting: ''
         type: url
-        url: /fuehrungen/fluss
+        url: /location
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
-            cssClass: fluss
+            cssClass: location
             isExternal: '0'
     -
-        title: Termine
+        title: 'Gutschein schenken'
+        nesting: ''
         type: url
-        url: /oeffentliche-fuehrung
+        url: /gutschein
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
-            cssClass: Termine
+            cssClass: Gutschein
             isExternal: '0'
     -
-        title: 'Tour planen'
+        title: 'Tisch reservieren'
+        nesting: ''
         type: url
-        url: /eigene-tour-planen
+        url: '/Tisch reservieren'
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
-            cssClass: eigene-tour-planen
+            cssClass: tisch-reservieren
             isExternal: '0'
     -
         title: Kontakt
@@ -57,6 +77,15 @@ items:
         viewBag:
             isHidden: '0'
             cssClass: kontakt
+            isExternal: '0'
+    -
+        title: Team
+        type: url
+        url: /team
+        code: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: team
             isExternal: '0'
     -
         title: Impressum

@@ -90,11 +90,12 @@ function onReguestEvent() {
     <body id="body-{{ str_studly(this.page.title) | lower | replace({'/':'_'}) }}" data-spy="scroll">
         {# Content #}
         <div id="layout-content">
-            {% partial 'jumplink-fixed-logo' sourceLogo='assets/images/logo-just.svg' sourceText='assets/images/logo-text.svg' position='top-left' width= '10rem' alt='Logo von'~this.theme.site_name %}
-            {% partial 'jumplink-navigation/navbar_only-sidebar' %}
+            
+            {% partial 'jumplink-navigation/navbar' %}
+
             <div id="barba-wrapper">
                 <div {% partial 'jumplink-barba-container-attributes' %}>
-                    <div class="py-5">
+                    <div class="">
                         {% page %}
                     </div>
                 </div>

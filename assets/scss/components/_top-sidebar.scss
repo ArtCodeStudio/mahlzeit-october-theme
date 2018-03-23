@@ -1,0 +1,53 @@
+top-sidebar {
+    @extend .navbar-background;
+    display: block;
+    widht: 100%;
+    height: 0px;
+    
+    &.hidden, &.animate {
+        overflow-y: hidden;
+    }
+    transition: height 300ms ease-out;
+    
+    .container  {
+         height: 100%;
+    }    
+    
+    .sidebar-dark {
+        .sidebar-nav {
+            .nav-link {
+                color: $navbar-dark-color;
+                &:hover {
+                    color: $navbar-dark-hover-color;
+                }
+                
+                &:active, .active {
+                    color: $navbar-dark-active-color;
+                }
+
+                &:disabled, .disabled {
+                    color: $navbar-dark-disabled-color;
+                }
+            }
+        }
+    }
+    
+    .sidebar-light {
+        .sidebar-nav {
+            .nav-link {
+                color: $navbar-light-color;
+                &:hover {
+                    color: $navbar-light-hover-color;
+                }
+                
+                &:active, .active {
+                    color: $navbar-light-active-color;
+                }
+
+                &:disabled, .disabled {
+                    color: $navbar-light-disabled-color;
+                }
+            }
+        }
+    }
+}

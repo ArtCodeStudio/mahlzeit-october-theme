@@ -1,17 +1,20 @@
 // bootstrap 4 compatible with the scss version of octobercms
-@import '../vendor/bootstrap/scss/bootstrap.scss';
+@import '../vendor/bootstrap/scss/functions';
+
+// variables we neeed for all other scss files
+@import "variables";
 
 // browser prefixes rendered in scss
 @import '../vendor/sass-prefix-mixins/scss/prefixes';
+
+// bootstrap 4 compatible with the scss version of octobercms
+@import '../vendor/bootstrap/scss/bootstrap';
 
 // utilities also bootstrap need
 @import 'utilities';
 
 // fixes for bootstrap we nee
 @import 'fixes';
-
-// variables we neeed for all other scss files
-@import "variables";
 
 // overwrite variables only for this theme 
 @import "theme-variables";

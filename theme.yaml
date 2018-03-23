@@ -7,6 +7,7 @@ license: MIT
 form:
     tabs:
         fields:
+        # general
             site_name:
                 label: 'Site name'
                 type: text
@@ -60,6 +61,257 @@ form:
                 comment: 'country, land, state, shore, ground, province'
                 default: Deutschland
                 tab: General
+        # favicons
+            theme_color:
+                label: 'Theme color'
+                type: colorpicker
+                comment: '<br><br><br>Color of the <a href="https://developers.google.com/web/updates/2015/08/using-manifest-to-set-sitewide-theme-color" target="_blank">browser address bar on Smartpohnes</a>.'
+                commentHtml: true
+                default: '#ffffff'
+                tab: Favicons
+            tile_color:
+                label: 'Tile color'
+                type: colorpicker
+                comment: '<br><br><br>Color of the <a href="https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-helpandsupport-helpandsupport-tilecolor" target="_blank">tile on Windows Phone</a>.'
+                commentHtml: true
+                default: '#ffffff'
+                tab: Favicons
+            mask_color:
+                label: 'Mask color'
+                type: colorpicker
+                comment: '<br><br><br>Color of the <a href="https://steemit.com/deutsch/@rilc0n/icon-fuer-angepinnte-tabs-in-safari-erstellen" target="_blank">icon on Safari</a>.'
+                commentHtml: true
+                default: '#ffffff'
+                tab: Favicons
+        # navigation
+            navigation_navbar_type:
+                label: Navbar Type
+                type: dropdown
+                options:
+                    default: 'Default'
+                    center_logo: 'Center Logo'
+                    only_sidebar: 'Only Sidebar'
+                default: 'default'
+                tab: Navigation
+            navigation_navbar_background_color:
+                label: Navbar Background Color
+                type: dropdown
+                options:
+                    dark: 'dark'
+                    light: 'light'
+                    white: 'white'
+                    primary: 'primary'
+                    secondary: 'secondary'
+                    success: 'success'
+                    danger: 'danger'
+                    warning: 'warning'
+                    info: 'info'
+                default: 'transparent'
+                tab: Navigation
+                assetVar: navigation_navbar_background_color
+            navigation_navbar_background_transparency:
+                label: Navbar Background Transparency
+                type: number
+                default: 0.1
+                tab: Navigation
+                assetVar: navigation_navbar_background_transparency
+            navigation_navbar_color:
+                label: Navbar Nav Elements Color
+                type: dropdown
+                options:
+                    dark: 'dark'
+                    light: 'light'
+                default: 'light'
+                tab: Navigation
+            navigation_left_sidebar_enabled:
+                label: Enable left sidebar
+                type: checkbox
+                default: 1
+                tab: Navigation
+            navigation_right_sidebar_enabled:
+                label: Enable right sidebar
+                type: checkbox
+                default: 0
+                tab: Navigation
+            navigation_top_sidebar_enabled:
+                label: Enable top sidebar
+                type: checkbox
+                default: 0
+                tab: Navigation
+        # page historie
+            page_historie_galleries:
+                tab: 'Gallery'
+                label: Gallery
+                type: repeater
+                prompt: Create Gallery
+                comment: Create a new gallery
+                span: left
+                form:
+                    fields:
+                        title:
+                            label: Title
+                            type: text
+                            comment: Write a title to show in the gallery
+                            span: left
+                        handle:
+                            label: handle
+                            type: text
+                            required: true
+                            comment: Define a handle for this gallery to use this gallery in a snippet. <span class="text-danger">Please write everything in lowercase and do not use blank or special characters</span>. 
+                            commentHtml: true
+                            span: right
+                        description:
+                            label: Description
+                            type: richeditor
+                            size: small
+                            toolbarButtons: fullscreen|bold|italic|underline|strikeThrough|subscript»superscript|fontSize|color|inlineStyle|paragraphStyle|paragraphFormat|align|formatOL|formatUL|outdent|indent|quote|insertHR|-|insertLink|insertImage|insertVideo|insertAudio|insertFile|insertTable|undo|redo|clearFormatting|html
+                            comment: Write a description to show in the gallery
+                            span: full
+                        images:
+                            label: Images
+                            type: repeater
+                            required: true
+                            comment: Upload images to your gallery
+                            prompt: Add image
+                            span: full
+                            form:
+                                fields:
+                                    image:
+                                        label: Image file
+                                        type: mediafinder
+                                        mode: image
+                                        span: left
+                                    alt:
+                                        label: alt
+                                        type: text
+                                        comment: Write a brief description of this image to improve search engine optimization (SEO) and accessibility for visually impaired customers.
+                                        span: right
+                                    # w:
+                                    #     label: width
+                                    #     type: number
+                                    #     required: true
+                                    #     comment: Image width
+                                    #     span: right
+                                    # h:
+                                    #     label: height
+                                    #     type: number
+                                    #     required: true
+                                    #     comment: Image height
+                                    #     span: right
+                                    ratio:
+                                        label: aspect ratio
+                                        type: number
+                                        comment: Aspect ratio e.g. 1:1, leaf it blank if you do not want to use this 
+                                        span: right
+                                    title:
+                                        label: Image title text
+                                        type: text
+                                        comment: Write a title to show in the image
+                                        span: right
+                                    description:
+                                        label: Image description text
+                                        type: richeditor
+                                        size: small
+                                        toolbarButtons: bold|italic|underline
+                                        comment: Write a description to show in the image
+                                        span: full
+        # bootstrap
+            bs4-colors:
+                label: Color system
+                type: section
+                cssClass: without-line
+                tab: 'Bootstrap'
+            bs4-white:
+                type: colorpicker
+                label: white
+                default: '#fff'
+                tab: 'Bootstrap'
+                assetVar: white
+            bs4-black:
+                type: colorpicker
+                label: black
+                default: '#000'
+                tab: 'Bootstrap'
+                assetVar: black
+            bs4-blue:
+                type: colorpicker
+                label: blue
+                default: '#007bff'
+                tab: 'Bootstrap'
+                assetVar: blue
+            bs4-indigo:
+                type: colorpicker
+                label: indigo
+                default: '#6610f2'
+                tab: 'Bootstrap'
+                assetVar: indigo
+            bs4-purple:
+                type: colorpicker
+                label: purple
+                default: '#6f42c1'
+                tab: 'Bootstrap'
+                assetVar: purple
+            bs4-pink:
+                type: colorpicker
+                label: pink
+                default: '#e83e8c'
+                tab: 'Bootstrap'
+                assetVar: pink
+            bs4-red:
+                type: colorpicker
+                label: red
+                default: '#dc3545'
+                tab: 'Bootstrap'
+                assetVar: red
+            bs4-orange:
+                type: colorpicker
+                label: orange
+                default: '#fd7e14'
+                tab: 'Bootstrap'
+                assetVar: orange
+            bs4-yellow:
+                type: colorpicker
+                label: yellow
+                default: '#ffc107'
+                tab: 'Bootstrap'
+                assetVar: yellow
+            bs4-green:
+                type: colorpicker
+                label: green
+                default: '#28a745'
+                tab: 'Bootstrap'
+                assetVar: green
+            bs4-teal:
+                type: colorpicker
+                label: teal
+                default: '#20c997'
+                tab: 'Bootstrap'
+                assetVar: teal
+            bs4-cyan:
+                type: colorpicker
+                label: cyan
+                default: '#17a2b8'
+                tab: 'Bootstrap'
+                assetVar: cyan
+            bs4-fonts:
+                label: 'Fonts'
+                type: section
+                cssClass: without-line
+                comment: 'Font, line-height, and color for body text, headings, and more.'
+                commentHtml: true
+                tab: Bootstrap
+            bs4-font-family-sans-serif:
+                type: text
+                label: font-family-sans-serif
+                default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+                tab: 'Bootstrap'
+                assetVar: font-family-sans-serif
+            bs4-font-family-monospace:
+                type: text
+                label: font-family-monospace
+                default: -SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+                tab: 'Bootstrap'
+                assetVar: font-family-monospace
             pp_general_pp_section:
                 label: 'Allgemeine Datenschutzerklärung'
                 type: section
@@ -920,5 +1172,5 @@ require:
     - Romanov.ClearCacheWidget
     - Samuell.ContentEditor
     - RainLab.GoogleAnalytics
-    #- Bedard.Debugbar
     - Renatio.SeoManager
+    # - Bedard.Debugbar

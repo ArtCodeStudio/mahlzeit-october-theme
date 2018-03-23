@@ -19,6 +19,19 @@ function onStart()
     }
     
     $this['jsComponents'] = $javascriptComponents;
+    
+    
+    
+    $partialsBasePath = "assets/javascript/partials/";
+    $partialsPath = $theme->getPath()."/".$partialsBasePath;
+    $partials = preg_grep('~\.js~', scandir($partialsPath));
+    
+    $javascriptPartials = array();
+    foreach ($partials as $index => $partialName) {
+        $javascriptPartials[] = $partialsPath.$partialName;
+    }
+    
+    $this['jsPartials'] = $javascriptPartials;
 }
 ?>
 ==
@@ -141,7 +154,7 @@ function onStart()
     'assets/javascript/adapters.js',
     'assets/javascript/binders.js',
     'assets/javascript/formatters.js'
-] | merge(jsComponents) | theme }}"></script>
+] | merge(jsPartials) | merge(jsComponents) | theme }}"></script>
 
 {% framework %}
 {% scripts %}

@@ -1,0 +1,13 @@
+name: second
+items:
+    -
+        title: Kontakt
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: kontakt
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'

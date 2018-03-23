@@ -35,13 +35,6 @@ rivets.components.gallery = {
         for (var index in themeImages) {
             if (themeImages.hasOwnProperty(index)) {
                 var image = themeImages[index];
-                /** converts images to the photoswipe format */
-          
-                /** path to image */
-                // image.src = controller.imagesPath + image.image;
-                /** path to small image placeholder, large image will be loaded on top */
-                // image.msrc = image.src;
-
                 image.index = Number(index);
                 controller.debug('image', image, 'index', index);
                 images.push(image);

@@ -448,6 +448,19 @@ jumplink.utilities.removeHash = function () {
 };
 
 /**
+ * get param from hash
+ */
+jumplink.utilities.getUrlParameter = function (name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+/**
  * get hostname an path of address bar
  * @see http://stackoverflow.com/a/736970/1465919
  */

@@ -116,17 +116,7 @@ rivets.components['rv-photoswipe'] = {
         
         // Function builds caption markup
         addCaptionHTMLFn: function(item, captionEl, isFake) {
-            // item      - slide object
-            // captionEl - caption DOM element
-            // isFake    - true when content is added to fake caption container
-            //             (used to get size of next or previous caption)
-        
-            if(!item.title) {
-                captionEl.children[0].innerHTML = '';
-                return false;
-            }
-            captionEl.children[0].innerHTML = item.title;
-            return true;
+            // we use rivets for this
         },
         
         // Buttons/elements
@@ -199,6 +189,7 @@ rivets.components['rv-photoswipe'] = {
         getPageURLForShare: function( shareButtonData ) {
             return window.location.href;
         },
+        
         getTextForShare: function( shareButtonData ) {
             return pswp.currItem.title || '';
         },
@@ -218,6 +209,30 @@ rivets.components['rv-photoswipe'] = {
         options.index = index;
         pswp = new PhotoSwipe( $pswp[0], PhotoSwipeUI_Default, controller.images, options);
         pswp.init();
+        
+        // overwrite images with additional properties from pswp
+        controller.images = pswp.items;
+        
+        // set current item
+        controller.image = pswp.currItem;
+        
+        pswp.listen('afterChange', function() {
+            controller.debug('afterChange', pswp.currItem);
+            controller.image = pswp.currItem;
+        });
+        
+        pswp.listen('close', function() {
+            controller.debug('close');
+            // jumplink.utilities.removeHash();
+        });
+        
+        pswp.listen('destroy', function() {
+            controller.debug('destroy');
+            setTimeout(function() {
+                jumplink.utilities.removeHash();
+            }, 0);
+        });
+        
     };
     
     controller.next = function(event, controller) {
@@ -252,6 +267,19 @@ rivets.components['rv-photoswipe'] = {
         controller.images = images;
         open(index);
     });
+    
+    
+    setTimeout(function() {
+        // get current index from url e.g. if it was shared
+        var pid = jumplink.utilities.getUrlParameter('pid');
+        if(pid !== null) {
+            var index = Number(pid) - 1;
+            // TODO add the selector to attribute
+            $imagesWrapper = $('.images-row');
+            controller.images = data.images;
+            open(index);
+        }
+    }, 0);
     
     return controller;
   }

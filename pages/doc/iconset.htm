@@ -1,12 +1,12 @@
 title = "Iconset"
 url = "/doc/iconset"
 layout = "jumplink-barba"
-is_hidden = 0
-contentType = "html"
 meta_title = "Iconset"
 meta_description = "Iconset"
+is_hidden = 0
 robot_index = "index"
 robot_follow = "follow"
+contentType = "html"
 ==
 <?php
 use Cms\Classes\Theme;
@@ -33,6 +33,10 @@ function onStart() {
     <div class="row">
         <div class="col-xs-12">
             <p>The Iconset we are using is based on the <a href="https://github.com/heimrichhannot/elegant-icons">The Elegant Icon Font</a> but we are using the svg files directly to make it possible to easily replace the icons for each theme. We also try to add new icons. Click on the icon you wish to see more information.</p>
+            
+            <div class="alert alert-success" role="alert">
+                <strong>Note!</strong> If you edit existing or create new icons, add the <code>fill="currentColor"</code> attribute to the root svg element or path if you want to apply the css font color to the fill color.
+            </div>
             <div class="row">
                 {% for file in files %}
                     {% set icon = file | replace({'.svg': ''}) %}

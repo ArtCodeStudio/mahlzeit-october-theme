@@ -1,0 +1,23 @@
+.jumplink-footer {
+    font-size: 0.9rem;
+    
+    .logo {
+        max-width: 297px;
+    }
+}
+
+.footer-background {
+    @extend .navbar-background;
+    color: $navbar-dark-color;
+    a {
+        color: $navbar-dark-color;
+        &:hover {
+            color: $navbar-dark-hover-color;
+            text-decoration: none;
+        }
+        
+        &:active, &.active {
+            color: $navbar-dark-active-color;
+        }
+    }
+}

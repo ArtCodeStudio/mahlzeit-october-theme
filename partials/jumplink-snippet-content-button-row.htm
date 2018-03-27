@@ -1,0 +1,41 @@
+description = "Content and button row from theme settings"
+
+[viewBag]
+snippetCode = "jumplink-snippet-content-button-row"
+snippetName = "Content / Button Row"
+snippetProperties[handle][title] = "theme settings handle"
+snippetProperties[handle][type] = "string"
+snippetProperties[handle][default] = ""
+snippetProperties[handle][options][] = ""
+==
+{% set content_button_rows = this.theme.content_button_row %}
+{% set found_row = null %}
+
+{% for content_button_row in content_button_rows %}
+    {% if content_button_row.handle == handle %}
+        {% set found_row = content_button_row %}
+    {% endif %}
+{% endfor %}
+
+{% if found_row is not null %}
+    <div class="{{found_row.container_class}}">
+        <div class="row {{found_row.justify_xs}} {{found_row.justify_sm}} {{found_row.justify_md}} {{found_row.justify_lg}} {{found_row.justify_xl}}">
+            {% for column in found_row.column %}
+            
+                {#{column | json_encode()}#}
+            
+                <div class="{{column.xs}} {{column.sm}} {{column.md}} {{column.lg}} {{column.xl}} {{column.offset_xs}} {{column.offset_sm}} {{column.offset_md}} {{column.offset_lg}} {{column.offset_xl}} {{column.spacing_top}} {{column.spacing_bottom}}">
+                
+                    {% if column.content and column.contentFilename %}
+                        {% component 'contenteditor' file=contentFilename tools="bold,italic,link,heading,subheading,subheading3,subheading4,subheading5,paragraph,unordered-list,ordered-list,table,indent,unindent,line-break,image,video,preformatted" %}
+                    {% endif %}
+                
+                    {% if column.button %}
+                        <a class="btn {{column.button_style}} {{column.button_alignment}}" href="{{column.button_url}}">{{column.button_label}}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+{% endif %}

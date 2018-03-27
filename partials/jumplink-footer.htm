@@ -9,9 +9,8 @@ code = "footer"
     {% set mode = 'horizontal_menu' %} {# 'horizontal_menu' | 'vertical_menu' #}
 {% endif %}
 
-
 <footer
-    class="jumplink-partial jumplink-footer"
+    class="jumplink-partial {{partialId}}"
     data-partial-name="{{partialId}}"
     data-mode="{{mode}}"
     data-items="{{footerMenu.menuItems | json_encode() }}"
@@ -19,6 +18,16 @@ code = "footer"
     itemscope
     itemtype="http://schema.org/SiteNavigationElement"
 >
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{'kontakt' | staticPage}}">
+                    <img class="img-fluid d-block mx-auto logo py-5" src="{{'assets/images/logo-footer.svg' | theme}}" alt="{{this.theme.site_name}}">
+                </a>
+            </div>
+        </div>
+    </div>
+
     {% if mode == 'vertical_menu' %}
         <div class="container py-1 py-lg-3">
             <div class="row">
@@ -60,15 +69,13 @@ code = "footer"
         </div>
     {% endif %}
     
-    {% if mode == 'horizontal_menu' %}
-
-        <div class="navbar navbar-toggleable-md navbar-light bg-transparent jumplink-navbar_extend-horizontally">
-            <div class="container">
-            
-                <div class="w-100 hidden-print">
-                    {% partial 'jumplink-navigation/navbar-items' items=footerMenu.menuItems class='navbar-nav d-flex justify-content-center' itemClass='nav-item' %}
-                </div>
-                
+    {% if mode == 'horizontal_menu' %}  
+    
+        <div class="footer-background pt-5">
+            {% partial 'jumplink-address-center' wrapContainer=false xs=12 sm=12 md=12 lg=12 xl=12 offsetxs=0 offsetsm=0 offsetmd=0 offsetlg=0 offsetxl=0 %}
+    
+            <div class="navbar navbar-expand justify-content-center">
+                {% partial 'jumplink-navigation/navbar-items' items=footerMenu.menuItems class='navbar-nav d-flex justify-content-center' itemClass='nav-item' %}
             </div>
         </div>
 

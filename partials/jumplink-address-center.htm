@@ -1,0 +1,39 @@
+[viewBag]
+==
+{% set partialId = 'jumplink-address-center' %}
+
+{% if wrapContainer %}
+    {% set containerClass = 'container'%}
+{% else %}
+    {% set containerClass = 'container-fluid'%}
+{% endif %}
+
+{% set columnClass = 'col-'~xs~' offset-xs-'~offsetxs~' col-sm-'~sm~' offset-sm-'~offsetsm~' col-md-'~md~' offset-md-'~offsetmd~' col-lg-'~lg~' offset-lg-'~offsetlg %}
+
+<div class="{{containerClass}} jumplink-partial {{partialId}}"
+    data-partial-name="{{partialId}}"
+    >
+    <div class="row">
+
+        {# TODO öffnmungszeiten, logo, see http://schema.org/Restaurant #}
+        <address class="{{columnClass}} text-center" itemscope itemtype="http://schema.org/Restaurant">
+            <p class="m-0" itemprop="alternateName">{{this.theme.site_business}}</p>
+            <p class="m-0 text-uppercase" itemprop="name">{{this.theme.site_name}}</p>
+            <p itemprop="description">{{this.theme.site_desc | raw}}</p>
+            {# TODO set in theme settings?, logo, see http://schema.org/Restaurant #}
+            <span itemprop="servesCuisine" content="German cuisine"></span>
+            <span itemprop="priceRange" content="€€"></span>
+            <span itemprop="image" content="{{ url('mahlzeit-am-meer-header.jpg' | media)}}"><span>
+            <p class="m-0" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                <span itemprop="streetAddress">{{this.theme.street}}</span>	•
+                <span itemprop="postalCode">{{this.theme.zip}}</span>
+                <span itemprop="addressLocality">{{this.theme.city}}</span>
+            </p>
+            <a itemprop="telephone" content="{{this.theme.phone_number}}" href="tel:{{str_camel(this.theme.phone_number)}}">{{this.theme.phone_number}}</a> •
+            <a itemprop="email" content="{{this.theme.email_address}}" href="mailto:{{this.theme.email_address}}">{{this.theme.email_address}}</a>
+            <br>
+            <a itemprop="sameAs" href="https://{{this.theme.site_webaddress}}">{{this.theme.site_webaddress}}</a>
+            
+        </address>
+    </div>
+</div>

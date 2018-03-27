@@ -26,3 +26,9 @@
 
   }
 }
+
+$navbar-background-color: transparentize(theme-color($navigation_navbar_background_color), $navigation_navbar_background_transparency);
+
+.navbar-background {
+  background-color: $navbar-background-color;
+}

@@ -14,6 +14,12 @@ form:
                 comment: 'Name of your site'
                 default: ''
                 tab: General
+            site_business:
+                label: 'Site Business'
+                type: text
+                comment: 'Describe your business with one word'
+                default: ''
+                tab: General
             site_desc:
                 label: 'Site description'
                 type: text
@@ -31,6 +37,12 @@ form:
                 type: text
                 comment: 'Email address for contact form and imprint'
                 default: hello@yoursite.de
+                tab: General
+            site_webaddress:
+                label: 'Site Webaddress'
+                type: text
+                comment: 'The main address for this site'
+                default: 'www.yoursite.de'
                 tab: General
             owner_name:
                 label: 'Owner Name'
@@ -138,7 +150,403 @@ form:
                 type: checkbox
                 default: 0
                 tab: Navigation
-        # page historie
+        # jumplink-snippet-content-button-row
+            content_button_row:
+                tab: 'Content / Button Row'
+                label: Content / Button Row
+                type: repeater
+                prompt: Create Row
+                comment: Create a new row with content or Button
+                span: left
+                form:
+                    fields:
+                        handle:
+                            label: Handle
+                            type: text
+                            comment: Handle to identify the row in the snippet
+                        container_class:
+                            label: Container
+                            type: dropdown
+                            comment: Container class, <a href="https://getbootstrap.com/docs/4.0/layout/overview/#containers" target="_blank">show bootstrap docs for more information</a>.
+                            commentHtml: true
+                            span: left
+                            options:
+                                container: Limited width (.container) 
+                                container-fluid: Full width (.container-fluid)
+                            default: container
+                        horizontal_alignment_section:
+                            label: Horizontal alignment
+                            type: section
+                            comment: How should the columns be arranged? <a href="https://getbootstrap.com/docs/4.0/layout/grid/#horizontal-alignment" target="_blank">More about layout on Bootstrap</a>.
+                            commentHtml: true
+                        justify_xs:
+                            label: Justify on extra small devices 
+                            type: dropdown
+                            span: left
+                            options:
+                                justify-content-center: center
+                                justify-content-start: start
+                                justify-content-end: end
+                                justify-content-between: space between
+                                justify-content-around: space around
+                            default: justify-content-center
+                        justify_sm:
+                            label: Justify on small devices 
+                            type: dropdown
+                            span: right
+                            options:
+                                justify-content-sm-center: center
+                                justify-content-sm-start: start
+                                justify-content-sm-end: end
+                                justify-content-sm-between: space between
+                                justify-content-sm-around: space around
+                            default: justify-contentt-sm-center
+                        justify_md:
+                            label: Justify on medium devices 
+                            type: dropdown
+                            span: left
+                            options:
+                                justify-content-md-center: center
+                                justify-content-md-start: start
+                                justify-content-md-end: end
+                                justify-content-md-between: space between
+                                justify-content-md-around: space around
+                            default: justify-contentt-md-center
+                        justify_lg:
+                            label: Justify on large devices 
+                            type: dropdown
+                            span: right
+                            options:
+                                justify-content-lg-center: center
+                                justify-content-lg-start: start
+                                justify-content-lg-end: end
+                                justify-content-lg-between: space between
+                                justify-content-lg-around: space around
+                            default: justify-contentt-lg-center
+                        justify_xl:
+                            label: Justify on extra large devices 
+                            type: dropdown
+                            span: left
+                            options:
+                                justify-content-xl-center: center
+                                justify-content-xl-start: start
+                                justify-content-xl-end: end
+                                justify-content-xl-between: space between
+                                justify-content-xl-around: space around
+                            default: justify-contentt-xl-center
+                        column:
+                            label: Column Item
+                            type: repeater
+                            prompt: Create Column Item
+                            comment: Create a new column with content or Button
+                            form:
+                                fields:
+                                    column_item_section:
+                                        label:  'Content / Button Column Item'
+                                        type: section
+                                    # content_section:
+                                    #     label: Content
+                                    #     type: section
+                                    #     comment: Configure your content
+                                    content:
+                                        label: Enable
+                                        type: checkbox
+                                        comment: Do you want to embed a content file? 
+                                    contentFilename:
+                                        label: Content Filename
+                                        type: text
+                                        comment: Filename of the content you want to display
+                                    button_section:
+                                        label: Button
+                                        type: section
+                                        comment: Configure your button
+                                    button:
+                                        label: Enable
+                                        type: checkbox
+                                        comment: Do you want to embed a button? 
+                                    button_style:
+                                        label: Button style
+                                        type: dropdown
+                                        comment: Button style, <a href="https://getbootstrap.com/docs/4.0/components/buttons/" target="_blank">show bootstrap docs for more information</a>.
+                                        commentHtml: true
+                                        span: left
+                                        options:
+                                            btn-primary: Primary
+                                            btn-secondary: Secondary
+                                            btn-success: Success
+                                            btn-danger: Danger
+                                            btn-warning: Warning
+                                            btn-info: Info
+                                            btn-light: Light
+                                            btn-dark: Dark
+                                            btn-link: Link
+                                            btn-outline-primary: Outline Primary
+                                            btn-outline-secondary: Outline Secondary
+                                            btn-outline-success: Outline Success
+                                            btn-outline-danger: Outline Danger
+                                            btn-outline-warning: Outline Warning
+                                            btn-outline-info: Outline Info
+                                            btn-outline-light: Outline Light
+                                            btn-outline-dark: Outline Dark
+                                            btn-outline-dashed-dark: Outline Dashed Dark
+                                        default: auto
+                                    button_alignment:
+                                        label: Alignment
+                                        type: dropdown
+                                        comment: Button alignment, <a href="https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment" target="_blank">show bootstrap docs for more information</a>.
+                                        commentHtml: true
+                                        span: right
+                                        options:
+                                            text-left: Left aligned button
+                                            text-center: Center button
+                                            text-justify: Justify button
+                                            text-right: Right aligned button
+                                    button_label:
+                                        label: Label
+                                        type: text
+                                        span: left
+                                    button_url:
+                                        label: Url
+                                        type: text
+                                        span: right
+                                    spacing_section:
+                                        label: Spacing
+                                        type: section
+                                        comment: Add spaces to the column, <a href="https://getbootstrap.com/docs/4.0/utilities/spacing/" target="_blank">More on Bootstrap</a>.
+                                        commentHtml: true
+                                    spacing_top:
+                                        label: Spacing top
+                                        type: dropdown
+                                        span: left
+                                        options:
+                                            mt-0: none
+                                            mt-1: small
+                                            mt-2: little
+                                            mt-3: medium
+                                            mt-4: more
+                                            mt-5: big
+                                    spacing_bottom:
+                                        label: Spacing bottom
+                                        type: dropdown
+                                        span: left
+                                        options:
+                                            mb-0: none
+                                            mb-1: small
+                                            mb-2: little
+                                            mb-3: medium
+                                            mb-4: more
+                                            mb-5: big
+                                    column_section:
+                                        label: Column
+                                        type: section
+                                        comment: How much width should the columns have? <a href="https://getbootstrap.com/docs/4.0/layout/grid/#grid-options" target="_blank">More about layout on Bootstrap</a>.
+                                        commentHtml: true
+                                    xs:
+                                        label: xs
+                                        type: dropdown
+                                        comment: Width on extra small devices
+                                        span: left
+                                        options:
+                                            col: auto
+                                            col-12: 12/12
+                                            col-11: 11/12
+                                            col-10: 10/12
+                                            col-9: 9/12
+                                            col-8: 8/12
+                                            col-7: 7/12
+                                            col-6: 6/12
+                                            col-5: 5/12
+                                            col-4: 4/12
+                                            col-3: 3/12
+                                            col-2: 2/12
+                                            col-1: 1/12
+                                        default: auto
+                                    sm:
+                                        label: sm
+                                        type: dropdown
+                                        comment: Width on small devices
+                                        span: right
+                                        options:
+                                            col-sm-auto: auto
+                                            col-sm-12: 12/12
+                                            col-sm-11: 11/12
+                                            col-sm-10: 10/12
+                                            col-sm-9: 9/12
+                                            col-sm-8: 8/12
+                                            col-sm-7: 7/12
+                                            col-sm-6: 6/12
+                                            col-sm-5: 5/12
+                                            col-sm-4: 4/12
+                                            col-sm-3: 3/12
+                                            col-sm-2: 2/12
+                                            col-sm-1: 1/12
+                                        default: auto
+                                    md:
+                                        label: sm
+                                        type: dropdown
+                                        comment: Width on medium devices
+                                        span: left
+                                        options:
+                                            col-md-auto: auto
+                                            col-md-12: 12/12
+                                            col-md-11: 11/12
+                                            col-md-10: 10/12
+                                            col-md-9: 9/12
+                                            col-md-8: 8/12
+                                            col-md-7: 7/12
+                                            col-md-6: 6/12
+                                            col-md-5: 5/12
+                                            col-md-4: 4/12
+                                            col-md-3: 3/12
+                                            col-md-2: 2/12
+                                            col-md-1: 1/12
+                                        default: auto
+                                    lg:
+                                        label: lg
+                                        type: dropdown
+                                        comment: Width on large devices
+                                        span: right
+                                        options:
+                                            col-lg-auto: auto
+                                            col-lg-12: 12/12
+                                            col-lg-11: 11/12
+                                            col-lg-10: 10/12
+                                            col-lg-9: 9/12
+                                            col-lg-8: 8/12
+                                            col-lg-7: 7/12
+                                            col-lg-6: 6/12
+                                            col-lg-5: 5/12
+                                            col-lg-4: 4/12
+                                            col-lg-3: 3/12
+                                            col-lg-2: 2/12
+                                            col-lg-1: 1/12
+                                        default: auto
+                                    xl:
+                                        label: xl
+                                        type: dropdown
+                                        comment: Width on extra large devices
+                                        span: left
+                                        options:
+                                            col-xl-auto: auto
+                                            col-xl-12: 12/12
+                                            col-xl-11: 11/12
+                                            col-xl-10: 10/12
+                                            col-xl-9: 9/12
+                                            col-xl-8: 8/12
+                                            col-xl-7: 7/12
+                                            col-xl-6: 6/12
+                                            col-xl-5: 5/12
+                                            col-xl-4: 4/12
+                                            col-xl-3: 3/12
+                                            col-xl-2: 2/12
+                                            col-xl-1: 1/12
+                                        default: auto
+                                    column_offset:
+                                        label: Offset
+                                        type: section
+                                        comment: Bootstrap column offset, <a href="https://getbootstrap.com/docs/4.0/layout/grid/#offset-classes" target="_blank">more about on Bootstrap</a>.
+                                        commentHtml: true
+                                    offset_xs:
+                                        label: xs
+                                        type: dropdown
+                                        comment: Offset on extra small devices
+                                        span: left
+                                        options:
+                                            offset-0: none
+                                            offset-12: 12/12
+                                            offset-11: 11/12
+                                            offset-10: 10/12
+                                            offset-9: 9/12
+                                            offset-8: 8/12
+                                            offset-7: 7/12
+                                            offset-6: 6/12
+                                            offset-5: 5/12
+                                            offset-4: 4/12
+                                            offset-3: 3/12
+                                            offset-2: 2/12
+                                            offset-1: 1/12
+                                        default: none
+                                    offset_sm:
+                                        label: sm
+                                        type: dropdown
+                                        comment: Offset on small devices
+                                        span: right
+                                        options:
+                                            offset-sm-0: none
+                                            offset-sm-12: 12/12
+                                            offset-sm-11: 11/12
+                                            offset-sm-10: 10/12
+                                            offset-sm-9: 9/12
+                                            offset-sm-8: 8/12
+                                            offset-sm-7: 7/12
+                                            offset-sm-6: 6/12
+                                            offset-sm-5: 5/12
+                                            offset-sm-4: 4/12
+                                            offset-sm-3: 3/12
+                                            offset-sm-2: 2/12
+                                            offset-sm-1: 1/12
+                                        default: none
+                                    offset_md:
+                                        label: sm
+                                        type: dropdown
+                                        comment: Offset on medium devices
+                                        span: left
+                                        options:
+                                            offset-sm-0: none
+                                            offset-sm-12: 12/12
+                                            offset-sm-11: 11/12
+                                            offset-sm-10: 10/12
+                                            offset-sm-9: 9/12
+                                            offset-sm-8: 8/12
+                                            offset-sm-7: 7/12
+                                            offset-sm-6: 6/12
+                                            offset-sm-5: 5/12
+                                            offset-sm-4: 4/12
+                                            offset-sm-3: 3/12
+                                            offset-sm-2: 2/12
+                                            offset-sm-1: 1/12
+                                        default: none
+                                    offset_lg:
+                                        label: lg
+                                        type: dropdown
+                                        comment: Offset on large devices
+                                        span: right
+                                        options:
+                                            offset-lg-0: none
+                                            offset-lg-12: 12/12
+                                            offset-lg-11: 11/12
+                                            offset-lg-10: 10/12
+                                            offset-lg-9: 9/12
+                                            offset-lg-8: 8/12
+                                            offset-lg-7: 7/12
+                                            offset-lg-6: 6/12
+                                            offset-lg-5: 5/12
+                                            offset-lg-4: 4/12
+                                            offset-lg-3: 3/12
+                                            offset-lg-2: 2/12
+                                            offset-lg-1: 1/12
+                                        default: none
+                                    offset_xl:
+                                        label: xl
+                                        type: dropdown
+                                        comment: Offset on extra large devices
+                                        span: left
+                                        options:
+                                            offset-xl-0: none
+                                            offset-xl-12: 12/12
+                                            offset-xl-11: 11/12
+                                            offset-xl-10: 10/12
+                                            offset-xl-9: 9/12
+                                            offset-xl-8: 8/12
+                                            offset-xl-7: 7/12
+                                            offset-xl-6: 6/12
+                                            offset-xl-5: 5/12
+                                            offset-xl-4: 4/12
+                                            offset-xl-3: 3/12
+                                            offset-xl-2: 2/12
+                                            offset-xl-1: 1/12
+                                        default: none
+        # jumplink-snippet-gallery
             page_historie_galleries:
                 tab: 'Gallery'
                 label: Gallery

@@ -17,7 +17,7 @@ rivets.components.flipbooks = {
     
     controller.background = data.background;
     controller.handle = data.handle;
-    controller.debug('initialize flipbooks component', $el, controller.books);
+    controller.debug('initialize flipbooks component', $el, data);
     
     controller.ready = false;
     

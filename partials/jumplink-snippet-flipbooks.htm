@@ -18,5 +18,5 @@ snippetProperties[handle][options][] = ""
 {% endfor %}
 
 {% if found_collection is not null %}
-    <flipbooks books="'{{found_collection.flipbooks | json_encode()}}'" background="'{{found_collection.background}}'" handle="{{handle}}"></flipbooks>
+    <flipbooks books="'{{found_collection.flipbooks | json_encode()}}'" background="'{{found_collection.background | media}}'" handle="{{handle}}"></flipbooks>
 {% endif %}

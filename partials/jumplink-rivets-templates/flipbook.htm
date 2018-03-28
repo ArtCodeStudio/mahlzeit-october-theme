@@ -1,9 +1,8 @@
 [viewBag]
 ==
-<div class="flipbook-preview" rv-on-click="zoomBook">
+<div class="flipbook-preview" rv-on-click="zoomInBook">
     <rv-img src="previewPage.image" ratio="ratio" alt="previewPage.alt"></rv-img>
 </div>
-
 
 <div class="flipbook-zoom-wrapper">
     <div class="flipbook">
@@ -13,3 +12,5 @@
         </div>
     </div>
 </div>
+
+<div rv-show="showMask" class="mask"></div>

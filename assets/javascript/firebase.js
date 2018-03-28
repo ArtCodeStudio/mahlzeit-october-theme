@@ -14,7 +14,7 @@ jumplink.firebase.config = {
     projectId: "jumplink-events",
     storageBucket: "jumplink-events.appspot.com",
     messagingSenderId: "514839071838",
-    customerDomain: 'watt-land-fluss.de' // custom config property
+    customerDomain: 'mahlzeit-am-meer.de' // custom config property
 };
 firebase.initializeApp(jumplink.firebase.config);
 

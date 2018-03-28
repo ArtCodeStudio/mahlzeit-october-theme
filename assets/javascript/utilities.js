@@ -426,6 +426,38 @@ jumplink.utilities.replaceNoImage = function() {
   jumplink.utilities.replaceNoImageBackground();
 };
 
+ /**
+  * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
+  * images to fit into a certain area.
+  * 
+  * @see https://opensourcehacker.com/2011/12/01/calculate-aspect-ratio-conserving-resize-for-images-in-javascript/
+  * @see https://stackoverflow.com/questions/1248081/get-the-browser-viewport-dimensions-with-javascript
+  *
+  * @param {Number} srcWidth width of source image
+  * @param {Number} srcHeight height of source image
+  * @param {Number} maxWidth maximum available width
+  * @param {Number} maxHeight maximum available height
+  * @return {Object} { w, h }
+  */
+jumplink.utilities.calculateAspectRatioFit = function (srcWidth, srcHeight, maxWidth, maxHeight) {
+    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+    return { w: srcWidth*ratio, h: srcHeight*ratio };
+};
+
+/**
+ * Get the browser viewport dimensions
+ * @see https://stackoverflow.com/a/8876069/1465919
+ */
+jumplink.utilities.getViewportDimensions = function ()  {
+    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    return {
+        w: w,
+        h: h
+    };
+};
+
+
 /**
  * Get hash from address bar
  */

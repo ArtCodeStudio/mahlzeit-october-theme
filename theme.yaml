@@ -624,49 +624,74 @@ form:
                                         comment: Write a description to show in the image
                                         span: full
         # flipbooks
-            flipbooks:
+            flipbooks_collection:
                 tab: 'Flipbooks'
-                label: Flipbooks
+                label: Flipbooks Collection
                 type: repeater
-                prompt: Create Flipbook
-                comment: Create a new Flipbook
-                span: left
+                prompt: Create a flipbook collection
+                comment: Create a new flipbook collection
+                span: full
                 form:
                     fields:
-                        name:
-                            label: Name
-                            type: text
-                        w:
-                            label: Width
-                            type: number
-                            required: true
-                            comment: Book width in pixel
-                            span: left
-                        h:
-                            label: Height
-                            type: number
-                            required: true
-                            comment: Book height in pixel
-                            span: right
-                        pages:
-                            label: Pages
+                        flipbooks:
+                            label: Flipbooks
                             type: repeater
-                            required: true
-                            comment: Upload pages to your flipboard
-                            prompt: Add page
-                            span: full
+                            prompt: Create Flipbook
+                            comment: Create a new Flipbook for this collection
+                            span: left
                             form:
                                 fields:
-                                    image:
-                                        label: Image file
-                                        type: mediafinder
-                                        mode: image
-                                        span: left
-                                    alt:
-                                        label: alt
+                                    show:
+                                        label: Show
+                                        type: checkbox
+                                        default: true
+                                    name:
+                                        label: Name
                                         type: text
-                                        comment: Write a brief description of this image to improve search engine optimization (SEO) and accessibility for visually impaired customers.
+                                    w:
+                                        label: Pages width
+                                        type: number
+                                        required: true
+                                        comment: Width of the pages in the book (in pixels).
+                                        span: left
+                                        default: 1241
+                                    h:
+                                        label: Pages height
+                                        type: number
+                                        required: true
+                                        comment: Height of the pages in the book (in pixels).
                                         span: right
+                                        default: 1754
+                                    pages:
+                                        label: Pages
+                                        type: repeater
+                                        required: true
+                                        comment: Upload pages to your flipboard
+                                        prompt: Add page
+                                        span: full
+                                        form:
+                                            fields:
+                                                image:
+                                                    label: Image file
+                                                    type: mediafinder
+                                                    mode: image
+                                                    span: left
+                                                alt:
+                                                    label: alt
+                                                    type: text
+                                                    comment: Write a brief description of this image to improve search engine optimization (SEO) and accessibility for visually impaired customers.
+                                                    span: right
+                        handle:
+                            label: Handle
+                            type: text
+                            comment: Handle to identify the flipbook collection in the snippet
+                            span: right
+                        background:
+                            label: Background image file
+                            type: mediafinder
+                            mode: image
+                            comment: Background image of the flipbook collection
+                            span: right
         # bootstrap
             bs4-colors:
                 label: Color system

@@ -3,5 +3,20 @@ description = "Content look like a real book"
 [viewBag]
 snippetCode = "jumplink-snippet-flipbooks"
 snippetName = "Flipbooks"
+snippetProperties[handle][title] = "theme settings handle"
+snippetProperties[handle][type] = "string"
+snippetProperties[handle][default] = ""
+snippetProperties[handle][options][] = ""
 ==
-<flipbooks books="'{{this.theme.flipbooks | json_encode()}}'"></flipbooks>
+{% set collections = this.theme.flipbooks_collection %}
+{% set found_collection = null %}
+
+{% for collection in collections %}
+    {% if collection.handle == handle %}
+        {% set found_collection = collection %}
+    {% endif %}
+{% endfor %}
+
+{% if found_collection is not null %}
+    <flipbooks books="'{{found_collection.flipbooks | json_encode()}}'" background="'{{found_collection.background}}'" handle="{{handle}}"></flipbooks>
+{% endif %}

@@ -9,7 +9,14 @@ rivets.components.flipbooks = {
     var controller = this;
     controller.debug = debug('rivets:flipbooks');
     var $el = $(el);
-    controller.books = JSON.parse(data.books);
+    data.books = JSON.parse(data.books);
+    
+    controller.books = $.map(data.books, function(book, index) {
+        return [book];
+    });
+    
+    controller.background = data.background;
+    controller.handle = data.handle;
     controller.debug('initialize flipbooks component', $el, controller.books);
     
     controller.ready = false;

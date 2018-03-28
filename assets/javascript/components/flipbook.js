@@ -41,23 +41,26 @@ rivets.components.flipbook = {
         // optionally get horizontal scroll
         // get position of element relative to viewport
         var rect = $thumbnail[0].getBoundingClientRect();
-        controller.debug('[getPreviewPosition] rect', rect);
-        // w = width
-        return {x: rect.left, y: rect.top /*- pageYScroll*/, w: rect.width, h: rect.height};
+        var result = {x: rect.left, y: rect.top /*- pageYScroll*/, w: rect.width, h: rect.height};
+        controller.debug('[getPreviewPosition] result', result);
+        return result;
     };
     
+    /**
+     * Scales the flipbook to the size of the preview and set the position over the preview for a nice zoome in animation
+     */
     var scaleFlipbookToPreview = function () {
-        var bounds = getPreviewPosition();
+        var preview = getPreviewPosition();
         $zoom = $el.find('.flipbook-zoom-wrapper');
         
-        var scaleX = bounds.w / controller.book.width;
-        var scaleY = bounds.h / controller.book.height;
+        var scaleX = preview.w / controller.book.width;
+        var scaleY = preview.h / controller.book.height;
         
         ready();
 
         $zoom
         .css('visibility', 'visible')
-        .css('transform', 'translate3d('+(bounds.x - (controller.book.width/2))+'px, '+ (bounds.y - (bounds.h / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
+        .css('transform', 'translate3d('+(preview.x - (controller.book.width / 2))+'px, '+ (preview.y - ((controller.book.height  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
         
         setTimeout(function() {
             $zoom.addClass('animate');
@@ -65,12 +68,17 @@ rivets.components.flipbook = {
         
     };
     
+    /**
+     * Starts the zoome in animation and opens the first page if there are more then 2 pages
+     */
     var scaleFlipbookToOriginal = function () {
         var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
         $zoom = $el.find('.flipbook-zoom-wrapper');
         
         setTimeout(function() {
-            $flipbook.turn('page', 2);
+            if(data.book.pages.length > 2) {
+                $flipbook.turn('page', 2);
+            }
         }, 0);
              
         setTimeout(function() {
@@ -84,8 +92,6 @@ rivets.components.flipbook = {
         scaleFlipbookToPreview();
 
         scaleFlipbookToOriginal();
-        
-        controller.debug('zoomBook', bounds);
     };
 
     

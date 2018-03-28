@@ -532,6 +532,12 @@ var initBarba = function () {
  */
 var init = function ($) {
     if(!jumplink.cache || !jumplink.cache.initialized) {
+
+      // enable cache for ajax requests
+        $.ajaxSetup({
+          cache: true
+        });
+
         jumplink.cacheSelectors();
         jumplink.setLanguage();
         initBarba();

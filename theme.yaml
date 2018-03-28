@@ -174,66 +174,66 @@ form:
                                 container: Limited width (.container) 
                                 container-fluid: Full width (.container-fluid)
                             default: container
-                        horizontal_alignment_section:
-                            label: Horizontal alignment
-                            type: section
-                            comment: How should the columns be arranged? <a href="https://getbootstrap.com/docs/4.0/layout/grid/#horizontal-alignment" target="_blank">More about layout on Bootstrap</a>.
-                            commentHtml: true
-                        justify_xs:
-                            label: Justify on extra small devices 
-                            type: dropdown
-                            span: left
-                            options:
-                                justify-content-center: center
-                                justify-content-start: start
-                                justify-content-end: end
-                                justify-content-between: space between
-                                justify-content-around: space around
-                            default: justify-content-center
-                        justify_sm:
-                            label: Justify on small devices 
-                            type: dropdown
-                            span: right
-                            options:
-                                justify-content-sm-center: center
-                                justify-content-sm-start: start
-                                justify-content-sm-end: end
-                                justify-content-sm-between: space between
-                                justify-content-sm-around: space around
-                            default: justify-contentt-sm-center
-                        justify_md:
-                            label: Justify on medium devices 
-                            type: dropdown
-                            span: left
-                            options:
-                                justify-content-md-center: center
-                                justify-content-md-start: start
-                                justify-content-md-end: end
-                                justify-content-md-between: space between
-                                justify-content-md-around: space around
-                            default: justify-contentt-md-center
-                        justify_lg:
-                            label: Justify on large devices 
-                            type: dropdown
-                            span: right
-                            options:
-                                justify-content-lg-center: center
-                                justify-content-lg-start: start
-                                justify-content-lg-end: end
-                                justify-content-lg-between: space between
-                                justify-content-lg-around: space around
-                            default: justify-contentt-lg-center
-                        justify_xl:
-                            label: Justify on extra large devices 
-                            type: dropdown
-                            span: left
-                            options:
-                                justify-content-xl-center: center
-                                justify-content-xl-start: start
-                                justify-content-xl-end: end
-                                justify-content-xl-between: space between
-                                justify-content-xl-around: space around
-                            default: justify-contentt-xl-center
+                            horizontal_alignment_section:
+                                label: Horizontal alignment
+                                type: section
+                                comment: How should the columns be arranged? <a href="https://getbootstrap.com/docs/4.0/layout/grid/#horizontal-alignment" target="_blank">More about layout on Bootstrap</a>.
+                                commentHtml: true
+                            justify_xs:
+                                label: Justify on extra small devices 
+                                type: dropdown
+                                span: left
+                                options:
+                                    justify-content-center: center
+                                    justify-content-start: start
+                                    justify-content-end: end
+                                    justify-content-between: space between
+                                    justify-content-around: space around
+                                default: justify-content-center
+                            justify_sm:
+                                label: Justify on small devices 
+                                type: dropdown
+                                span: right
+                                options:
+                                    justify-content-sm-center: center
+                                    justify-content-sm-start: start
+                                    justify-content-sm-end: end
+                                    justify-content-sm-between: space between
+                                    justify-content-sm-around: space around
+                                default: justify-contentt-sm-center
+                            justify_md:
+                                label: Justify on medium devices 
+                                type: dropdown
+                                span: left
+                                options:
+                                    justify-content-md-center: center
+                                    justify-content-md-start: start
+                                    justify-content-md-end: end
+                                    justify-content-md-between: space between
+                                    justify-content-md-around: space around
+                                default: justify-contentt-md-center
+                            justify_lg:
+                                label: Justify on large devices 
+                                type: dropdown
+                                span: right
+                                options:
+                                    justify-content-lg-center: center
+                                    justify-content-lg-start: start
+                                    justify-content-lg-end: end
+                                    justify-content-lg-between: space between
+                                    justify-content-lg-around: space around
+                                default: justify-contentt-lg-center
+                            justify_xl:
+                                label: Justify on extra large devices 
+                                type: dropdown
+                                span: left
+                                options:
+                                    justify-content-xl-center: center
+                                    justify-content-xl-start: start
+                                    justify-content-xl-end: end
+                                    justify-content-xl-between: space between
+                                    justify-content-xl-around: space around
+                                default: justify-contentt-xl-center
                         column:
                             label: Column Item
                             type: repeater
@@ -623,6 +623,50 @@ form:
                                         toolbarButtons: bold|italic|underline
                                         comment: Write a description to show in the image
                                         span: full
+        # flipbooks
+            flipbooks:
+                tab: 'Flipbooks'
+                label: Flipbooks
+                type: repeater
+                prompt: Create Flipbook
+                comment: Create a new Flipbook
+                span: left
+                form:
+                    fields:
+                        name:
+                            label: Name
+                            type: text
+                        w:
+                            label: Width
+                            type: number
+                            required: true
+                            comment: Book width in pixel
+                            span: left
+                        h:
+                            label: Height
+                            type: number
+                            required: true
+                            comment: Book height in pixel
+                            span: right
+                        pages:
+                            label: Pages
+                            type: repeater
+                            required: true
+                            comment: Upload pages to your flipboard
+                            prompt: Add page
+                            span: full
+                            form:
+                                fields:
+                                    image:
+                                        label: Image file
+                                        type: mediafinder
+                                        mode: image
+                                        span: left
+                                    alt:
+                                        label: alt
+                                        type: text
+                                        comment: Write a brief description of this image to improve search engine optimization (SEO) and accessibility for visually impaired customers.
+                                        span: right
         # bootstrap
             bs4-colors:
                 label: Color system

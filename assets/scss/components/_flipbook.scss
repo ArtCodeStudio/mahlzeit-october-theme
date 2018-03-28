@@ -1,0 +1,57 @@
+flipbook {
+    display: block;
+    	
+	// turn.js is active 
+	.page-wrapper {
+	
+        .page {
+            display: block;
+        	
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: auto;
+            right: auto;
+            
+            rv-img {
+                            
+            	-webkit-touch-callout: none;
+            	-webkit-user-select: none;
+            	-khtml-user-select: none;
+            	-moz-user-select: none;
+            	-ms-user-select: none;
+            	user-select: none;
+                
+                width: 100%;
+                height: 100%;
+                .img-wrapper {
+                    width: 100%;
+                    height: 100%;
+                    .background-box {
+                        padding: 0 !important;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        	
+        }
+	}
+	
+	.flipbook-zoom-wrapper {
+        visibility: hidden;
+        position: fixed;
+        left: 0;
+        top: 0;
+        margin-top: 56px; // WTF? FIXME
+        // width: 0;
+        // height: 0;
+        transform: scale3d(0, 0, -1);
+        z-index: 5000;
+        &.animate {
+            transition: all 1s;
+        }
+	    
+	}
+
+}

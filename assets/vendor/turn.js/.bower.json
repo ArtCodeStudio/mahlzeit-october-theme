@@ -1,0 +1,14 @@
+{
+  "name": "turn.js",
+  "homepage": "https://github.com/blasten/turn.js",
+  "_release": "08c1f6599a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "08c1f6599a1412b145c7bf645a1f28c14db12742"
+  },
+  "_source": "https://github.com/blasten/turn.js.git",
+  "_target": "*",
+  "_originalSource": "blasten/turn.js",
+  "_direct": true
+}

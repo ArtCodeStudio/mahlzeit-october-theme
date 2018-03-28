@@ -55,22 +55,8 @@ function onStart()
 {# templates for rivets.js #}
 {% partial 'jumplink-rivets-templates/index' %}
 
-<script>
-    var Hyphenopoly = {
-        require: {
-            "de": "Elektrizitätskraftwerk"
-        },
-        paths: {
-            patterndir: "{{'assets/vendor/Hyphenopoly/patterns' | theme}}/",
-            maindir: "{{'assets/vendor/Hyphenopoly' | theme}}/"
-        },
-        setup: {
-            classnames: {
-                "hyphenate": {}
-            }
-        }
-    };
-</script>
+{# set javascript variables #}
+{% partial 'jumplink-javascript-variables' %}
 
 {#
  # Deps:
@@ -134,15 +120,13 @@ function onStart()
     'assets/vendor/sightglass/index.js',
     'assets/vendor/rivets/dist/rivets.js',
     'assets/vendor/barba.js/dist/barba.min.js',
+    'assets/vendor/promise-polyfill/dist/polyfill.js',
 ]|theme }}" ></script>
-
-<script>
-    L.Icon.Default.imagePath = "{{'/assets/vendor/leaflet/dist/images/' | theme}}";
-</script>
 
  {# Own #}
 <script src="{{ [
     'assets/javascript/utilities.js',
+    'assets/javascript/dependencies.js',
     'assets/javascript/events.js',
     'assets/javascript/styleicons.js',
     'assets/javascript/sticky-kit.js',

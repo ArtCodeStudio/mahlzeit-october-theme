@@ -1,0 +1,15 @@
+[viewBag]
+==
+<div class="flipbook-preview" rv-on-click="zoomBook">
+    <rv-img src="previewPage.image" ratio="ratio" alt="previewPage.alt"></rv-img>
+</div>
+
+
+<div class="flipbook-zoom-wrapper">
+    <div class="flipbook">
+        <div rv-each-page="book.pages" class="page">
+            {# <img class="img-fluid" rv-src="page.image" rv-alt="page.alt"> #}
+            <rv-img src="page.image" ratio="ratio" alt="page.alt" delay="0"></rv-img>
+        </div>
+    </div>
+</div>

@@ -46,7 +46,9 @@
     "masonry-layout": "^4.2.1",
     "Hyphenopoly": "mnater/Hyphenopoly",
     "AlertifyJS": "MohammadYounes/AlertifyJS#^1.11.0",
-    "popper.js": "^1.14.0"
+    "popper.js": "^1.14.0",
+    "turn.js": "blasten/turn.js",
+    "promise-polyfill": "^7.1.0"
   },
   "resolutions": {
     "jquery": "2",

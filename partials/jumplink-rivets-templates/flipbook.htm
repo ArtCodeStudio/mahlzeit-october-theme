@@ -1,6 +1,6 @@
 [viewBag]
 ==
-<div class="flipbook-preview" rv-on-click="zoomInBook">
+<div class="flipbook-preview" rv-class-invisible="open" rv-on-click="openBook">
     <rv-img src="previewPage.image" ratio="ratio" alt="previewPage.alt"></rv-img>
 </div>
 
@@ -13,4 +13,17 @@
     </div>
 </div>
 
-<div rv-show="showMask" class="mask"></div>
+<div rv-show="open" class="mask" >
+    <div class="close-book text-white" rv-on-click="closeBook">
+        {% partial "jumplink-iconset" name="icon_close" color="white" size=32 class="m-2" %}
+    </div>
+    
+    <div class="prev-page" rv-on-click="prevPage">
+        {% partial "jumplink-iconset" name="arrow_carrot_thin" color="primary" direction="left" size=32 class="m-2" %}
+    </div>
+    
+    <div class="next-page" rv-on-click="nextPage">
+        {% partial "jumplink-iconset" name="arrow_carrot_thin" color="primary" direction="right" size=32 class="m-2" %}
+    </div>
+
+</div>

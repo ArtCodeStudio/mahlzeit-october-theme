@@ -1,0 +1,23 @@
+{
+  "name": "Vague.js",
+  "version": "0.0.6",
+  "main": "Vague.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "*.jpg",
+    "*.css"
+  ],
+  "homepage": "https://github.com/GianlucaGuarini/Vague.js",
+  "_release": "0.0.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.6",
+    "commit": "ee8aa953dcd97aadd25a13f8044f4e653d04adb3"
+  },
+  "_source": "https://github.com/GianlucaGuarini/Vague.js.git",
+  "_target": "^0.0.6",
+  "_originalSource": "vague.js",
+  "_direct": true
+}

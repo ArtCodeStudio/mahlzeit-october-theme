@@ -25,6 +25,9 @@ rivets.components.flipbooks = {
     var ready = function() {
         jumplink.dependencies['turn.js']()
         .then(function() {
+            return jumplink.dependencies['vague.js']();
+        })
+        .then(function() {
             controller.ready = true;
         });
     };

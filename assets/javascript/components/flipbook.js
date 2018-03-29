@@ -9,6 +9,8 @@ rivets.components.flipbook = {
     var controller = this;
     controller.debug = debug('rivets:flipbook');
     var $el = $(el);
+    var vagues;
+
     
     // convert object to array
     data.book.pages = $.map(data.book.pages, function(page, index) {
@@ -18,11 +20,8 @@ rivets.components.flipbook = {
         
     controller.book = data.book;
     
-    controller.showMask = false;
-    
-    // controller.book.width = Number(controller.book.w);
-    // controller.book.height = Number(controller.book.h) / 2;
-    
+    controller.open = false;
+        
     controller.previewPage = controller.book.pages[0];
     controller.ratio = data.book.w + ':' + data.book.h;
     controller.debug('initialize flipbook component', $el, controller.book);
@@ -71,7 +70,6 @@ rivets.components.flipbook = {
         }, 0);
     };
     
-    
     var scaleFlipbookBackToPreview = function (flipbookDim) {
         var preview = getPreviewPosition();
         preview.w = Math.round(preview.w);
@@ -110,11 +108,14 @@ rivets.components.flipbook = {
     var getFlipbookDim = function() {
         var viewportDim = jumplink.utilities.getViewportDimensions();
         
+        var offsetX = 5;
+        var offseetY = 50;
+        
         /* Generate the demensions of the flipbook with border
          * - controller.book.w * 2 because we have to pages
          * - w and h -100 for 50px spacing on all sites
          */
-        var flipbookDim = jumplink.utilities.calculateAspectRatioFit(controller.book.w * 2, controller.book.h, viewportDim.w - 10, viewportDim.h - 100);
+        var flipbookDim = jumplink.utilities.calculateAspectRatioFit(controller.book.w * 2, controller.book.h, viewportDim.w - (offsetX * 2), viewportDim.h - (offseetY * 2));
         
         flipbookDim.w = Math.round(flipbookDim.w);
         flipbookDim.h = Math.round(flipbookDim.h);
@@ -122,26 +123,77 @@ rivets.components.flipbook = {
         flipbookDim.x = Math.round((viewportDim.w - flipbookDim.w) / 2);
         flipbookDim.y = Math.round((viewportDim.h - flipbookDim.h) / 2);
         
+        flipbookDim.vw = Math.round(viewportDim.w);
+        flipbookDim.vh = Math.round(viewportDim.h);
+        
+        flipbookDim.offsetX = offsetX;
+        flipbookDim.offseetY = offseetY;
+        
         controller.debug('viewportDim', viewportDim, 'flipbookDim', flipbookDim);
         
         return flipbookDim;
     };
     
-    controller.zoomInBook = function() {
+
+    
+    controller.openBook = function() {
         
         var flipbookDim = getFlipbookDim();
 
         scaleFlipbookToPreview(flipbookDim);
 
         scaleFlipbookToOriginal(flipbookDim);
+        
+        blur();
     };
     
-    controller.zoomOutBook = function() {
-        controller.debug('zoomOutBook');
+    controller.closeBook = function(event) {
+        controller.debug('closeBook');
         var flipbookDim = getFlipbookDim();
         
         scaleFlipbookBackToPreview(flipbookDim);
         
+        unblur();
+        
+        if(event) {
+            event.stopPropagation();
+        }
+    };
+    
+    controller.prevPage = function(event) {
+        controller.debug('nextPage');
+        var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
+        $flipbook.turn('previous');   
+        event.stopPropagation();
+    };
+    
+    controller.nextPage = function(event) {
+        controller.debug('prevPage');
+        var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
+        $flipbook.turn('next');        
+        event.stopPropagation();
+    };
+    
+    var blur = function() {
+        var animationOptions = {
+          duration: 500,
+          easing: 'linear' // here you can use also custom jQuery easing functions
+        };
+     
+        vagues.forEach(function(vague, index) {
+            vague.animate(10, animationOptions);
+        });
+    };
+    
+    var unblur = function() {
+        var animationOptions = {
+          duration: 500,
+          easing: 'linear' // here you can use also custom jQuery easing functions
+        };
+     
+        vagues.forEach(function(vague, index) {
+            vague.animate(0, animationOptions);
+        });
     };
 
     
@@ -159,18 +211,17 @@ rivets.components.flipbook = {
         		duration: 1000,
         	});
         }
+        
+        initControls(flipbookDim);
     	
-    	controller.showMask = true;
+    	controller.open = true;
     };
     
     var closeFlipbook = function(flipbookDim) {
         var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
         var $zoom = $el.find('.flipbook-zoom-wrapper');
         
-        controller.showMask = false;
-        
         $flipbook.turn('page', 1);
-        
                         
         setTimeout(function() {
             // $flipbook.turn('destroy');
@@ -181,23 +232,68 @@ rivets.components.flipbook = {
             $zoom
             .css('visibility', 'hidden')
             .css('transform', 'scale3d(0, 0, 0)' );
+            
+            controller.open = false;
+            
         }, 1000);
-                
     };
     
-    var ready = function() {
-        var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
-        var $mask = $el.find('.mask');
-        $mask.click(function(event) {
-            controller.debug('click');
-            controller.zoomOutBook();
+    var initControls = function(flipbookDim) {
+        var $close = $el.find('.close-book');
+        var $prev = $el.find('.prev-page');
+        var $next = $el.find('.next-page');
+        
+        var offsetX = flipbookDim.offsetX + 50;
+        
+        $close.css('right', (flipbookDim.x - offsetX) + 'px');
+        
+        $prev.css('left', (flipbookDim.x - offsetX) + 'px');
+        
+        $next.css('right', (flipbookDim.x - offsetX) + 'px');
+    };
+    
+    var initBlur = function() {
+        
+        var $blurElements = $(
+            '#speisenimmahlzeitammeer > div > div.container, '
+            +'#speisenimmahlzeitammeer > div > div.container-fluid, '
+            +'.jumplink-footer, #main-navbar, '
+            +'#speisenimmahlzeitammeer > div > flipbooks > div > div:nth-child(1) > div > rv-img, '
+            +'.flipbook-preview'
+        );
+        
+        var vagueOptions = {
+        	intensity:      0,      // Blur Intensity
+        	forceSVGUrl:    false,   // Force absolute path to the SVG filter,
+        };
+        
+        controller.debug('$blurElements', $blurElements);
+        
+        vagues = [];
+        $blurElements.each(function() {
+            var $this = $(this);
+            var vague = $this.Vague(vagueOptions);
+            
+            controller.debug('Vague', $this);
+            vague.blur();
+            vagues.push(vague);
         });
     };
-
+    
+    
+    var ready = function() {
+        jumplink.dependencies['turn.js']()
+        .then(function() {
+            return jumplink.dependencies['vague.js']();
+        })
+        .then(function() {
+            initBlur();
+        });
+    };
     
     setTimeout(function() {
         ready();
-    }, 100);
+    }, 0);
     
     
 

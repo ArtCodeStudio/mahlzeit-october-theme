@@ -21,7 +21,7 @@ rivets.components.flipbook = {
     controller.book = data.book;
     
     controller.open = false;
-        
+    controller.currentPageIndex = 1;
     controller.previewPage = controller.book.pages[0];
     controller.ratio = data.book.w + ':' + data.book.h;
     controller.debug('initialize flipbook component', $el, controller.book);
@@ -71,6 +71,7 @@ rivets.components.flipbook = {
     };
     
     var scaleFlipbookBackToPreview = function (flipbookDim) {
+        var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
         var preview = getPreviewPosition();
         preview.w = Math.round(preview.w);
         preview.h = Math.round(preview.h);
@@ -78,12 +79,24 @@ rivets.components.flipbook = {
         
         var scaleX = preview.w / flipbookDim.w;
         var scaleY = preview.h / flipbookDim.h;
-
-        $zoom
-        .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview.y - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
         
-        closeFlipbook(flipbookDim);
-        
+        return new Promise(function(resolve, reject) {
+            if(controller.currentPageIndex > 1) {
+                $flipbook.turn('page', 1);
+                setTimeout(function() {
+                    $zoom
+                    .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview.y - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
+                    
+                    closeFlipbook(flipbookDim);
+                    resolve();
+                }, 1000);
+            } else {
+                $zoom
+                .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview.y - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
+                closeFlipbook(flipbookDim);
+                resolve();
+            }
+        });
     };
     
     /**
@@ -151,9 +164,10 @@ rivets.components.flipbook = {
         controller.debug('closeBook');
         var flipbookDim = getFlipbookDim();
         
-        scaleFlipbookBackToPreview(flipbookDim);
-        
-        unblur();
+        scaleFlipbookBackToPreview(flipbookDim)
+        .then(function() {
+            unblur();
+        });
         
         if(event) {
             event.stopPropagation();
@@ -183,6 +197,13 @@ rivets.components.flipbook = {
         vagues.forEach(function(vague, index) {
             vague.animate(10, animationOptions);
         });
+        
+        // resolve after animation is done
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                resolve();
+            }, animationOptions.duration);
+        });
     };
     
     var unblur = function() {
@@ -194,34 +215,51 @@ rivets.components.flipbook = {
         vagues.forEach(function(vague, index) {
             vague.animate(0, animationOptions);
         });
+        
+        // resolve after animation is done
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                resolve();
+            }, animationOptions.duration);
+        });
     };
 
     
     var initFlipbook = function(flipbookDim) {
         var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
-        
+        var options = {
+    		width: flipbookDim.w,
+    		height: flipbookDim.h,
+    		autoCenter: false,
+    		duration: 1000,
+    	};
 
         if($flipbook.find('.page-wrapper').length !== 0) {
             controller.debug('turn already initialized');
         } else {
-        	$flipbook.turn({
-        		width: flipbookDim.w,
-        		height: flipbookDim.h,
-        		autoCenter: false,
-        		duration: 1000,
-        	});
+        	$flipbook.turn(options);
+        	
+            $flipbook.unbind('turning').bind('turning', function(event, newPageIndex, view) {
+                controller.debug('turning', newPageIndex);
+                controller.currentPageIndex = newPageIndex;
+            });
         }
         
         initControls(flipbookDim);
     	
     	controller.open = true;
+    	
+    	// resolve after animation is done
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                resolve();
+            }, options.duration);
+        });
     };
     
     var closeFlipbook = function(flipbookDim) {
         var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
         var $zoom = $el.find('.flipbook-zoom-wrapper');
-        
-        $flipbook.turn('page', 1);
                         
         setTimeout(function() {
             // $flipbook.turn('destroy');

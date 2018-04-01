@@ -1,7 +1,7 @@
 [viewBag]
 ==
 <div class="flipbook-preview" rv-class-invisible="open" rv-on-click="openBook">
-    <rv-img src="previewPage.image" ratio="ratio" alt="previewPage.alt"></rv-img>
+    <rv-img src="previewPage.image" ratio="ratio" alt="previewPage.alt" delay="0"></rv-img>
 </div>
 
 <div class="flipbook-zoom-wrapper">
@@ -18,11 +18,11 @@
         {% partial "jumplink-iconset" name="icon_close" color="white" size=32 class="m-2" %}
     </div>
     
-    <div class="prev-page" rv-on-click="prevPage">
+    <div rv-hide="currentPageIndex | eq 1" class="prev-page" rv-on-click="prevPage">
         {% partial "jumplink-iconset" name="arrow_carrot_thin" color="primary" direction="left" size=32 class="m-2" %}
     </div>
     
-    <div class="next-page" rv-on-click="nextPage">
+    <div rv-hide="book.pages | size | eq currentPageIndex" class="next-page" rv-on-click="nextPage">
         {% partial "jumplink-iconset" name="arrow_carrot_thin" color="primary" direction="right" size=32 class="m-2" %}
     </div>
 

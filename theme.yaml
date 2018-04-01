@@ -693,7 +693,7 @@ form:
                             comment: Background image of the flipbook collection
                             span: right
         # bootstrap
-            bs4-colors:
+            bs4-colors_section:
                 label: Color system
                 type: section
                 cssClass: without-line
@@ -770,7 +770,7 @@ form:
                 default: '#17a2b8'
                 tab: 'Bootstrap'
                 assetVar: cyan
-            bs4-fonts:
+            bs4-fonts_section:
                 label: 'Fonts'
                 type: section
                 cssClass: without-line

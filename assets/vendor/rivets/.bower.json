@@ -28,6 +28,5 @@
   },
   "_source": "https://github.com/mikeric/rivets.git",
   "_target": "^0.9.6",
-  "_originalSource": "rivets",
-  "_direct": true
+  "_originalSource": "rivets"
 }

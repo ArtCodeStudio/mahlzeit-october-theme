@@ -35,6 +35,5 @@
   },
   "_source": "https://github.com/visionmedia/debug.git",
   "_target": "^3.1.0",
-  "_originalSource": "visionmedia-debug",
-  "_direct": true
+  "_originalSource": "visionmedia-debug"
 }

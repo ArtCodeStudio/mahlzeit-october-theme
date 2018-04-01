@@ -2,6 +2,7 @@
 logs
 *.log
 npm-debug.log*
+yarn.lock
 
 # Runtime data
 pids
@@ -25,7 +26,6 @@ build/Release
 
 # Dependency directory
 node_modules/
-#assets/vendor/
 
 # Optional npm cache directory
 .npm

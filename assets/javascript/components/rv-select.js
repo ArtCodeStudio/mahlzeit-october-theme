@@ -116,21 +116,14 @@ rivets.components['rv-select'] = {
         };
         
         var onChange = function(value) {
+            var value = controller.get();
+            controller.debug('onChange', value );
+            
             $el.trigger('change', value);
             if (jumplink.utilities.isFunction(data.onChange)) {
                 data.onChange(value);
             }
         };
-        
-        /*
-         * set the selected value, if not defined as attribute select the first value from the values array
-         */
-        if(data.value) {
-            controller.set(data.value);
-        } else {
-            controller.set(controller.values[0]);
-            onChange(controller.values[0]); // on change is not automatically fired in this case, so fire it manually
-        }
         
         /**
          * Append values to select dom element
@@ -172,12 +165,17 @@ rivets.components['rv-select'] = {
             $select.append($option);
         });
         
-        $select.on('change', function() {
-            var $this = $(this);
-            var value = controller.get();
-            onChange(value);
-            controller.debug('[$select.on(change] value', value );
-        });
+        /*
+         * set the selected value, if not defined as attribute select the first value from the values array
+         */
+        setTimeout(function(){
+            if(data.value) {
+                controller.set(data.value);
+            } else {
+                controller.set(controller.values[0]);
+                // onChange(controller.values[0]); // on change is not automatically fired in this case, so fire it manually
+            }
+        }, 0);
     
         return controller;
     }

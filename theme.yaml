@@ -174,66 +174,66 @@ form:
                                 container: Limited width (.container) 
                                 container-fluid: Full width (.container-fluid)
                             default: container
-                            horizontal_alignment_section:
-                                label: Horizontal alignment
-                                type: section
-                                comment: How should the columns be arranged? <a href="https://getbootstrap.com/docs/4.0/layout/grid/#horizontal-alignment" target="_blank">More about layout on Bootstrap</a>.
-                                commentHtml: true
-                            justify_xs:
-                                label: Justify on extra small devices 
-                                type: dropdown
-                                span: left
-                                options:
-                                    justify-content-center: center
-                                    justify-content-start: start
-                                    justify-content-end: end
-                                    justify-content-between: space between
-                                    justify-content-around: space around
-                                default: justify-content-center
-                            justify_sm:
-                                label: Justify on small devices 
-                                type: dropdown
-                                span: right
-                                options:
-                                    justify-content-sm-center: center
-                                    justify-content-sm-start: start
-                                    justify-content-sm-end: end
-                                    justify-content-sm-between: space between
-                                    justify-content-sm-around: space around
-                                default: justify-contentt-sm-center
-                            justify_md:
-                                label: Justify on medium devices 
-                                type: dropdown
-                                span: left
-                                options:
-                                    justify-content-md-center: center
-                                    justify-content-md-start: start
-                                    justify-content-md-end: end
-                                    justify-content-md-between: space between
-                                    justify-content-md-around: space around
-                                default: justify-contentt-md-center
-                            justify_lg:
-                                label: Justify on large devices 
-                                type: dropdown
-                                span: right
-                                options:
-                                    justify-content-lg-center: center
-                                    justify-content-lg-start: start
-                                    justify-content-lg-end: end
-                                    justify-content-lg-between: space between
-                                    justify-content-lg-around: space around
-                                default: justify-contentt-lg-center
-                            justify_xl:
-                                label: Justify on extra large devices 
-                                type: dropdown
-                                span: left
-                                options:
-                                    justify-content-xl-center: center
-                                    justify-content-xl-start: start
-                                    justify-content-xl-end: end
-                                    justify-content-xl-between: space between
-                                    justify-content-xl-around: space around
-                                default: justify-contentt-xl-center
+                        horizontal_alignment_section:
+                            label: Horizontal alignment
+                            type: section
+                            comment: How should the columns be arranged? <a href="https://getbootstrap.com/docs/4.0/layout/grid/#horizontal-alignment" target="_blank">More about layout on Bootstrap</a>.
+                            commentHtml: true
+                        justify_xs:
+                            label: Justify on extra small devices 
+                            type: dropdown
+                            span: left
+                            options:
+                                justify-content-center: center
+                                justify-content-start: start
+                                justify-content-end: end
+                                justify-content-between: space between
+                                justify-content-around: space around
+                            default: justify-content-center
+                        justify_sm:
+                            label: Justify on small devices 
+                            type: dropdown
+                            span: right
+                            options:
+                                justify-content-sm-center: center
+                                justify-content-sm-start: start
+                                justify-content-sm-end: end
+                                justify-content-sm-between: space between
+                                justify-content-sm-around: space around
+                            default: justify-contentt-sm-center
+                        justify_md:
+                            label: Justify on medium devices 
+                            type: dropdown
+                            span: left
+                            options:
+                                justify-content-md-center: center
+                                justify-content-md-start: start
+                                justify-content-md-end: end
+                                justify-content-md-between: space between
+                                justify-content-md-around: space around
+                            default: justify-contentt-md-center
+                        justify_lg:
+                            label: Justify on large devices 
+                            type: dropdown
+                            span: right
+                            options:
+                                justify-content-lg-center: center
+                                justify-content-lg-start: start
+                                justify-content-lg-end: end
+                                justify-content-lg-between: space between
+                                justify-content-lg-around: space around
+                            default: justify-contentt-lg-center
+                        justify_xl:
+                            label: Justify on extra large devices 
+                            type: dropdown
+                            span: left
+                            options:
+                                justify-content-xl-center: center
+                                justify-content-xl-start: start
+                                justify-content-xl-end: end
+                                justify-content-xl-between: space between
+                                justify-content-xl-around: space around
+                            default: justify-contentt-xl-center
                         column:
                             label: Column Item
                             type: repeater
@@ -244,10 +244,6 @@ form:
                                     column_item_section:
                                         label:  'Content / Button Column Item'
                                         type: section
-                                    # content_section:
-                                    #     label: Content
-                                    #     type: section
-                                    #     comment: Configure your content
                                     content:
                                         label: Enable
                                         type: checkbox
@@ -568,6 +564,15 @@ form:
                             comment: Define a handle for this gallery to use this gallery in a snippet. <span class="text-danger">Please write everything in lowercase and do not use blank or special characters</span>. 
                             commentHtml: true
                             span: right
+                        type:
+                            label: Type
+                            type: dropdown
+                            comment: Type of gallery
+                            span: left
+                            options:
+                                grid: Grid
+                                slide_scrollbar: Slide with Scrollbar (horizontal)
+                            default: grid
                         description:
                             label: Description
                             type: richeditor

@@ -1,3 +1,22 @@
 gallery {
     display: block;
+    
+    // type grid
+    .grid {
+    }
+    
+    // type grid
+    .slide_scrollbar {
+        @extend .scrollbar-transparent;
+        overflow-x: hidden;
+        // scroll-behavior: smooth; not working with dragscroll
+        -webkit-overflow-scrolling: touch;
+        // margin-bottom is setted via javascript to the scrollbar width
+        &:hover {
+            @extend .scrollbar-primary;
+            overflow-x: auto;
+            margin-bottom: 0px !important; // remove placeholder for scrollbar
+            
+        }
+    }
 }

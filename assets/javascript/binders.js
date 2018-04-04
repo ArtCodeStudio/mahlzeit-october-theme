@@ -85,6 +85,32 @@ rivets.binders.html = function (el, value) {
   $(el).html(value ? value : '');
 };
 
+/**
+ * fires singleclick or drag event
+ */
+rivets.binders.singleclick = function (el, offset) {
+    $(el)
+    .off('mousedown')
+    .on('mousedown', function(e) {
+        $(this).data('p0', { x: e.pageX, y: e.pageY });
+    })
+    .off('mouseup')
+    .on('mouseup', function(e) {
+        var p0 = $(this).data('p0'),
+            p1 = { x: e.pageX, y: e.pageY },
+            d = Math.sqrt(Math.pow(p1.x - p0.x, 2) + Math.pow(p1.y - p0.y, 2));
+    
+        if (d < offset) {
+            console.log('singleclick');
+            $(el).trigger('singleclick');
+        } else {
+            console.log('drag');
+            $(el).trigger('drag');
+        }
+    });
+  
+};
+
 rivets.binders.class = {
    bind: function(el) {
         this.$el = $(el);

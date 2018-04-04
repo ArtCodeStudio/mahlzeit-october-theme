@@ -49,7 +49,8 @@
     "popper.js": "^1.14.0",
     "turn.js": "blasten/turn.js",
     "promise-polyfill": "^7.1.0",
-    "Vague.js": "vague.js#^0.0.6"
+    "Vague.js": "vague.js#^0.0.6",
+    "dragscroll": "^0.0.8"
   },
   "resolutions": {
     "jquery": "2",

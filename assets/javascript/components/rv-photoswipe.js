@@ -268,6 +268,14 @@ rivets.components['rv-photoswipe'] = {
         open(index);
     });
     
+    jumplink.dependencies.photoswipe()
+    .then(function() {
+        controller.debug('photoswipe is ready');
+    })
+    .catch(function(exception) {
+        controller.debug('cant load photoswipe', exception);
+    });
+    
     
     setTimeout(function() {
         // get current index from url e.g. if it was shared

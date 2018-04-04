@@ -13,10 +13,11 @@ rivets.components.gallery = {
     var $el = $(el);
     controller.debug = debug('rivets:gallery');
     controller.debug('initialize', $el, data);
-    var observer;
-    var $imagesWrapper = $el.find('.images-row');
+    // var observer;
+    var $imagesWrapper = $el.find('[data-photoswipe-thumbs]');
 
     controller.handle = data.data.handle;
+    controller.type = data.type;
     controller.imagesPath = data.imagesPath;
     controller.headerTitle = data.data.title;
     controller.headerText = data.data.description;
@@ -26,8 +27,9 @@ rivets.components.gallery = {
     if(jumplink.utilities.isString(data.containerClass)) {
         controller.container = data.containerClass;
     } else {
-        controller.container = 'container';
+        controller.container = controller.type === 'grid' ? 'container' : 'container-fluid';
     }
+            
     
     var themeSettingImagesToArray = function(themeImages) {
         var images = [];
@@ -53,7 +55,7 @@ rivets.components.gallery = {
         e = e || window.event;
         e.preventDefault ? e.preventDefault() : e.returnValue = false;
 
-        var $target = $(e.target || e.srcElement).parent().parent(); // parent to get the rivets rv-img component root element
+        var $target = $(e.target || e.srcElement).closest('[data-index]'); // parent to get the rivets rv-img component root element
         var data = $target.data();
 
         controller.debug('[onThumbnailsClick] $target', $target, $target, data);
@@ -65,23 +67,47 @@ rivets.components.gallery = {
         return false;
     };
     
-    controller.ready = true;
+    /**
+     * Scoll vertivally on horizontal mouse scroll
+     * @see https://stackoverflow.com/a/28172102/1465919
+     */
+    var initMouseScroll = function ($slideScrollbar) {
+        /**
+         * Check which wheel event is supported. Don't use both as it would fire each event 
+         * in browsers where both events are supported.
+         * 
+         */
+        var wheelEvent = jumplink.utilities.isEventSupported('mousewheel') ? 'mousewheel' : 'wheel';
+        
+        controller.debug($el.find('.slide_scrollbar'));
+            
+        $slideScrollbar.off(wheelEvent).on(wheelEvent, function(event) {
+            var oEvent = event.originalEvent;
+            var delta  = oEvent.deltaY || oEvent.wheelDelta;
+            this.scrollLeft += (delta * 5);
+            event.preventDefault();
+        });   
+    };
+    
+    var setScrollbarMargin = function($slideScrollbar) {
+        var scrollbarWidth = jumplink.utilities.getScrollbarWidth('scrollbar-primary');
+        $slideScrollbar.css('margin-bottom', scrollbarWidth + 'px');
+    };
+   
         
     controller.images = themeSettingImagesToArray(data.data.images);
     controller.debug('images', controller.images);
     
     var ready = function(mutationsList) {
-        // $imagesWrapper.masonry({
-        //   itemSelector: '.image-col',
-        // });
-        observer.disconnect();
+        controller.ready = true;
+        controller.debug('ready');
+        var $slideScrollbar = $el.find('.slide_scrollbar');
+
+        setScrollbarMargin($slideScrollbar);
+        // initMouseScroll($slideScrollbar);
     };
-    
-    observer = new MutationObserver(ready);
-    observer.observe(el, {
-      attributes: true,
-      childList: true
-    });
+        
+    setTimeout(ready, 0);
 
     return controller;
   }

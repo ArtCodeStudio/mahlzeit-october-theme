@@ -47,3 +47,61 @@ jumplink.dependencies['vague.js'] = function() {
     }
   });
 };
+
+/**
+ * 
+ * @see https://github.com/desandro/masonry
+ */
+jumplink.dependencies.masonry = function() {
+  return new Promise(function(resolve, reject) {
+    if ($().masonry) {
+      jumplink.debug.dependencies('masonry is loaded');
+      resolve();
+    } else {
+      jumplink.debug.dependencies('load masonry');
+
+      $.getScript(jumplink.settings.active_theme_path + '/assets/vendor/masonry-layout/dist/masonry.pkgd.js')
+        .done(function( script, textStatus ) {
+          jumplink.debug.dependencies(textStatus);
+          resolve(script);
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          jumplink.debug.dependencies(exception);
+          reject(exception);
+      });
+    }
+  });
+};
+
+/**
+ * 
+ * @see http://photoswipe.com/
+ */
+jumplink.dependencies.photoswipe = function() {
+  return new Promise(function(resolve, reject) {
+    if (typeof(PhotoSwipe) !== 'undefined') {
+      jumplink.debug.dependencies('photoswipe is loaded');
+      resolve();
+    } else {
+      jumplink.debug.dependencies('load photoswipe');
+      $.getScript(jumplink.settings.active_theme_path + '/assets/vendor/photoswipe/dist/photoswipe.js')
+        .done(function( script, textStatus ) {
+          jumplink.debug.dependencies('load photoswipe ui default');
+          jumplink.debug.dependencies(textStatus);
+          $.getScript(jumplink.settings.active_theme_path + '/assets/vendor/photoswipe/dist/photoswipe-ui-default.js')
+            .done(function( script, textStatus ) {
+              jumplink.debug.dependencies(textStatus);
+              resolve(script);
+            })
+            .fail(function( jqxhr, settings, exception ) {
+              jumplink.debug.dependencies(exception);
+              reject(exception);
+          });
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          jumplink.debug.dependencies(exception);
+          reject(exception);
+      });
+    }
+  });
+};

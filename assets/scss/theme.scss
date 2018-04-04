@@ -19,6 +19,7 @@
 // overwrite variables only for this theme 
 @import "theme-variables";
 
+@import "mixins";
 
 // all custom styles for this theme
 @import "normalize";
@@ -48,6 +49,7 @@
 @import "fonts";
 @import "spacings";
 @import "forms";
+@import "scrollbars";
 
 @import "partials/_index";
 @import "extensions/_index";
@@ -55,3 +57,12 @@
 
 // overwrite styles only for this theme 
 @import "theme-customisations";
+
+
+body /*, #layout-content*/ {
+    height: 100vh;
+    overflow-x: auto;
+    @extend .scrollbar-primary;
+    // scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}

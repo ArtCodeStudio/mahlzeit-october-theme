@@ -343,6 +343,21 @@ jumplink.utilities.featureTest = function ( property, value, noPrefixes ) {
   return mStyle[ property ].indexOf( value ) !== -1;
 };
 
+// This function checks if the specified event is supported by the browser.
+// Source: http://perfectionkills.com/detecting-event-support-without-browser-sniffing/
+// @see https://stackoverflow.com/a/28172102/1465919
+jumplink.utilities.isEventSupported = function(eventName) {
+    var el = document.createElement('div');
+    eventName = 'on' + eventName;
+    var isSupported = (eventName in el);
+    if (!isSupported) {
+        el.setAttribute(eventName, 'return;');
+        isSupported = typeof el[eventName] == 'function';
+    }
+    el = null;
+    return isSupported;
+};
+
 /**
  * Generate random number between two numbers
  */
@@ -399,6 +414,36 @@ jumplink.utilities.loadImages = function(loadAll, customSelector$) {
       }
   });
 };
+
+/**
+ * Get the width of the scrollbar
+ * @see https://stackoverflow.com/a/13382873/1465919
+ */
+jumplink.utilities.getScrollbarWidth = function(scrollbarClass) {
+    var outer = document.createElement("div");
+    outer.className = scrollbarClass || '';
+    outer.style.visibility = "hidden";
+    outer.style.width = "100px";
+    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+    document.body.appendChild(outer);
+
+    var widthNoScroll = outer.offsetWidth;
+    // force scrollbars
+    outer.style.overflow = "scroll";
+
+    // add innerdiv
+    var inner = document.createElement("div");
+    inner.style.width = "100%";
+    outer.appendChild(inner);        
+
+    var widthWithScroll = inner.offsetWidth;
+
+    // remove divs
+    outer.parentNode.removeChild(outer);
+
+    return widthNoScroll - widthWithScroll;
+}
 
 
 /**

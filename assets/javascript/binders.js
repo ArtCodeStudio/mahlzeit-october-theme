@@ -85,30 +85,37 @@ rivets.binders.html = function (el, value) {
   $(el).html(value ? value : '');
 };
 
-/**
- * fires singleclick or drag event
- */
-rivets.binders.singleclick = function (el, offset) {
-    $(el)
-    .off('mousedown')
-    .on('mousedown', function(e) {
-        $(this).data('p0', { x: e.pageX, y: e.pageY });
-    })
-    .off('mouseup')
-    .on('mouseup', function(e) {
-        var p0 = $(this).data('p0'),
-            p1 = { x: e.pageX, y: e.pageY },
-            d = Math.sqrt(Math.pow(p1.x - p0.x, 2) + Math.pow(p1.y - p0.y, 2));
-    
-        if (d < offset) {
-            console.log('singleclick');
-            $(el).trigger('singleclick');
-        } else {
-            console.log('drag');
-            $(el).trigger('drag');
-        }
+rivets.binders['moving-shadow-by-mouse-pos'] = function (el, divisor) {
+    if(!divisor) {
+        divisor = 200;
+    }
+    $(document).on('mousemove', function(event) {
+    	var pos = {
+    		x: event.pageX,
+    		y: event.pageY
+    	};
+        $(el).css('text-shadow', 'rgba(0, 0, 0, 0.1) '+ pos.x/divisor +'px '+ pos.y/divisor +'px');
+        console.log(pos);
     });
-  
+};
+
+rivets.binders['moving-by-mouse-pos'] = function (el, divisor) {
+    var $el = $(el);
+    // Do not overwrite other transforms like rotation, so give me the current values for reusage
+    var transformStrings = $el.css('transform').replace('matrix(', '').replace(')', '').split(',');
+    var rotate = transformStrings[4];
+    
+    
+    if(!divisor) {
+        divisor = 200;
+    }
+    $(document).on('mousemove', function(event) {
+    	var pos = {
+    		x: event.pageX,
+    		y: event.pageY
+    	};
+        $el.css('transform', 'matrix('+ transformStrings[0] +', '+ transformStrings[1] +', '+transformStrings[2]+', '+transformStrings[3]+', '+pos.x/divisor+', '+pos.y/divisor+')');
+    });
 };
 
 rivets.binders.class = {

@@ -25,7 +25,7 @@ function OnStart() {
     // find image by handle
     foreach ($this->theme->page_historie_galleries as $key => $gallery) {
         if($gallery['handle'] == $handle) {
-            Debugbar::info($gallery);
+            // Debugbar::info($gallery);
             // convert images to photoswipe format
             $images = [];
             foreach ($gallery['images'] as $key => $image) {

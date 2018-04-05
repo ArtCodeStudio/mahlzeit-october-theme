@@ -30,6 +30,14 @@ strong {
     font-family: $font-family-second;
 }
 
+.decotext {
+    @extend .text-second;
+    @extend .text-warning;
+    transform: rotate(5deg);
+    font-size: 1.4rem;
+    text-shadow: rgba(0, 0, 0, 0.1) 0 0;
+}
+
 
 /**
  * Smaler test on small devices

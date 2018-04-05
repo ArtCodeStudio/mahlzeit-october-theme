@@ -370,11 +370,150 @@ jumplink.utilities.rand = function (min, max) {
  * 
  * @see https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
  */
-window.jumplink.utilities.isTouchDevice = function () {
+window.jumplink.utilities.isTouchDevice = function (platform) {
   if(platform.name === 'Epiphany') {
     return false;
   }
   return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+};
+
+/**
+ * Detect the browser, sets platform.supported to true if the browser is supported by themes theme
+ * Replace html placeholders from the key's of platfrom
+ * @see https://github.com/bestiejs/platform.js
+ */
+jumplink.utilities.initPlatform = function(platform) {
+  if(typeof(platform) === 'undefined') {
+    window.jumplink.debug.warn('You need the platform.js library to detect the browser!');
+    return false;
+  }
+
+  var $body = $('body');
+
+  // is the browser supported by this theme?
+  platform.supported = false;
+  if(platform.version === null ) {
+    platform.version_number = null;
+  } else {
+    if(platform.version.indexOf('.')) {
+      platform.version_number = Number(platform.version.substr(0, platform.version.indexOf('.')));
+    } else if(platform.version.indexOf('+')) {
+      platform.version_number = Number(platform.version.substr(0, platform.version.indexOf('+')));
+    } else {
+      platform.version_number = Number(platform.version);
+    }
+  }
+
+  switch (platform.name) {
+    case 'Chrome':
+      if(platform.version_number >= 60) {
+        platform.supported = true;
+      }
+      break;
+    case 'Chrome Mobile':
+      if(platform.version_number >= 60) {
+        platform.supported = true;
+      }
+      break;
+    case 'Firefox':
+      if(platform.version_number >= 57) {
+        platform.supported = true;
+      }
+      break;
+      case 'Firefox Mobile':
+      if(platform.version_number >= 57) {
+        platform.supported = true;
+      }
+      break;
+    case 'Safari':
+      if(platform.version_number >= 9) {
+        platform.supported = true;
+      }
+      break;
+    case 'IE':
+      if(platform.version_number >= 11) {
+        platform.supported = true;
+      }
+      break;
+    case 'Microsoft Edge':
+      if(platform.version_number >= 17) {
+        platform.supported = true;
+      }
+      break;
+      case 'Opera':
+      if(platform.version_number >= 49) {
+        platform.supported = true;
+      }
+      break;
+    default:
+      break;
+  }
+  
+  platform.handle = platform.name.toLowerCase().replace(' ', '-');
+  $body.addClass('browser-'+platform.handle);
+
+  switch (platform.os.family) {
+    case 'Linux':
+    case 'Ubuntu':
+    case 'Debian':
+    case 'Fedora':
+    case 'Red Hat':
+    case 'SuSE':
+    case 'Gentoo':
+    case 'Kubuntu':
+    case 'Linux Mint':
+    case 'Xubuntu':
+    case 'Xubuntu':
+      platform.os.handle = 'linux';
+      break;
+    case 'Windows Server 2003 / XP 64-bit': // BrowserStack Chrome: Windows XP
+    case 'Windows Server 2008 R2 / 7':      // BrowserStack Chrome: Windows 7
+    case 'Windows':                         // BrowserStack Chrome: Windows 8 und Windows 8.1
+    case 'Windows Server 2008 / Vista':
+    case 'Windows XP':
+      platform.os.handle = 'windows';
+      break;
+    case 'OS X':
+      platform.os.handle = 'osx';
+      break;
+    case 'Windows Phone':                   // BrowserStack: Windows Phone Lumia 930
+      platform.os.handle = 'windows-phone';
+      break;
+    case 'iOS':
+      platform.os.handle = 'ios';
+      break;
+    case 'Android':
+      platform.os.handle = 'android';
+      break;
+    case 'Chrome OS':
+    case 'CrOS':
+      platform.os.handle = 'chrome-os';
+      break;
+    default:
+      platform.os.handle = 'other';
+      break;
+  }
+  $body.addClass('os-family-'+platform.os.handle);
+  
+  platform.os.isTouch = jumplink.utilities.isTouchDevice(platform);
+  if(platform.os.isTouch) {
+     $body.removeClass('os-no-touch').addClass('os-is-touch');
+  } else {
+    $body.removeClass('os-is-touch').addClass('os-no-touch');
+  }
+  
+
+  // window.jumplink.debug.browser('platform', platform);
+
+  // window.jumplink.initBrowserDetectionTemplate('#jumplink-browser-detection-bar');
+
+  if(platform.supported) {
+    $body.removeClass('browser-not-supported').addClass('browser-supported');
+  } else {
+    $body.removeClass('browser-supported').addClass('browser-not-supported');
+  }
+  
+  return platform;
 };
 
 /**

@@ -31,3 +31,11 @@
   scrollbar-face-color: $foreground-color;
   scrollbar-track-color: $background-color;
 }
+
+@mixin default-scrollbars {
+    &::-webkit-scrollbar, &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track {
+       all: unset;
+    }
+    scrollbar-face-color: unset;
+    scrollbar-track-color: unset;
+}

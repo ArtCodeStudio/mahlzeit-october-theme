@@ -12,15 +12,24 @@ rivets.components['browser-detection-form'] = {
     controller.debug = debug('rivets:browser-detection-form');
     var $el = $(el);
     controller.debug('initialize', $el, data);
-    
-    $el.one('DOMSubtreeModified', function() {
-        setTimeout(function() {
-            controller.platform = window.jumplink.initBrowserDetection();
-        }, 0);    
+    controller.ready = false;
+    controller.platform = {};
         
-    });
+    var ready = function() {
+        jumplink.dependencies.platform()
+        .then(function(platform) {
+            controller.debug('platform is ready', platform);
+            controller.ready = true;
+            controller.platform = platform;
+        })
+        .catch(function(exception) {
+            controller.debug('cant load platform', exception);
+        });
+    };
     
-
+    setTimeout(function() {
+        ready();
+    }, 0);  
     
     return controller;
   }

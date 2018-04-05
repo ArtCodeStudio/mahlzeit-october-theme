@@ -20,3 +20,13 @@ gallery {
         }
     }
 }
+
+.os-is-touch {
+    gallery {
+        .slide_scrollbar {
+            // show scrollbar always on touch devices
+            @extend .scrollbar-primary;
+            overflow-x: auto;
+        }
+    }
+}

@@ -93,6 +93,23 @@ rivets.components.gallery = {
         var scrollbarWidth = jumplink.utilities.getScrollbarWidth('scrollbar-primary');
         $slideScrollbar.css('margin-bottom', scrollbarWidth + 'px');
     };
+    
+    var initScrollbar = function() {
+        jumplink.dependencies.dragscroll()
+        .then(function(platform) {
+            controller.debug('dragscroll is ready', dragscroll);
+            
+            var $slideScrollbar = $el.find('.slide_scrollbar');
+            setScrollbarMargin($slideScrollbar);
+            initMouseScroll($slideScrollbar);
+            
+            dragscroll.reset();
+            return jumplink.dependencies['jquery-touch-events']();
+        })
+        .catch(function(exception) {
+            controller.debug('cant load dependencies', exception);
+        });
+    };
    
         
     controller.images = themeSettingImagesToArray(data.data.images);
@@ -101,10 +118,8 @@ rivets.components.gallery = {
     var ready = function(mutationsList) {
         controller.ready = true;
         controller.debug('ready');
-        var $slideScrollbar = $el.find('.slide_scrollbar');
-
-        setScrollbarMargin($slideScrollbar);
-        // initMouseScroll($slideScrollbar);
+        
+        initScrollbar();
     };
         
     setTimeout(ready, 0);

@@ -44,7 +44,8 @@
             <div
                 {# rv-singleclick="5" #}
                 rv-data-index="%image%"
-                rv-on-click="onThumbnailsClick"
+                {# tab event comes from https://github.com/benmajor/jQuery-Touch-Events #}
+                rv-on-tap="onThumbnailsClick"
             >
                 <rv-img
                     src="image.msrc"

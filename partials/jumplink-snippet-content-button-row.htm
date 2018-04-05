@@ -24,14 +24,14 @@ snippetProperties[handle][options][] = ""
             
                 {#{column | json_encode()}#}
             
-                <div class="{{column.xs}} {{column.sm}} {{column.md}} {{column.lg}} {{column.xl}} {{column.offset_xs}} {{column.offset_sm}} {{column.offset_md}} {{column.offset_lg}} {{column.offset_xl}} {{column.spacing_top}} {{column.spacing_bottom}}">
+                <div class="{{column.xs}} {{column.sm}} {{column.md}} {{column.lg}} {{column.xl}} {{column.offset_xs}} {{column.offset_sm}} {{column.offset_md}} {{column.offset_lg}} {{column.offset_xl}} {{column.spacing_top}} {{column.spacing_bottom}} {{column.button_alignment}}">
                 
                     {% if column.content and column.contentFilename %}
                         {% component 'contenteditor' file=contentFilename tools="bold,italic,link,heading,subheading,subheading3,subheading4,subheading5,paragraph,unordered-list,ordered-list,table,indent,unindent,line-break,image,video,preformatted" %}
                     {% endif %}
                 
                     {% if column.button %}
-                        <a class="btn {{column.button_style}} {{column.button_alignment}}" href="{{column.button_url}}">{{column.button_label}}</a>
+                        <a class="btn {{column.button_style}}" href="{{column.button_url}}">{{column.button_label}}</a>
                     {% endif %}
                 </div>
             {% endfor %}

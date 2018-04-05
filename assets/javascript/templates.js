@@ -33,18 +33,31 @@ window.jumplink.templates.prepairTemplate = function(container, dataset) {
     
     // window.jumplink.debug.templates('newPageReady');
     var data = jumplink.utilities.parseDatasetJsonStrings(dataset);
-
+    var $container = $(container);
     jumplink.model.dataset = dataset;
     
     // if(window.jumplink.boundView) {
     //  jumplink.boundView.unbind();
     // }
-    jumplink.boundView = rivets.bind($(container), window.jumplink.model);
     
-    // init browser-detection-bar seperate because its outsite of barba container
-    if(!platform.supported) {
-        rivets.init('browser-detection-bar', $('body'), {platform: window.platform});
-    }
+    
+    
+
+    
+    jumplink.dependencies.platform()
+    .then(function(platform) {
+        jumplink.model.platform = platform;
+        jumplink.boundView = rivets.bind($container, window.jumplink.model);
+        
+        // init browser-detection-bar seperate because its outsite of barba container
+        if(!platform.supported) {
+            rivets.init('browser-detection-bar', $('body'), window.jumplink.model);
+        }
+    })
+    .catch(function(exception) {
+        window.jumplink.debug.templates('cant load platform', exception);
+    });
+    
     
     jumplink.utilities.closeAllModals();
     jumplink.initDataApi();

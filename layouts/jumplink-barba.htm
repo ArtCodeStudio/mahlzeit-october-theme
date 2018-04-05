@@ -87,14 +87,14 @@ function onReguestEvent() {
 <!DOCTYPE html>
 <html lang="de">
     {% partial 'jumplink-layout-head' %}
-    <body id="body-{{ str_studly(this.page.title) | lower | replace({'/':'_'}) }}" data-spy="scroll">
-    
-        {% partial 'jumplink-navigation/navbar' %}
-    
+    <body id="body-{{ str_studly(this.page.title) | lower | replace({'/':'_'}) }}" data-spy="scroll">    
         {# Content #}
         <div id="layout-content">
-
+        
+            {% partial 'jumplink-navigation/navbar' %}
+            
             <div id="barba-wrapper">
+                
                 <div {% partial 'jumplink-barba-container-attributes' %}>
                     <div class="">
                         {% page %}

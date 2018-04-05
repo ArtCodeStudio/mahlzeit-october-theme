@@ -10,10 +10,11 @@ rivets.components['top-sidebar'] = {
     controller.debug = debug('rivets:top-sidebar');
     var $el = $(el);
     controller.shown = false;
-    controller.menuItems = JSON.parse(data.menuItems);
-    controller.debug('initialize', $el, controller.menuItems);
-    var $tcon = $('.top-sidebar-toggler.tcon');
-    var $toggler = $('.top-sidebar-toggler');
+    
+    controller.menuItems = {};
+    controller.debug('initialize', $el, data.menuItems);
+    var $tcon;
+    var $toggler;
 
     controller.show = function() {
         var offset = jumplink.utilities.getNavHeight();
@@ -42,7 +43,7 @@ rivets.components['top-sidebar'] = {
         controller.shown = false;
     };
     
-    controller.toggle = function() {
+    controller.toggle = function() {            
         if(controller.shown) {
             controller.hide();
         } else {
@@ -52,18 +53,26 @@ rivets.components['top-sidebar'] = {
 
 
     var ready = function() {
+        $tcon = $('.top-sidebar-toggler.tcon');
+        $toggler = $('.top-sidebar-toggler');
+        
+        try {
+            controller.menuItems = JSON.parse(data.menuItems);
+        } catch(error){
+            controller.debug(error, data.menuItems);
+        }
+        
+        controller.debug('menuItems',  controller.menuItems);
         controller.hide();
+        
+        $toggler.on('click', function(event) {
+            console.log('toggle');
+            controller.toggle();
+        });
     };
     
-    $toggler.on('click', function(event) {
-        controller.toggle();
-    });
 
-    $el.one('DOMSubtreeModified', function() {
-        setTimeout(function() {
-            ready();
-        }, 0);     
-    });
+    setTimeout(ready, 100);     
             
     return controller;
   }

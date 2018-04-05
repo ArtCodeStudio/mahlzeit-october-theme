@@ -34,15 +34,14 @@ window.jumplink.templates.prepairTemplate = function(container, dataset) {
     // window.jumplink.debug.templates('newPageReady');
     var data = jumplink.utilities.parseDatasetJsonStrings(dataset);
     var $container = $(container);
+    var $body = $('body');
     jumplink.model.dataset = dataset;
+    jumplink.model.data = data;
     
     // if(window.jumplink.boundView) {
     //  jumplink.boundView.unbind();
     // }
     
-    
-    
-
     
     jumplink.dependencies.platform()
     .then(function(platform) {
@@ -51,7 +50,7 @@ window.jumplink.templates.prepairTemplate = function(container, dataset) {
         
         // init browser-detection-bar seperate because its outsite of barba container
         if(!platform.supported) {
-            rivets.init('browser-detection-bar', $('body'), window.jumplink.model);
+            rivets.init('browser-detection-bar', $body, window.jumplink.model);
         }
     })
     .catch(function(exception) {
@@ -80,6 +79,7 @@ window.jumplink.templates.prepairTemplate = function(container, dataset) {
     // window.jumplink.initDataAttributes(dataset);
     
     // window.jumplink.setNavActive(dataset, data);
+    jumplink.cache.$barbaWrapper.css( 'padding-top', jumplink.utilities.getNavHeight()+'px');
     
     
     jumplink.utilities.hyphenate(); // todo make a component for this

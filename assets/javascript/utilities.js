@@ -209,7 +209,7 @@ jumplink.utilities.parseDatasetJsonStrings = function (dataset) {
  * Get the height of the main navbar, useful to set the page padding if the navbar is fixed
  */
 jumplink.utilities.getNavHeight = function () {
-    return jumplink.cache.$mainNavbar.outerHeight(true);
+    return jumplink.cache.$mainNavbar.find('.navbar').outerHeight(true);
 };
 
 jumplink.utilities.setBodyId = function (namespace) {

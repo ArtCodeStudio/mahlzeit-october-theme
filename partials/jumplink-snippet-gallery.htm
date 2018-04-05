@@ -24,9 +24,11 @@ function OnStart() {
         
     // find image by handle
     foreach ($this->theme->page_historie_galleries as $key => $gallery) {
-        if($gallery['handle'] == $handle) {            
+        if($gallery['handle'] == $handle) {
+            Debugbar::info($gallery);
             // convert images to photoswipe format
-            foreach ($gallery['images'] as $key => &$image) {
+            $images = [];
+            foreach ($gallery['images'] as $key => $image) {
                 $image['src'] = $mediaPath.$image['image'];
                 $fullImagePath = $fullMediaPath.$image['image'];
                 list($width, $height) = getimagesize($fullImagePath);
@@ -41,11 +43,12 @@ function OnStart() {
                 $imageObj->resize(300, false, [ 'mode' => 'crop' ]);
                 $thumbPath = $imageObj->getCachedImagePath(true);
                 $image['msrc'] = $thumbPath;
+                $image['id'] = $key;
+                $images[] = $image;
             }
+            $gallery['images'] = $images;
             
             $this['foundGallery'] = $gallery;
-            
-            
         }
     }
 }

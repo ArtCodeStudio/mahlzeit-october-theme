@@ -66,7 +66,6 @@
     
     @include media-breakpoint-down(md) {
         .wrapper {
-            padding-top: 3rem;
             position: initial;
             .content-layer {
                 position: initial;
@@ -93,4 +92,12 @@
         }
     }
     
+}
+
+.jumplink-snippet-images-row, .jumplink-snippet-image-row {
+    @include media-breakpoint-down(md) {
+        .wrapper {
+            padding-top: 3rem;
+        }
+    }
 }

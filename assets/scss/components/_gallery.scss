@@ -18,6 +18,14 @@ gallery {
             margin-bottom: 0px !important; // remove placeholder for scrollbar
             
         }
+        
+        rv-img {
+            transition: transform 100ms;
+            &:hover {
+                transform: scale3d(1.05, 1.05, 1) rotate(1deg);
+                
+            }
+        }
     }
 }
 

@@ -12,7 +12,7 @@ code = "sidebar"
 <!-- Nav -->
 {% set partialId = 'navbar_center_logo' %}
 
-<nav class="fixed-top {{partialId}}" id="main-navbar"
+<nav class="fixed-top jumplink-partial {{partialId}}" id="main-navbar"
   itemscope
   itemtype="http://schema.org/SiteNavigationElement"
   data-partial-name="{{partialId}}"
@@ -57,9 +57,9 @@ code = "sidebar"
         </div>
     </div>
 
-    {##
-    # Toggle sidebar from top
-    #}
+    {#
+     # Toggle sidebar from top
+     #}
     {% if topSidebarEnabled %}
       <top-sidebar menu-items="'{{sidebar.menuItems | json_encode()}}'"></top-sidebar>
     {% endif %}

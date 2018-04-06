@@ -10,12 +10,9 @@ rivets.components.flipbook = {
     controller.debug = debug('rivets:flipbook');
     var $el = $(el);
     var vagues;
-
     
-    // convert object to array
-    data.book.pages = $.map(data.book.pages, function(page, index) {
+    data.book.pages.forEach(function(page, index) {
         page.image = jumplink.settings.media_path+page.image;
-        return [page];
     });
         
     controller.book = data.book;

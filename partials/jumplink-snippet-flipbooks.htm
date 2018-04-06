@@ -8,15 +8,35 @@ snippetProperties[handle][type] = "string"
 snippetProperties[handle][default] = ""
 snippetProperties[handle][options][] = ""
 ==
-{% set collections = this.theme.flipbooks_collection %}
-{% set found_collection = null %}
+<?php
+// use Debugbar as Debugbar;
 
-{% for collection in collections %}
-    {% if collection.handle == handle %}
-        {% set found_collection = collection %}
-    {% endif %}
-{% endfor %}
-
+function OnStart() {
+    $handle = $this->handle;
+    $this['found_collection'] = null;
+    // find image by handle
+    foreach ($this->theme->flipbooks_collection as $key => $collection) {
+        if($collection['handle'] == $handle) {
+            // convert flipbooks to array with the right order
+            $flipbooks = [];
+            foreach ($collection['flipbooks'] as $key => $flipbook) {
+                // convert pages to array with the right order
+                $pages = [];
+                foreach ($flipbook['pages'] as $key => $page) {
+                    $page['id'] = $key;
+                    $pages[] = $page;
+                }
+                $flipbook['pages'] = $pages;
+                $flipbook['id'] = $key;
+                $flipbooks[] = $flipbook;
+            }
+            $collection['flipbooks'] = $flipbooks;
+            $this['found_collection'] = $collection;
+        }
+    }
+}
+?>
+==
 {% if found_collection is not null %}
     <flipbooks books="'{{found_collection.flipbooks | json_encode()}}'" background="'{{found_collection.background | media}}'" handle="{{handle}}"></flipbooks>
 {% endif %}

@@ -101,7 +101,7 @@ rivets.components.gallery = {
             
             var $slideScrollbar = $el.find('.slide_scrollbar');
             setScrollbarMargin($slideScrollbar);
-            initMouseScroll($slideScrollbar);
+            // initMouseScroll($slideScrollbar);
             
             dragscroll.reset();
             return jumplink.dependencies['jquery-touch-events']();

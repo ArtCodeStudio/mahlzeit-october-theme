@@ -21,14 +21,14 @@ snippetProperties[handle][options][] = ""
     <div rv-tabs="{{handle}}">
         <div class="container py-5">
             <ul
-                class="nav nav-tabs"
+                class="nav nav-tabs nav-tabs-underline d-flex justify-content-center"
                 id="{{handle}}-tabs"
                 role="tablist"
             >
                 {% for tab in found.tabs %}
                     <li class="nav-item">
                         <a
-                            class="nav-link"
+                            class="nav-link text-muted"
                             id="{{handle}}-tabs-{{ str_studly(tab.label) | lower | replace({'&': '_'}) }}"
                             href="#{{handle}}-tabs-content-{{ str_studly(tab.label) | lower | replace({'&': '_'}) }}"
                             aria-control="{{handle}}-tabs-content-{{ str_studly(tab.label) | lower | replace({'&': '_'}) }}"

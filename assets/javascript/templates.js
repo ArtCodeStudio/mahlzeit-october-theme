@@ -47,11 +47,16 @@ window.jumplink.templates.prepairTemplate = function(container, dataset) {
     .then(function(platform) {
         jumplink.model.platform = platform;
         jumplink.boundView = rivets.bind($container, window.jumplink.model);
-        
+                
         // init browser-detection-bar seperate because its outsite of barba container
         if(!platform.supported) {
             rivets.init('browser-detection-bar', $body, window.jumplink.model);
         }
+        
+        // to load lasy images
+        setTimeout(function() {
+            $(document).trigger('resize'); 
+        }, 500);
     })
     .catch(function(exception) {
         window.jumplink.debug.templates('cant load platform', exception);

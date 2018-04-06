@@ -817,6 +817,93 @@ form:
                 default: '#17a2b8'
                 tab: 'Bootstrap'
                 assetVar: cyan
+            # Components
+            bs4-components_section:
+                label: 'Components'
+                type: section
+                cssClass: without-line
+                comment: Define common padding and border radius sizes and more.
+                commentHtml: true
+                tab: Bootstrap
+            bs4-line-height-lg:
+                type: number
+                label: line-height-lg
+                default: 1.5
+                tab: 'Bootstrap'
+                assetVar: line-height-lg
+            bs4-line-height-sm:
+                type: number
+                label: line-height-sm
+                default: 1.5
+                tab: 'Bootstrap'
+                assetVar: line-height-sm
+            bs4-border-width:
+                type: text
+                label: border-width
+                default: $gray-300 $gray-300 $nav-tabs-link-active-bg
+                tab: 'Bootstrap'
+                assetVar: border-width
+            bs4-border-color:
+                type: text
+                label: border-color
+                default: $gray-300
+                tab: 'Bootstrap'
+                assetVar: border-color
+            bs4-border-radius:
+                type: text
+                label: border-radius
+                default: .25rem
+                tab: 'Bootstrap'
+                assetVar: border-radius
+            bs4-border-radius-lg:
+                type: text
+                label: border-radius-lg
+                default: .3rem
+                tab: 'Bootstrap'
+                assetVar: border-radius-lg
+            bs4-border-radius-sm:
+                type: text
+                label: border-radius-sm
+                default: .2rem
+                tab: 'Bootstrap'
+                assetVar: border-radius-sm
+            bs4-component-active-color:
+                type: text
+                label: component-active-color
+                default: $white
+                tab: 'Bootstrap'
+                assetVar: component-active-color
+            bs4-component-active-bg:
+                type: text
+                label: component-active-bg
+                default: 'theme-color("primary")'
+                tab: 'Bootstrap'
+                assetVar: component-active-bg
+            bs4-caret-width:
+                type: text
+                label: caret-width
+                default: .3em
+                tab: 'Bootstrap'
+                assetVar: caret-width
+            bs4-transition-base:
+                type: text
+                label: transition-base
+                default: all .2s ease-in-out
+                tab: 'Bootstrap'
+                assetVar: transition-base
+            bs4-transition-fade:
+                type: text
+                label: transition-fade
+                default: opacity .15s linear
+                tab: 'Bootstrap'
+                assetVar: transition-fade
+            bs4-transition-collapse:
+                type: text
+                label: transition-collapse
+                default: height .35s ease
+                tab: 'Bootstrap'
+                assetVar: transition-collapse
+            # Fonts
             bs4-fonts_section:
                 label: 'Fonts'
                 type: section
@@ -836,6 +923,90 @@ form:
                 default: -SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
                 tab: 'Bootstrap'
                 assetVar: font-family-monospace
+            # Navs
+            bs4-nav_section:
+                label: 'Navs'
+                type: section
+                cssClass: without-line
+                tab: Bootstrap
+            bs4-nav-link-padding-y:
+                type: text
+                label: nav-link-padding-y
+                default: .5rem
+                tab: 'Bootstrap'
+                assetVar: nav-link-padding-y
+            bs4-nav-link-padding-x:
+                type: text
+                label: nav-link-padding-x
+                default: 1rem
+                tab: 'Bootstrap'
+                assetVar: nav-link-padding-x
+            bs4-nav-link-disabled-color:
+                type: text
+                label: nav-link-disabled-color
+                default: $gray-600
+                tab: 'Bootstrap'
+                assetVar: nav-link-disabled-color
+            bs4-$nav-tabs-border-color:
+                type: text
+                label: $nav-tabs-border-color
+                default: $gray-300
+                tab: 'Bootstrap'
+                assetVar: $nav-tabs-border-color
+            bs4-$nav-tabs-border-width:
+                type: text
+                label: $nav-tabs-border-width
+                default: $border-width
+                tab: 'Bootstrap'
+                assetVar: $nav-tabs-border-width
+            bs4-nav-tabs-border-radius:
+                type: text
+                label: nav-tabs-border-radius
+                default: $border-radius
+                tab: 'Bootstrap'
+                assetVar: nav-tabs-border-radius
+            bs4-nav-tabs-link-hover-border-color:
+                type: text
+                label: nav-tabs-link-hover-border-color
+                default: $gray-200 $gray-200 $nav-tabs-border-color
+                tab: 'Bootstrap'
+                assetVar: nav-tabs-link-hover-border-color
+            bs4-nav-tabs-link-active-color:
+                type: text
+                label: nav-tabs-link-active-color
+                default: $gray-700
+                tab: 'Bootstrap'
+                assetVar: nav-tabs-link-active-color
+            bs4-nav-tabs-link-active-bg:
+                type: text
+                label: nav-tabs-link-active-bg
+                default: $body-bg
+                tab: 'Bootstrap'
+                assetVar: nav-tabs-link-active-bg
+            bs4-nav-tabs-link-active-border-color:
+                type: text
+                label: nav-tabs-link-active-border-color
+                default: $gray-300 $gray-300 $nav-tabs-link-active-bg
+                tab: 'Bootstrap'
+                assetVar: nav-tabs-link-active-border-color
+            bs4-nav-pills-border-radius:
+                type: text
+                label: nav-pills-border-radius
+                default: $border-radius
+                tab: 'Bootstrap'
+                assetVar: nav-pills-border-radius
+            bs4-nav-pills-link-active-color:
+                type: text
+                label: nav-pills-link-active-color
+                default: $component-active-color
+                tab: 'Bootstrap'
+                assetVar: nav-pills-link-active-color
+            bs4-nav-pills-link-active-bg:
+                type: text
+                label: nav-pills-link-active-bg
+                default: $component-active-bg
+                tab: 'Bootstrap'
+                assetVar: nav-pills-link-active-bg
             pp_general_pp_section:
                 label: 'Allgemeine Datenschutzerklärung'
                 type: section

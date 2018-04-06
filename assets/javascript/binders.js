@@ -14,8 +14,10 @@ rivets.binders.tabs = function (el, handle) {
     $tabLinks.on('click', function(event) {
         event.preventDefault();
         $(this).tab('show');
+        
+        // to load lasy images
         setTimeout(function() {
-            $(document).trigger('resize'); // to load lasy images
+            $(document).trigger('resize'); 
         }, 200);
         
     });

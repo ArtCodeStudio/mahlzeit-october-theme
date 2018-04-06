@@ -5,13 +5,15 @@
     }
 
     .nav-link {
-      border-width: 0 0 $nav-tabs-border-width 0; 
+      border-width: 0 0 $nav-tabs-border-width 0;
+      
+        // &.show      
+        &.active {
+          border-color: $nav-tabs-link-active-border-color;
+          color: $nav-tabs-link-active-color !important;
+        }
     }
 
-    .nav-link.active,
-    .nav-item.show .nav-link {
-      border-color: $nav-tabs-link-active-border-color;
-    }
   }
 }
 

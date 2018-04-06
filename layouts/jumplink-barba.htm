@@ -91,10 +91,11 @@ function onReguestEvent() {
         {# Content #}
         <div id="layout-content">
         
-            {% partial 'jumplink-navigation/navbar' %}
+            <div id="rivets-content-top">
+                {% partial 'jumplink-navigation/navbar' %}
+            </div>
             
             <div id="barba-wrapper">
-                
                 <div {% partial 'jumplink-barba-container-attributes' %}>
                     <div class="">
                         {% page %}
@@ -102,7 +103,12 @@ function onReguestEvent() {
                 </div>
             </div>
             
-            {% partial 'jumplink-footer' %}
+            <div id="rivets-content-bottom">
+                {% partial 'jumplink-footer' %}
+                <a rv-fixed-under="'#main-navbar'" rv-show-on-url="'/'" href="{{'termine-neu' | staticPage}}" class="position-fixed swing" style="right: 50px; width: 200px;">
+                    <img class="img-fluid" src="{{'assets/images/swing/reservieren.svg' | theme}}" alt="Reservieren Schild" >
+                </a>
+            </div>
             
         </div>
         

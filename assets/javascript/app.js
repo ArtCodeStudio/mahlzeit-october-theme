@@ -264,6 +264,26 @@ var initProductList = function() {
 
 
 /**
+ * Init rivets outsite of barba container
+ * @note: rivets insite barba is bound each view in teplates.js 
+ */
+var initStaticRivets = function() {
+  jumplink.dependencies.platform()
+    .then(function(platform) {
+        window.jumplink.model = window.jumplink.model || {};
+        window.jumplink.model.platform = platform;
+        console.log('BIND RIVETS');
+        rivets.bind($('#rivets-content-top'), window.jumplink.model);
+        rivets.bind($('#rivets-content-bottom'), window.jumplink.model);
+        
+        
+  })
+  .catch(function(exception) {
+      window.jumplink.debug.templates('cant load platform', exception);
+  });
+};
+
+/**
  * Init Javascripts insite of barba.js
  * 
  * @note see init() for inits outsite of barba.js 
@@ -275,9 +295,7 @@ var initTemplates = function () {
   });
 
   Barba.Dispatcher.on('newPageReady', function(currentStatus, oldStatus, container) {
-          
     window.jumplink.templates.prepairTemplate(container, container.dataset);
-   
   });
 };
 
@@ -541,6 +559,7 @@ var init = function ($) {
         jumplink.cacheSelectors();
         jumplink.setLanguage();
         initBarba();
+        initStaticRivets();
         jumplink.cache.initialized = true;
     } else {
         console.warn('jumplink has already been initialized');

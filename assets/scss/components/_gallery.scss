@@ -3,6 +3,13 @@ gallery {
     
     // type grid
     .grid {
+        rv-img {
+            transition: transform 100ms;
+            &:hover {
+                transform: scale3d(1.05, 1.05, 1) rotate(1deg);
+                
+            }
+        }
     }
     
     // type grid
@@ -14,7 +21,7 @@ gallery {
         // margin-bottom is setted via javascript to the scrollbar width
         &:hover {
             @extend .scrollbar-primary;
-            overflow-x: auto;
+            overflow-x: scroll;
             margin-bottom: 0px !important; // remove placeholder for scrollbar
             
         }

@@ -10,8 +10,8 @@ window.jumplink.debug.templates = debug('theme:templates');
 
 
 // rivets model
-window.jumplink.model = {};
-window.jumplink.boundView;
+window.jumplink.model = window.jumplink.model || {};
+window.jumplink.boundView = window.jumplink.model || {};
 
 
 window.jumplink.templates.init = function(dataset, data) {

@@ -37,12 +37,7 @@ rivets.components.flipbook = {
         // find thumbnail element
         var $thumbnail = $el.find('.flipbook-preview');
         controller.debug('[getPreviewPosition] $thumbnail', $thumbnail);
-        // get window scroll Y
-        var pageYScroll = window.pageYOffset || document.documentElement.scrollTop; 
-        // optionally get horizontal scroll
-        // get position of element relative to viewport
-        var rect = $thumbnail[0].getBoundingClientRect();
-        var result = {x: rect.left, y: rect.top /*- pageYScroll*/, w: rect.width, h: rect.height};
+        var result = jumplink.utilities.getElementPosition($thumbnail);
         controller.debug('[getPreviewPosition] result', result);
         return result;
     };

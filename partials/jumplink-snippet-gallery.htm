@@ -2,7 +2,7 @@ description = "Gallery aus den Theme Settings"
 
 [viewBag]
 snippetCode = "jumplink-snippet-gallery"
-snippetName = "Gallery"
+snippetName = "Gallery  (Theme Settings)"
 snippetProperties[handle][title] = "handle"
 snippetProperties[handle][type] = "string"
 snippetProperties[handle][default] = ""
@@ -31,20 +31,28 @@ function OnStart() {
             foreach ($gallery['images'] as $key => $image) {
                 $image['src'] = $mediaPath.$image['image'];
                 $fullImagePath = $fullMediaPath.$image['image'];
-                list($width, $height) = getimagesize($fullImagePath);
-                $image['w'] = $width;
-                $image['h'] = $height;
-                
-                /**
-                 * generate thumbnail
-                 * @see https://github.com/toughdeveloper/oc-imageresizer-plugin
-                 */
-                $imageObj = new Image($fullImagePath);
-                $imageObj->resize(300, false, [ 'mode' => 'crop' ]);
-                $thumbPath = $imageObj->getCachedImagePath(true);
-                $image['msrc'] = $thumbPath;
-                $image['id'] = $key;
-                $images[] = $image;
+                if (!file_exists($fullImagePath)) {
+                    // throw new Exception('File not found '.$fullImagePath);
+                } else {
+                    try {
+                        list($width, $height) = getimagesize($fullImagePath);
+                        $image['w'] = $width;
+                        $image['h'] = $height;
+                    } catch (Exception $e) {
+                        throw new Exception('Can not read image '.$fullImagePath);
+                    }
+                    
+                    /**
+                     * generate thumbnail
+                     * @see https://github.com/toughdeveloper/oc-imageresizer-plugin
+                     */
+                    $imageObj = new Image($fullImagePath);
+                    $imageObj->resize(300, false, [ 'mode' => 'crop' ]);
+                    $thumbPath = $imageObj->getCachedImagePath(true);
+                    $image['msrc'] = $thumbPath;
+                    $image['id'] = $key;
+                    $images[] = $image;
+                }
             }
             $gallery['images'] = $images;
             

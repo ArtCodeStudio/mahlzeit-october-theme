@@ -5,6 +5,24 @@ window.jumplink.debug = window.jumplink.debug || {};
 window.jumplink.debug.binders = debug('rivets:binders');
 
 /**
+ * 
+ * @see https://getbootstrap.com/docs/4.0/components/navs/#via-javascript
+ */
+rivets.binders.tabs = function (el, handle) {
+    var $el = $(el);
+    var $tabLinks = $el.find('.nav-tabs a');
+    $tabLinks.on('click', function(event) {
+        event.preventDefault();
+        $(this).tab('show');
+        setTimeout(function() {
+            $(document).trigger('resize'); // to load lasy images
+        }, 200);
+        
+    });
+    $tabLinks.first().tab('show');
+};
+
+/**
  * pignose-calendar
  * @see https://www.pigno.se/barn/PIGNOSE-Calendar/
  */
@@ -85,6 +103,9 @@ rivets.binders.html = function (el, value) {
   $(el).html(value ? value : '');
 };
 
+/**
+ * Move text shadow position of element by mouse position
+ */
 rivets.binders['moving-shadow-by-mouse-pos'] = function (el, divisor) {
     if(!divisor) {
         divisor = 200;
@@ -95,10 +116,12 @@ rivets.binders['moving-shadow-by-mouse-pos'] = function (el, divisor) {
     		y: event.pageY
     	};
         $(el).css('text-shadow', 'rgba(0, 0, 0, 0.1) '+ pos.x/divisor +'px '+ pos.y/divisor +'px');
-        console.log(pos);
     });
 };
 
+/**
+ * Move position of element by mouse position
+ */
 rivets.binders['moving-by-mouse-pos'] = function (el, divisor) {
     var $el = $(el);
     // Do not overwrite other transforms like rotation, so give me the current values for reusage
@@ -116,6 +139,38 @@ rivets.binders['moving-by-mouse-pos'] = function (el, divisor) {
     	};
         $el.css('transform', 'matrix('+ transformStrings[0] +', '+ transformStrings[1] +', '+transformStrings[2]+', '+transformStrings[3]+', '+pos.x/divisor+', '+pos.y/divisor+')');
     });
+};
+
+/**
+ * Set element fixed under the element of the selector
+ */
+rivets.binders['fixed-under'] = function (el, selector) {
+    console.log('[fixed-under]', selector);
+    var $el = $(el);
+    var $under = $(selector);
+    var pos = jumplink.utilities.getElementPosition($under);
+    $el.css('top', pos.x + pos.h + 'px');
+};
+
+rivets.binders['show-on-url'] = function (el, url) {
+    console.log('[show-on-url]', url);
+    var $el = $(el);
+    
+    var checkURL = function() {
+        console.log('url changed');
+        var pathname = window.jumplink.getCurrentLocation().pathname;
+        if(url === pathname) {
+            $el.show();
+        } else {
+            $el.hide();
+        }
+    };
+    
+    $(window).on('hashchange newPageReady', checkURL);
+    if(Barba) {
+        Barba.Dispatcher.on('newPageReady', checkURL);
+    }
+    checkURL();    
 };
 
 rivets.binders.class = {

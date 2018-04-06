@@ -12,7 +12,7 @@ rivets.components['top-sidebar'] = {
     controller.shown = false;
     
     controller.menuItems = {};
-    controller.debug('initialize', $el, data.menuItems);
+    // controller.debug('initialize', $el, data.menuItems);
     var $tcon;
     var $toggler;
 
@@ -20,7 +20,7 @@ rivets.components['top-sidebar'] = {
         var offset = jumplink.utilities.getNavHeight();
         var vh = $(window).height();
         transformicons.transform($tcon[0]);
-        controller.debug('show', offset, vh);
+        // controller.debug('show', offset, vh);
         var height = vh - offset;
         $el.height(height);
         $el.removeClass('hidden').addClass('shown animate');
@@ -32,7 +32,7 @@ rivets.components['top-sidebar'] = {
     };
     
     controller.hide = function() {
-        controller.debug('hide');
+        // controller.debug('hide');
         transformicons.revert($tcon[0]);
         $el.height(0);
         $el.removeClass('shown').addClass('hidden animate');
@@ -61,8 +61,6 @@ rivets.components['top-sidebar'] = {
         } catch(error){
             controller.debug(error, data.menuItems);
         }
-        
-        controller.debug('menuItems',  controller.menuItems);
         controller.hide();
         
         $toggler.on('click', function(event) {

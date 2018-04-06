@@ -628,6 +628,16 @@ jumplink.utilities.calculateAspectRatioFit = function (srcWidth, srcHeight, maxW
     return { w: srcWidth*ratio, h: srcHeight*ratio };
 };
 
+jumplink.utilities.getElementPosition = function(selector) {
+    $el = $(selector);
+    var pageYScroll = window.pageYOffset || document.documentElement.scrollTop; 
+    // optionally get horizontal scroll
+    // get position of element relative to viewport
+    var rect = $el[0].getBoundingClientRect();
+    var result = {x: rect.left, y: rect.top /*- pageYScroll*/, w: rect.width, h: rect.height};
+    return result;
+}
+
 /**
  * Get the browser viewport dimensions
  * @see https://stackoverflow.com/a/8876069/1465919
@@ -679,6 +689,13 @@ jumplink.utilities.getUrlParameter = function (name, url) {
 /**
  * get hostname an path of address bar
  * @see http://stackoverflow.com/a/736970/1465919
+ * 
+ * @example
+ * var l = window.jumplink.getUrlLocation("http://example.com/path");
+ * console.debug(l.hostname)
+ * >> "example.com"
+ * console.debug(l.pathname)
+ * >> "/path"
  */
 window.jumplink.getUrlLocation = function(href) {
   var l = document.createElement("a");
@@ -686,7 +703,7 @@ window.jumplink.getUrlLocation = function(href) {
   return l;
 };
 
-window.jumplink.getCurrentLocation = function(href) {
+window.jumplink.getCurrentLocation = function() {
   return jumplink.getUrlLocation(window.location);
 };
 

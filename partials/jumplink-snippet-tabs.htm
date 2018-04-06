@@ -1,0 +1,66 @@
+description = "Tabs"
+
+[viewBag]
+snippetCode = "jumplink-snippet-tabs.htm"
+snippetName = "Tabs (Theme Settings)"
+snippetProperties[handle][title] = "theme settings handle"
+snippetProperties[handle][type] = "string"
+snippetProperties[handle][default] = ""
+snippetProperties[handle][options][] = ""
+==
+{% set tabs_collections = this.theme.tabs_collection %}
+{% set found = null %}
+
+{% for collection in tabs_collections %}
+    {% if collection.handle == handle %}
+        {% set found = collection %}
+    {% endif %}
+{% endfor %}
+
+{% if found is not null %}
+    <div rv-tabs="{{handle}}">
+        <div class="container py-5">
+            <ul
+                class="nav nav-tabs"
+                id="{{handle}}-tabs"
+                role="tablist"
+            >
+                {% for tab in found.tabs %}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            id="{{handle}}-tabs-{{ str_studly(tab.label) | lower | replace({'&': '_'}) }}"
+                            href="#{{handle}}-tabs-content-{{ str_studly(tab.label) | lower | replace({'&': '_'}) }}"
+                            aria-control="{{handle}}-tabs-content-{{ str_studly(tab.label) | lower | replace({'&': '_'}) }}"
+                        >
+                            {{tab.label}}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="tab-content" id="{{handle}}-tabs-content">
+            {% for tab in found.tabs %}
+                <div
+                    class="tab-pane fade"
+                    role="tabpanel"
+                    aria-labelledby="{{handle}}-tabs-{{ str_studly(tab.label) | lower | replace({'&': '_'}) }}"
+                    id="{{handle}}-tabs-content-{{ str_studly(tab.label) | lower | replace({'&': '_'}) }}"
+                >
+                    {# Gallery handle (theme settings) #}
+                    {% if tab.galleryHandle %}
+                        {% partial 'jumplink-snippet-gallery.htm' handle=tab.galleryHandle %}
+                    {% endif %}
+                
+                    {# Tabs content filename #}
+                    {% if tab.contentFilename %}
+                        <div class="container py-5">
+                            {% component 'contenteditor' file=tab.contentFilename tools="bold,italic,link,heading,subheading,subheading3,subheading4,subheading5,paragraph,unordered-list,ordered-list,table,indent,unindent,line-break,image,video,preformatted" %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

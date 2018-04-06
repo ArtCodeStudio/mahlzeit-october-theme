@@ -697,6 +697,48 @@ form:
                             mode: image
                             comment: Background image of the flipbook collection
                             span: right
+        # Tabs
+            tabs_collection:
+                tab: 'Tabs'
+                label: Tabs Collection
+                type: repeater
+                prompt: Create Tab Collection
+                comment: Create a new tab collection
+                span: left
+                form:
+                    fields:
+                        handle:
+                            label: handle
+                            type: text
+                            required: true
+                            comment: Define a handle for this tabs collection to use this tabs in a snippet. <span class="text-danger">Please write everything in lowercase and do not use blank or special characters</span>. 
+                            commentHtml: true
+                            span: right
+                        tabs:
+                            label: Tab
+                            type: repeater
+                            required: true
+                            comment: Create a new tab for this tabs collection
+                            prompt: Add tab
+                            span: full
+                            form:
+                                fields:
+                                    label:
+                                        label: Label
+                                        type: text
+                                        comment: Label of the tab to click
+                                        span: left
+                                    galleryHandle:
+                                        label: Gallery Handle
+                                        type: text
+                                        comment: Handle of the gallery if you want to display a slideshow in this tab
+                                        span: right
+                                    contentFilename:
+                                        label: Content Filename
+                                        type: text
+                                        comment: Filename of the content you want to display in this tab
+                                        span: full
+
         # bootstrap
             bs4-colors_section:
                 label: Color system

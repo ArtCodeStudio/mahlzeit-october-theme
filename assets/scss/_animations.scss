@@ -1,28 +1,55 @@
-@-webkit-keyframes swing {
-    100% {
-        -webkit-transform: rotate(7deg)
-    }
-}
 
-@keyframes swing {
+@keyframes swing-7deg {
     100% {
         transform: rotate(7deg)
     }
 }
 
-.swing {
-    -webkit-animation-duration: 1s;
+@keyframes swing-6deg {
+    100% {
+        transform: rotate(6deg)
+    }
+}
+
+@keyframes swing-5deg {
+    100% {
+        transform: rotate(5deg)
+    }
+}
+
+@keyframes swing-7-7deg {
+    0% {
+        transform: rotate(-7deg)
+    }
+    100% {
+        transform: rotate(7deg)
+    }
+}
+
+@keyframes swing-5-5deg {
+    0% {
+        transform: rotate(-5deg)
+    }
+    100% {
+        transform: rotate(5deg)
+    }
+}
+
+@keyframes swing-4-4deg {
+    0% {
+        transform: rotate(-4deg)
+    }
+    100% {
+        transform: rotate(4deg)
+    }
+}
+
+.swing, .swing-7deg {
     animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
-    -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
-    -webkit-transform-origin: 50% 8px;
-    transform-origin: 50% 8px;
-    -webkit-animation-name: swing;
-    animation-name: swing;
-    -webkit-animation-direction: alternate;
+    transform-origin: 50% 0;
+    animation-name: swing-7deg;
     animation-direction: alternate;
     animation-iteration-count: infinite;
-    -webkit-animation-iteration-count: infinite
 }

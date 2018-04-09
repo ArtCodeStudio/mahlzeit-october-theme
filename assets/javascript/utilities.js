@@ -26,6 +26,19 @@ jumplink.utilities.triggerResize = function () {
     window.dispatchEvent(new Event('resize'));
 };
 
+jumplink.utilities.getOpenPhotoswipeComponentEventName = function (handle) {
+    var openEvent = 'rivets:photoswipe:open';
+    if(handle) {
+        openEvent = openEvent+':'+handle;
+    }
+    return openEvent;
+};
+
+jumplink.utilities.openPhotoSwipe = function(handle, $imagesWrapper, index, images) {
+    var openEvent = jumplink.utilities.getOpenPhotoswipeComponentEventName(handle);
+    $.event.trigger(openEvent, [$imagesWrapper, index, images]);
+};
+
 /**
  * run Hyphenopoly
  * @see https://github.com/mnater/Hyphenopoly

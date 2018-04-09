@@ -242,8 +242,9 @@ form:
                             form:
                                 fields:
                                     column_item_section:
-                                        label:  'Content / Button Column Item'
+                                        label: Content
                                         type: section
+                                        comment: Configure your text content
                                     content:
                                         label: Enable
                                         type: checkbox
@@ -252,6 +253,43 @@ form:
                                         label: Content Filename
                                         type: text
                                         comment: Filename of the content you want to display
+                                    image_section:
+                                        label: Image
+                                        type: section
+                                        comment: Configure your Image
+                                        commentHtml: true
+                                    image:
+                                        label: Enable
+                                        type: checkbox
+                                        comment: Do you want to embed a image file?
+                                        span: full
+                                    image_file:
+                                        label: Image file
+                                        type: mediafinder
+                                        mode: image
+                                        span: left
+                                    image_alt:
+                                        label: alt
+                                        type: text
+                                        comment: Write a brief description of this image to improve search engine optimization (SEO) and accessibility for visually impaired customers.
+                                        span: right
+                                    image_ratio:
+                                        label: aspect ratio
+                                        type: number
+                                        comment: Aspect ratio e.g. 1:1, leaf it blank if you do not want to use this 
+                                        span: right
+                                    image_title:
+                                        label: Image title text
+                                        type: text
+                                        comment: Write a title to show in the image
+                                        span: right
+                                    image_description:
+                                        label: Image description text
+                                        type: richeditor
+                                        size: small
+                                        toolbarButtons: bold|italic|underline
+                                        comment: Write a description to show in the image
+                                        span: full
                                     button_section:
                                         label: Button
                                         type: section
@@ -324,7 +362,7 @@ form:
                                     spacing_bottom:
                                         label: Spacing bottom
                                         type: dropdown
-                                        span: left
+                                        span: right
                                         options:
                                             mb-0: none
                                             mb-1: small
@@ -332,6 +370,28 @@ form:
                                             mb-3: medium
                                             mb-4: more
                                             mb-5: big
+                                    spacing_right:
+                                        label: Spacing right
+                                        type: dropdown
+                                        span: left
+                                        options:
+                                            mr-0: none
+                                            mr-1: small
+                                            mr-2: little
+                                            mr-3: medium
+                                            mr-4: more
+                                            mr-5: big
+                                    spacing_left:
+                                        label: Spacing left
+                                        type: dropdown
+                                        span: right
+                                        options:
+                                            ml-0: none
+                                            ml-1: small
+                                            ml-2: little
+                                            ml-3: medium
+                                            ml-4: more
+                                            ml-5: big
                                     column_section:
                                         label: Column
                                         type: section
@@ -378,7 +438,7 @@ form:
                                             col-sm-1: 1/12
                                         default: auto
                                     md:
-                                        label: sm
+                                        label: md
                                         type: dropdown
                                         comment: Width on medium devices
                                         span: left

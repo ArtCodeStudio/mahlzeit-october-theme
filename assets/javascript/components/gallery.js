@@ -23,6 +23,7 @@ rivets.components.gallery = {
     controller.headerText = data.data.description;
     controller.container = '';
     controller.images = [];
+    controller.handle = data.handle;
     
     if(jumplink.utilities.isString(data.containerClass)) {
         controller.container = data.containerClass;
@@ -46,9 +47,9 @@ rivets.components.gallery = {
     };
     
     var openPhotoSwipe = function(index) {
-        controller.debug('openPhotoSwipe', [$imagesWrapper, index, controller.images]);
-        $.event.trigger('rivets:photoswipe:open', [$imagesWrapper, index, controller.images]);
+        jumplink.utilities.openPhotoSwipe(data.handle, $imagesWrapper, index, controller.images);
     };
+    
     
     // triggers when user clicks on thumbnail
     controller.onThumbnailsClick = function(e) {

@@ -7,7 +7,6 @@
 rivets.components['rv-photoswipe'] = {
 
   template: function() {
-    // return $('template#rv-photoswipe').html();
     return jumplink.templates['rv-photoswipe'];
   },
 
@@ -261,13 +260,14 @@ rivets.components['rv-photoswipe'] = {
         pswp.ui.updateFullscreen();
     };
     
-    $(document).bind('rivets:photoswipe:open', function (event, $imgWrapper, index, images) {
+    var openEvent = jumplink.utilities.getOpenPhotoswipeComponentEventName(data.handle);
+    $(document).bind(openEvent, function (event, $imgWrapper, index, images) {
         controller.debug('[rivets:photoswipe:open]', event, index, images);
         $imagesWrapper = $imgWrapper;
         controller.images = images;
         open(index);
     });
-    
+
     jumplink.dependencies.photoswipe()
     .then(function() {
         controller.debug('photoswipe is ready');

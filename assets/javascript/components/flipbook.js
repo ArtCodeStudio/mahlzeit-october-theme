@@ -275,11 +275,14 @@ rivets.components.flipbook = {
         
         var offsetX = flipbookDim.offsetX + 50;
         
-        $close.css('right', (flipbookDim.x - offsetX) + 'px');
+        var x = flipbookDim.x - offsetX;
+        x = x >= 0 ? x : 0;
         
-        $prev.css('left', (flipbookDim.x - offsetX) + 'px');
+        $close.css('right', (x) + 'px');
         
-        $next.css('right', (flipbookDim.x - offsetX) + 'px');
+        $prev.css('left', (x) + 'px');
+        
+        $next.css('right', (x) + 'px');
     };
     
     var initBlur = function() {

@@ -150,7 +150,7 @@ rivets.components.gallery = {
                 initMouseScroll($slideScrollbar);
             }
             
-            if(data.autoscroll) {
+            if(data.autoscroll && !platform.os.isTouch) {
                 initAutoscroll($slideScrollbar);
             }
             

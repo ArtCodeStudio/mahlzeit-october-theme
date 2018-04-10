@@ -383,7 +383,7 @@ jumplink.utilities.rand = function (min, max) {
  * 
  * @see https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
  */
-window.jumplink.utilities.isTouchDevice = function (platform) {
+jumplink.utilities.isTouchDevice = function (platform) {
   if(platform.name === 'Epiphany') {
     return false;
   }
@@ -508,7 +508,7 @@ jumplink.utilities.initPlatform = function(platform) {
   }
   $body.addClass('os-family-'+platform.os.handle);
   
-  platform.os.isTouch = jumplink.utilities.isTouchDevice(platform);
+  platform.os.isTouch = jumplink.utilities.isTouchDevice(platform) === true;
   if(platform.os.isTouch) {
      $body.removeClass('os-no-touch').addClass('os-is-touch');
   } else {

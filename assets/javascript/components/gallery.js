@@ -138,8 +138,11 @@ rivets.components.gallery = {
         });
     };
     
-    var initScrollbar = function() {
+    var initScrollbar = function() {        
         jumplink.dependencies.dragscroll()
+        .then(function() {
+            return jumplink.dependencies.platform();
+        })
         .then(function(platform) {
             controller.debug('dragscroll is ready', dragscroll);
             

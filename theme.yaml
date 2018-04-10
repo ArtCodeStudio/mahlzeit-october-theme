@@ -811,6 +811,60 @@ form:
                 default: '#fff'
                 tab: 'Bootstrap'
                 assetVar: white
+            bs4-gray-100:
+                type: colorpicker
+                label: gray-100
+                default: '#f8f9fa'
+                tab: 'Bootstrap'
+                assetVar: gray-100
+            bs4-gray-200:
+                type: colorpicker
+                label: gray-200
+                default: '#e9ecef'
+                tab: 'Bootstrap'
+                assetVar: gray-200
+            bs4-gray-300:
+                type: colorpicker
+                label: gray-300
+                default: '#dee2e6'
+                tab: 'Bootstrap'
+                assetVar: gray-300
+            bs4-gray-400:
+                type: colorpicker
+                label: gray-400
+                default: '#ced4da'
+                tab: 'Bootstrap'
+                assetVar: gray-400
+            bs4-gray-500:
+                type: colorpicker
+                label: gray-500
+                default: '#adb5bd'
+                tab: 'Bootstrap'
+                assetVar: gray-500
+            bs4-gray-600:
+                type: colorpicker
+                label: gray-600
+                default: '#adb5bd'
+                tab: 'Bootstrap'
+                assetVar: gray-600
+            bs4-gray-700:
+                type: colorpicker
+                label: gray-700
+                default: '#495057'
+                tab: 'Bootstrap'
+                assetVar: gray-700
+            bs4-gray-800:
+                type: colorpicker
+                label: gray-800
+                default: '#343a40'
+                tab: 'Bootstrap'
+                assetVar: gray-800
+            bs4-gray-900:
+                type: colorpicker
+                label: gray-900
+                default: '#212529'
+                tab: 'Bootstrap'
+                assetVar: gray-900
             bs4-black:
                 type: colorpicker
                 label: black
@@ -877,6 +931,182 @@ form:
                 default: '#17a2b8'
                 tab: 'Bootstrap'
                 assetVar: cyan
+            bs4-primary:
+                type: text
+                label: primary
+                default: $blue
+                tab: 'Bootstrap'
+                assetVar: primary
+            bs4-secondary:
+                type: text
+                label: secondary
+                default: $gray-600
+                tab: 'Bootstrap'
+                assetVar: secondary
+            bs4-success:
+                type: text
+                label: success
+                default: $green
+                tab: 'Bootstrap'
+                assetVar: success
+            bs4-info:
+                type: text
+                label: info
+                default: $cyan
+                tab: 'Bootstrap'
+                assetVar: info
+            bs4-warning:
+                type: text
+                label: warning
+                default: $yellow
+                tab: 'Bootstrap'
+                assetVar: warning
+            bs4-danger:
+                type: text
+                label: danger
+                default: $red
+                tab: 'Bootstrap'
+                assetVar: danger
+            bs4-light:
+                type: text
+                label: light
+                default: $gray-100
+                tab: 'Bootstrap'
+                assetVar: light
+            bs4-dark:
+                type: text
+                label: dark
+                default: $gray-800
+                tab: 'Bootstrap'
+                assetVar: dark
+            bs4-theme-color-interval:
+                type: text
+                label: theme-color-interval
+                default: 8%
+                tab: 'Bootstrap'
+                assetVar: theme-color-interval
+                comment: Set a specific jump point for requesting color jumps
+            bs4-yiq-contrasted-threshold:
+                type: number
+                label: yiq-contrasted-threshold
+                default: 150
+                tab: 'Bootstrap'
+                assetVar: yiq-contrasted-threshold
+                comment: The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+            bs4-yiq-text-dark:
+                type: text
+                label: yiq-text-dark
+                default: $gray-900
+                tab: 'Bootstrap'
+                assetVar: yiq-text-dark
+                comment: Customize the light and dark text colors for use in our YIQ color contrast function.
+            bs4-yiq-text-light:
+                type: text
+                label: yiq-text-light
+                default: $white
+                tab: 'Bootstrap'
+                assetVar: yiq-text-light
+                comment: Customize the light and dark text colors for use in our YIQ color contrast function.
+            # Options
+            bs4-options_section:
+                label: 'Options'
+                type: section
+                cssClass: without-line
+                comment: Quickly modify global styling by enabling or disabling optional features.
+                commentHtml: true
+                tab: Bootstrap
+            bs4-enable-caret:
+                label: enable-caret
+                type: checkbox
+                default: true
+                tab: Bootstrap
+                assetVar: enable-caret
+            bs4-enable-rounded:
+                label: enable-rounded
+                type: checkbox
+                default: true
+                tab: Bootstrap
+                assetVar: enable-rounded
+            bs4-enable-shadows:
+                label: enable-shadows
+                type: checkbox
+                default: false
+                tab: Bootstrap
+                assetVar: enable-shadows
+            bs4-enable-gradients:
+                label: enable-gradients
+                type: checkbox
+                default: false
+                tab: Bootstrap
+                assetVar: enable-gradients
+            bs4-enable-transitions:
+                label: enable-transitions
+                type: checkbox
+                default: true
+                tab: Bootstrap
+                assetVar: enable-transitions
+            bs4-enable-grid-classes:
+                label: enable-grid-classes
+                type: checkbox
+                default: true
+                tab: Bootstrap
+                assetVar: enable-grid-classes
+            bs4-enable-print-styles:
+                label: enable-print-styles
+                type: checkbox
+                default: true
+                tab: Bootstrap
+                assetVar: enable-print-styles
+            # Spacing
+            bs4-spacing_section:
+                label: 'Spacing'
+                type: section
+                cssClass: without-line
+                comment: Control the default styling of most Bootstrap elements by modifying these variables. Mostly focused on spacing. You can add more entries to the $spacers map, should you need more variation.
+                commentHtml: true
+                tab: Bootstrap
+            bs4-spacer:
+                type: text
+                label: spacer
+                default: 1rem
+                tab: 'Bootstrap'
+                assetVar: spacer
+            bs4-spacer_factor_0:
+                type: number
+                label: spacer_factor_0
+                default: 0
+                tab: 'Bootstrap'
+                assetVar: spacer_factor_0
+            bs4-spacer_factor_1:
+                type: number
+                label: spacer_factor_1
+                default: 0.25
+                tab: 'Bootstrap'
+                assetVar: spacer_factor_1
+            bs4-spacer_factor_2:
+                type: number
+                label: spacer_factor_2
+                default: 0.5
+                tab: 'Bootstrap'
+                assetVar: spacer_factor_2
+            bs4-spacer_factor_3:
+                type: number
+                label: spacer_factor_3
+                default: 1
+                tab: 'Bootstrap'
+                assetVar: spacer_factor_3
+            bs4-spacer_factor_4:
+                type: number
+                label: spacer_factor_4
+                default: 1.5
+                tab: 'Bootstrap'
+                assetVar: spacer_factor_4
+            bs4-spacer_factor_5:
+                type: number
+                label: spacer_factor_5
+                default: 3
+                tab: 'Bootstrap'
+                assetVar: spacer_factor_5
             # Components
             bs4-components_section:
                 label: 'Components'

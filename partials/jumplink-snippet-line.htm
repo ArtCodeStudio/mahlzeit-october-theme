@@ -29,6 +29,28 @@ snippetProperties[maxWidth][title] = "Maximal width"
 snippetProperties[maxWidth][type] = "string"
 snippetProperties[maxWidth][default] = "100%"
 snippetProperties[maxWidth][options][] = ""
+snippetProperties[id][title] = "ID"
+snippetProperties[id][type] = "string"
+snippetProperties[id][default] = ""
+snippetProperties[id][options][] = ""
+snippetProperties[spacingTop][title] = "Spacing Top"
+snippetProperties[spacingTop][type] = "dropdown"
+snippetProperties[spacingTop][default] = 0
+snippetProperties[spacingTop][options][] = "none"
+snippetProperties[spacingTop][options][] = "small"
+snippetProperties[spacingTop][options][] = "little"
+snippetProperties[spacingTop][options][] = "medium"
+snippetProperties[spacingTop][options][] = "more"
+snippetProperties[spacingTop][options][] = "big"
+snippetProperties[spacingBottom][title] = "Spacing Bottom"
+snippetProperties[spacingBottom][type] = "dropdown"
+snippetProperties[spacingBottom][default] = 0
+snippetProperties[spacingBottom][options][] = "none"
+snippetProperties[spacingBottom][options][] = "small"
+snippetProperties[spacingBottom][options][] = "little"
+snippetProperties[spacingBottom][options][] = "medium"
+snippetProperties[spacingBottom][options][] = "more"
+snippetProperties[spacingBottom][options][] = "big"
 ==
 {% if wrapContainer %}
     {% set containerClass = 'container'%}
@@ -36,7 +58,7 @@ snippetProperties[maxWidth][options][] = ""
     {% set containerClass = 'container-fluid'%}
 {% endif %}
 
-<div class="{{containerClass}}">
+<div class="{{containerClass}} mt-{{spacingTop}} mb-{{spacingBottom}}" id="{{id}}">
     <div class="row ">
         <div class="col-12">
             <hr class="border-{{color}} border-px-{{thickness}}" style="max-width:{{maxWidth}};">

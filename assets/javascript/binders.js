@@ -147,15 +147,43 @@ rivets.binders['moving-by-mouse-pos'] = function (el, divisor) {
  * Set element fixed under the element of the selector
  */
 rivets.binders['fixed-under'] = function (el, selector) {
-    console.log('[fixed-under]', selector);
     var $el = $(el);
-    var $under = $(selector);
-    var pos = jumplink.utilities.getElementPosition($under);
-    $el.css('top', pos.x + pos.h + 'px');
+    var setPosition = function() {
+        var $under = $(selector);
+        if($under.length) {
+            var pos = jumplink.utilities.getElementPosition($under);
+            $el.css('top', pos['fixed-y'] + pos.h + 'px');
+        }
+    };
+    $(window).on('hashchange newPageReady resize', setPosition);
 };
 
+rivets.binders['absolute-under'] = function (el, selector) {
+    var $el = $(el);
+    var setPosition = function() {
+        var $under = $(selector);
+        if($under.length) {
+            var pos = jumplink.utilities.getElementPosition($under);
+            $el.css('top', pos.y + pos.h + 'px');
+        }
+    };
+    $(window).on('hashchange newPageReady resize', setPosition);
+};
+
+rivets.binders['absolute-upper-edge'] = function (el, selector) {
+    var $el = $(el);
+    var setPosition = function() {
+        var $under = $(selector);
+        if($under.length) {
+            var pos = jumplink.utilities.getElementPosition($under);
+            $el.css('top', pos.y + 'px');
+        }
+    };
+    $(window).on('hashchange newPageReady resize', setPosition);
+};
+
+
 rivets.binders['show-on-url'] = function (el, url) {
-    console.log('[show-on-url]', url);
     var $el = $(el);
     
     var checkURL = function() {

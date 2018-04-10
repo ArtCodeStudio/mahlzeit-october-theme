@@ -19,7 +19,7 @@ snippetProperties[handle][options][] = ""
 
 {% if found is not null %}
     <div rv-tabs="{{handle}}">
-        <div class="container py-5">
+        <div class="container pb-3 pt-5">
             <ul
                 class="nav nav-tabs nav-tabs-underline d-flex justify-content-center"
                 id="{{handle}}-tabs"
@@ -50,12 +50,12 @@ snippetProperties[handle][options][] = ""
                 >
                     {# Gallery handle (theme settings) #}
                     {% if tab.galleryHandle %}
-                        {% partial 'jumplink-snippet-gallery.htm' handle=tab.galleryHandle %}
+                        {% partial 'jumplink-snippet-gallery.htm' handle=tab.galleryHandle autoscroll=false mousescroll=false %}
                     {% endif %}
                 
                     {# Tabs content filename #}
                     {% if tab.contentFilename %}
-                        <div class="container py-5">
+                        <div class="container py-3">
                             {% component 'contenteditor' file=tab.contentFilename tools="bold,italic,link,heading,subheading,subheading3,subheading4,subheading5,paragraph,unordered-list,ordered-list,table,indent,unindent,line-break,image,video,preformatted" %}
                         </div>
                     {% endif %}

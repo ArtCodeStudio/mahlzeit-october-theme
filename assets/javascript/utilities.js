@@ -643,11 +643,17 @@ jumplink.utilities.calculateAspectRatioFit = function (srcWidth, srcHeight, maxW
 
 jumplink.utilities.getElementPosition = function(selector) {
     $el = $(selector);
-    var pageYScroll = window.pageYOffset || document.documentElement.scrollTop; 
+    var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
     // optionally get horizontal scroll
     // get position of element relative to viewport
     var rect = $el[0].getBoundingClientRect();
-    var result = {x: rect.left, y: rect.top /*- pageYScroll*/, w: rect.width, h: rect.height};
+    var result = {
+        x: rect.left,
+        y: rect.top + pageYScroll,
+        'fixed-y': rect.top,
+        w: rect.width,
+        h: rect.height,
+    };
     return result;
 }
 

@@ -55,7 +55,7 @@ rivets.components.flipbook = {
 
         $zoom
         .css('visibility', 'visible')
-        .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview.y - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
+        .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview['fixed-y'] - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
         
         setTimeout(function() {
             $zoom.addClass('animate');
@@ -77,7 +77,7 @@ rivets.components.flipbook = {
                 $flipbook.turn('page', 1);
                 setTimeout(function() {
                     $zoom
-                    .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview.y - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
+                    .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview['fixed-y'] - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
                     
                     closeFlipbook(flipbookDim);
                     resolve();

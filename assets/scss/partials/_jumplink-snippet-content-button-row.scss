@@ -2,6 +2,9 @@
     // special theme style, remove this in other themes
     &.jumplink-snippet-content-button-row-location_occasion {
         
+        @extend .d-none;
+        @extend .d-md-block;
+        
         .row {
             overflow: hidden;
         }

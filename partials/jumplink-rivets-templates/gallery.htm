@@ -15,7 +15,7 @@
     <div
         rv-if="type | eq 'grid'"
         data-photoswipe-thumbs="true"
-        class="grid py-5 card-columns"
+        class="grid py-4 card-columns"
     >
         <div
             rv-each-image="images"
@@ -36,11 +36,11 @@
     </div>
     
     {# https://github.com/asvd/dragscroll #}
-    <div rv-if="type | eq 'slide_scrollbar'" data-photoswipe-thumbs="true" class="slide_scrollbar row justify-content-start align-items-center flex-nowrap py-5 dragscroll">
+    <div rv-if="type | eq 'slide_scrollbar'" data-photoswipe-thumbs="true" class="slide_scrollbar row justify-content-start align-items-center flex-nowrap py-4 dragscroll">
         <div
             rv-each-image="images"
             class="col-xs-6 col-sm-5 col-md-4 col-lg-3 col-xl-2"
-            rv-class-offset-2="%image% | eq 0"
+            rv-class-offset-md-3="%image% | eq 0"
         >
             <div
                 {# rv-singleclick="5" #}

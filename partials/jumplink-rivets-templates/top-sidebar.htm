@@ -3,7 +3,7 @@
 <div class="container sidebar-dark d-flex flex-column justify-content-center">
     <div class="row text-center">
         <div class="sidebar-nav col-12 h3 my-0" rv-each-item="menuItems" rv-hide="item.viewBag.isHidden | eq '1'">
-            <a class="nav-link" rv-href="item.url" rv-text="item.title"></a>
+            <a class="nav-link" rv-href="item.url" rv-text="item.title" rv-on-click="hide"></a>
         </div>
     </div>
 </div>

@@ -25,6 +25,9 @@ rivets.components.gallery = {
     controller.images = [];
     controller.handle = data.handle;
     
+    data.autoscroll = !!data.autoscroll;
+    data.mousescroll = !!data.mousescroll;
+    
     if(jumplink.utilities.isString(data.containerClass)) {
         controller.container = data.containerClass;
     } else {
@@ -95,6 +98,46 @@ rivets.components.gallery = {
         $slideScrollbar.css('margin-bottom', scrollbarWidth + 'px');
     };
     
+    var initAutoscroll = function($slideScrollbar) {
+        var scrollDirection = 1;
+        var jumps = 5;
+        var stop = false;
+        var position = $slideScrollbar.scrollLeft();
+        var maxScrollWidth = $slideScrollbar.prop('scrollWidth') - $slideScrollbar.outerWidth();
+        var scroll = function (position) {
+            if(stop) {
+                return;
+            }
+            if(scrollDirection > 0) {
+                position = position + jumps;
+            } else {
+                position = position - jumps;
+            }
+            
+            if ( position <= 0 || position >= maxScrollWidth) {
+                scrollDirection = 1;
+            }
+            
+            if (position >= maxScrollWidth) {
+                scrollDirection = -1;
+            }
+            
+            $slideScrollbar.animate({scrollLeft: position}, 100);
+            var scrollDelay = setTimeout(function() {
+                scroll(position);
+            }, 100); // scrolls every 100 milliseconds
+        };
+        scroll(position);
+        $slideScrollbar.off('mouseenter mouseover').on('mouseenter mouseover', function() {
+            stop = true;
+        });
+        $slideScrollbar.off('mouseleave').on('mouseleave', function() {
+            stop = false;
+            position = $slideScrollbar.scrollLeft();
+            scroll(position);
+        });
+    };
+    
     var initScrollbar = function() {
         jumplink.dependencies.dragscroll()
         .then(function(platform) {
@@ -102,7 +145,14 @@ rivets.components.gallery = {
             
             var $slideScrollbar = $el.find('.slide_scrollbar');
             setScrollbarMargin($slideScrollbar);
-            // initMouseScroll($slideScrollbar);
+            
+            if(data.mousescroll) {
+                initMouseScroll($slideScrollbar);
+            }
+            
+            if(data.autoscroll) {
+                initAutoscroll($slideScrollbar);
+            }
             
             dragscroll.reset();
             return jumplink.dependencies['jquery-touch-events']();
@@ -123,7 +173,7 @@ rivets.components.gallery = {
         initScrollbar();
     };
         
-    setTimeout(ready, 0);
+    setTimeout(ready, 100);
 
     return controller;
   }

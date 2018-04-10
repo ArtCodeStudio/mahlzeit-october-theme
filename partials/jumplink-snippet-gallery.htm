@@ -64,6 +64,14 @@ function OnStart() {
 ==
 {% set partialId = 'jumplink-snippet-gallery' %}
 
+{% if autoscroll is not defined %}
+    {% set autoscroll = true %}
+{% endif %}
+
+{% if mousescroll is not defined %}
+    {% set mousescroll = false %}
+{% endif %}
+
 <div
     class="jumplink-partial {{partialId}}"
     data-partial-name="{{partialId}}"
@@ -83,6 +91,8 @@ function OnStart() {
             images-path="'{{''| media}}'"
             type="'{{foundGallery.type}}'"
             handle="'{{handle}}'"
+            autoscroll='{{autoscroll}}'
+            mousescroll='{{mousescroll}}'
         ></gallery>
     {% endif %}
 </div>

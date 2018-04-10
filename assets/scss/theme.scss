@@ -1,6 +1,9 @@
 // bootstrap 4 compatible with the scss version of octobercms
 @import '../vendor/bootstrap/scss/functions';
 
+// overwrite variables only for this theme 
+@import "theme-variables";
+
 // variables we neeed for all other scss files
 @import "variables";
 
@@ -16,8 +19,7 @@
 // fixes for bootstrap we nee
 @import 'fixes';
 
-// overwrite variables only for this theme 
-@import "theme-variables";
+
 
 @import "mixins";
 

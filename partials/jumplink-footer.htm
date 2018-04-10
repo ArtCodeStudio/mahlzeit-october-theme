@@ -71,8 +71,10 @@ code = "footer"
     
     {% if mode == 'horizontal_menu' %}  
     
-        <div class="footer-background pt-5">
-            {% partial 'jumplink-address-center' wrapContainer=false xs=12 sm=12 md=12 lg=12 xl=12 offsetxs=0 offsetsm=0 offsetmd=0 offsetlg=0 offsetxl=0 %}
+        <div class="footer-background">
+            <div class="pt-5 pb-4">
+                {% partial 'jumplink-address-center' wrapContainer=false xs=12 sm=12 md=12 lg=12 xl=12 offsetxs=0 offsetsm=0 offsetmd=0 offsetlg=0 offsetxl=0 %}
+            </div>
     
             <div class="navbar navbar-expand justify-content-center">
                 {% partial 'jumplink-navigation/navbar-items' items=footerMenu.menuItems class='navbar-nav d-flex justify-content-center' itemClass='nav-item' %}

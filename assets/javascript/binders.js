@@ -144,39 +144,67 @@ rivets.binders['moving-by-mouse-pos'] = function (el, divisor) {
 };
 
 /**
- * Set element fixed under the element of the selector
+ * Set element fixed on top edge (Oberkante) of the element
  */
-rivets.binders['fixed-under'] = function (el, selector) {
+rivets.binders['fixed-top-edge'] = function (el, selector) {
     var $el = $(el);
     var setPosition = function() {
         var $under = $(selector);
         if($under.length) {
             var pos = jumplink.utilities.getElementPosition($under);
-            $el.css('top', pos['fixed-y'] + pos.h + 'px');
+            $el
+            .css('top', pos['fixed-y'] + 'px')
+            .css('position', 'fixed');
         }
     };
     $(window).on('hashchange newPageReady resize', setPosition);
 };
 
-rivets.binders['absolute-under'] = function (el, selector) {
+/**
+ * Set element fixed on lower edge (Unterkante) the element
+ */
+rivets.binders['fixed-lower-edge'] = function (el, selector) {
     var $el = $(el);
     var setPosition = function() {
         var $under = $(selector);
         if($under.length) {
             var pos = jumplink.utilities.getElementPosition($under);
-            $el.css('top', pos.y + pos.h + 'px');
+            $el
+            .css('top', pos['fixed-y'] + pos.h + 'px')
+            .css('position', 'fixed');
         }
     };
     $(window).on('hashchange newPageReady resize', setPosition);
 };
 
-rivets.binders['absolute-upper-edge'] = function (el, selector) {
+/**
+ * Set element absolute on top edge (Oberkante) of the element
+ */
+rivets.binders['absolute-top-edge'] = function (el, selector) {
     var $el = $(el);
     var setPosition = function() {
         var $under = $(selector);
         if($under.length) {
             var pos = jumplink.utilities.getElementPosition($under);
-            $el.css('top', pos.y + 'px');
+            $el.css('top', pos.y + 'px')
+            .css('position', 'absolute');
+        }
+    };
+    $(window).on('hashchange newPageReady resize', setPosition);
+};
+
+/**
+ * Set element absolute on lower edge (Unterkante) of the element
+ */
+rivets.binders['absolute-lower-edge'] = function (el, selector) {
+    var $el = $(el);
+    var setPosition = function() {
+        var $under = $(selector);
+        if($under.length) {
+            var pos = jumplink.utilities.getElementPosition($under);
+            $el
+            .css('top', pos.y + pos.h + 'px')
+            .css('position', 'absolute');
         }
     };
     $(window).on('hashchange newPageReady resize', setPosition);
@@ -196,9 +224,10 @@ rivets.binders['show-on-url'] = function (el, url) {
         }
     };
     
-    $(window).on('hashchange newPageReady', checkURL);
     if(Barba) {
         Barba.Dispatcher.on('newPageReady', checkURL);
+    } else {
+        $(window).on('hashchange', checkURL);
     }
     checkURL();    
 };

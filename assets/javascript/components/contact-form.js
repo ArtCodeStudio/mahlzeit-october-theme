@@ -14,6 +14,10 @@ rivets.components['contact-form'] = {
     controller.debug('initialize contact-form component', $el, data);
     
     controller.ready = false;
+    controller.layout = data.layout;
+    
+    data.inModal = !!data.inModal;
+    data.requestName = data.requestName || 'onSubmitContact';
     
     controller.form = {
         name: "",
@@ -161,7 +165,7 @@ rivets.components['contact-form'] = {
      * @see https://octobercms.com/docs/ajax/javascript-api
      */
     controller.submit = function() {
-        controller.debug('onSubmitContact');
+        controller.debug(data.requestName);
         controller.validation = jumplink.events.validate(controller.validation, controller.form, ['name', 'email', 'phone', 'message']);
         controller.debug('validation', controller.validation, 'form', controller.form);
         
@@ -180,14 +184,16 @@ rivets.components['contact-form'] = {
                         });
                         
                         // collapse('hide');
-                        controller.hideGlobalModal();
+                        if(data.inModal) {
+                            controller.hideGlobalModal();
+                        }
                         
                     });
                 }
             });
         } else {
             var message = 'Bitte überprüfen Sie Ihr Eingabeformular';
-            var notification = alertify.notify(message, 'error' ,5, function(){
+            var notification = alertify.notify(message, 'error', 5, function(){
                 
             });
         }

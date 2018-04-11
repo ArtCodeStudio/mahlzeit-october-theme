@@ -79,7 +79,7 @@ items:
             cssClass: team
             isExternal: '0'
     -
-        title: 'Historie & Gallerie'
+        title: 'Historie & Galerie'
         type: url
         url: /historie
         code: ''

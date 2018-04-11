@@ -57,7 +57,7 @@
 @import "components/_index";
 
 
-body /*, #layout-content*/ {
+body {
     height: 100vh;
     overflow-x: auto;
     @extend .scrollbar-primary;

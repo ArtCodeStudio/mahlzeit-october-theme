@@ -26,6 +26,16 @@ rivets.components['global-modal'] = {
     
     var $el = $(el);
     var $modal = $el.find('#modal');
+        
+    $modal.on('show.bs.modal', function (e) {
+        var $body = $('body');
+        var scrollbarWidth = 0;// jumplink.utilities.getScrollbarWidth('scrollbar-primary');
+        setTimeout(function() {
+            $body.css('padding-right', scrollbarWidth + 'px');
+            $('.fixed-top').css('padding-right', scrollbarWidth + 'px');
+        }, 0);
+        controller.debug('show.bs.modal', scrollbarWidth);
+    });
     
     /**
      * global event to show / hide this modal 

@@ -31,49 +31,11 @@ snippetProperties[source][options][] = ""
                         {% endif %}
                     </div>
                 </div>
+                
                 <div class="col-12">
-                    {% if __SELF__.enableCaptcha %}
-                        <div class="form-group md-form">
-                            <div class="g-recaptcha" data-sitekey="{{ __SELF__.siteKey }}"></div>
-                        </div>
-                    {% endif %}
-                    <form class="csontactForm row" role="form"
-                          data-request="onSubmitContact"
-                          data-request-update="'jumplink-forms/confirm': '.confirm-container'">
-                        <div class="col-12">
-                            <div class="confirm-container">
-                                {# This will contain the confirmation when the email is successfully sent #}
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-7">
-                            <div class="form-groups">
-                                <fieldset class="form-group md-form">
-                                    <textarea class="form-control md-textarea" name="message" rows="16" required></textarea>
-                                    <label>Ihre Nachricht</label>
-                                </fieldset>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-5 d-flex flex-column">
-                            <div class="form-groups pt-3">
-                                <div class="form-group md-form">
-                                    <input type="text" class="form-control form-control-success" name="name" required>
-                                    <label>Name</label>
-                                </div>
-                                <div class="form-group md-form">
-                                    <input type="email" class="form-control form-control-warning" name="email" required>
-                                    <label>E-Mail</label>
-                                </div>
-                                <div class="form-group md-form">
-                                    <input type="text" class="form-control form-control-danger" name="phone" required>
-                                    <label>Telefon</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 d-flex flex-column">
-                            <button type="submit" class="btn btn-outline-warning align-self-end">Absenden</button>
-                        </div>
-                    </form>
+                    <contact-form layout="'2-columns'" in-modal="false" request-name="'onSubmitContact'"></contact-form>
                 </div>
+                
             </div>
         </div>
     </header>

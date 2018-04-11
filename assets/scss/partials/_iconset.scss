@@ -338,7 +338,7 @@ a {
     .page-link {
         .iconset {
             &.fill-pagination-color, &.pagination-color {
-                 color: $pagination-disabled-color; }
+                 color: $pagination-disabled-color;
             }
             &.stroke-pagination-color {
                 svg {

@@ -87,7 +87,7 @@ rivets.components['rv-img'] = {
         /** called whenever an element could not be handled */
         onError: function(element) {
             controller.loaded = false;
-            controller.debug('[onError] image "' + controller.src + '" could not be loaded');
+            console.error('[onError] image "' + controller.src + '" could not be loaded');
             if (jumplink.utilities.isFunction(data.onError)) {
                 data.onError($el, controller);
             }

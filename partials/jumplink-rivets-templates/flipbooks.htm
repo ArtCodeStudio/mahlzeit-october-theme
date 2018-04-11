@@ -1,12 +1,12 @@
 [viewBag]
 ==
-<div class="container position-relative pt-5">
-    <div class="row">
+<div class="container pt-5" rv-class-position-relative="background">
+    <div rv-if="background" class="row">
         <div class="col-12 px-0">
             <rv-img src="background" ratio="'2:1'" delay="0"></rv-img>
         </div>
     </div>
-    <div rv-if="ready" class="flipbooks-container position-absolute w-100 row justify-content-center px-md-5">
+    <div rv-if="ready" class="flipbooks-container w-100 row justify-content-center px-md-5" rv-class-position-absolute="background">
         <div class="col" rv-each-book="books">
             <flipbook book="book"></flipbook>
         </div>

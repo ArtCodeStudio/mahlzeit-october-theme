@@ -74,18 +74,20 @@ flipbook {
 	    
 	}
 	
-    .shadow {
-    	-webkit-transition: -webkit-box-shadow 0.5s;
-    	-moz-transition: -moz-box-shadow 0.5s;
-    	-o-transition: -webkit-box-shadow 0.5s;
-    	-ms-transition: -ms-box-shadow 0.5s;
-    
-    	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    	-moz-box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    	-o-box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    	-ms-box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    	box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    	
-    }
+	.with-shadow {
+        .shadow {
+        	-webkit-transition: -webkit-box-shadow 0.5s;
+        	-moz-transition: -moz-box-shadow 0.5s;
+        	-o-transition: -webkit-box-shadow 0.5s;
+        	-ms-transition: -ms-box-shadow 0.5s;
+        
+        	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        	-moz-box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        	-o-box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        	-ms-box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        	box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        	
+        }
+	}
 
 }

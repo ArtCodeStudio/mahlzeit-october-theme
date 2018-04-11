@@ -187,3 +187,53 @@ jumplink.dependencies['jquery-touch-events'] = function() {
     }
   });
 };
+
+/**
+ * Summernote Bootstrap WYSIWYG 
+ * @see https://summernote.org/
+ */
+jumplink.dependencies.summernote = function() {
+  return new Promise(function(resolve, reject) {
+    if (jumplink.utilities.isFunction($().summernote)) {
+      jumplink.debug.dependencies('summernote is already loaded');
+      resolve();
+    } else {
+      jumplink.debug.dependencies('load summernote');
+
+      $.getScript(jumplink.settings.active_theme_path + '/assets/vendor/summernote/dist/summernote-bs4.js')
+        .done(function( script, textStatus ) {
+          jumplink.debug.dependencies(textStatus);
+          resolve(script);
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          jumplink.debug.dependencies(exception);
+          reject(exception);
+      });
+    }
+  });
+};
+
+/**
+ * 
+ * @see https://github.com/jaredreich/pell
+ */
+jumplink.dependencies.pell = function() {
+  return new Promise(function(resolve, reject) {
+    if (typeof(window.pell) !== 'undefined') {
+      jumplink.debug.dependencies('pell is already loaded');
+      resolve(window.pell);
+    } else {
+      jumplink.debug.dependencies('load pell');
+
+      $.getScript(jumplink.settings.active_theme_path + '/assets/vendor/pell/dist/pell.js')
+        .done(function( script, textStatus ) {
+          jumplink.debug.dependencies(textStatus);
+          resolve(window.pell);
+        })
+        .fail(function( jqxhr, settings, exception ) {
+          jumplink.debug.dependencies(exception);
+          reject(exception);
+      });
+    }
+  });
+};

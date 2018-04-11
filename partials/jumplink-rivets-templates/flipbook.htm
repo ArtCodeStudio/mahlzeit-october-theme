@@ -5,7 +5,7 @@
 </div>
 
 <div class="flipbook-zoom-wrapper">
-    <div class="flipbook">
+    <div class="flipbook" rv-class-with-shadow="book.pages | size | gt 2">
         <div rv-each-page="book.pages" class="page">
             {# <img class="img-fluid" rv-src="page.image" rv-alt="page.alt"> #}
             <rv-img src="page.image" ratio="ratio" alt="page.alt" delay="0"></rv-img>

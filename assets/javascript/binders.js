@@ -71,14 +71,20 @@ rivets.binders['pignose-calendar'] = {
  */
 rivets.binders.summernote = {
     bind: function(el) {
-        this.$el = $(el);
-        this.options = this.$el.data('options') || {};
-        
-        this.options.callbacks = {
-            onChange: this.publish
-        };
-        window.jumplink.debug.binders('[summernote] options', this.options);
-        this.$el.summernote(this.options);
+        jumplink.dependencies.summernote()
+        .then(function() {
+            this.$el = $(el);
+            this.options = this.$el.data('options') || {};
+            
+            this.options.callbacks = {
+                onChange: this.publish
+            };
+            window.jumplink.debug.binders('[summernote] options', this.options);
+            this.$el.summernote(this.options);
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
     },
 
     unbind: function(el) {
@@ -96,6 +102,46 @@ rivets.binders.summernote = {
 
     getValue: function(el) {
         var value = this.$el.summernote('code');
+        return value; 
+    }
+};
+
+/**
+ * the simplest and smallest WYSIWYG text editor for web, with no dependencies https://jaredreich.com/pell
+ * @see https://github.com/jaredreich/pell
+ */
+rivets.binders.pell = {
+    bind: function(el) {
+        jumplink.dependencies.pell()
+        .then(function(pell) {
+            this.$el = $(el);
+            this.options = this.$el.data('options') || {};
+            
+            this.options.onChange = this.publish;
+            this.options.element = el;
+            window.jumplink.debug.binders('[pell] options', this.options);
+            pell.init(this.options);
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+    },
+
+    unbind: function(el) {
+        // this.$el.pell('destroy');
+    },
+
+    routine: function(el, newValue) {
+        if (newValue) {
+            var oldValue = this.getValue(el);
+            if(oldValue !== newValue) {
+                this.$el.html(newValue);
+            }
+        }
+    },
+
+    getValue: function(el) {
+        var value = this.$el.html();
         return value; 
     }
 };
@@ -243,7 +289,6 @@ rivets.binders['show-on-url'] = function (el, url) {
     var $el = $(el);
     
     var checkURL = function() {
-        console.log('url changed');
         var pathname = window.jumplink.getCurrentLocation().pathname;
         if(url === pathname) {
             setTimeout(function() {
@@ -269,7 +314,6 @@ rivets.binders['show-global-modal-on-click'] = function (el, data) {
     } catch(e) {
         console.error(e, data);
     }
-    console.log(data);
     $el.on('click', function(event) {
         jumplink.utilities.triggerComponentEvent('global-modal', 'show', null, data);
     });   

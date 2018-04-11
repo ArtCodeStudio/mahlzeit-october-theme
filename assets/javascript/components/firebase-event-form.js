@@ -84,17 +84,24 @@ rivets.components['firebase-event-form'] = {
             
             event.showTimes = event.showTimes === true;
             
+            /**
+             * validate prices
+             * used to update old prices with missing eachAdditionalUnit value
+             */
             if(!jumplink.utilities.isArray(event.prices)) {
                 event.prices = [jumplink.events.getDefaultPrice()];
             }
+            event.prices.forEach(function(price) {
+                price.eachAdditionalUnit = price.eachAdditionalUnit === true;
+            });
             
             /**
              * validate prices
              * used to update old prices with missing eachAdditionalUnit value
              */
-            event.prices.forEach(function(price) {
-                price.eachAdditionalUnit = price.eachAdditionalUnit === true;
-            });
+            if(!jumplink.utilities.isArray(event.notifications)) {
+                event.notifications = [jumplink.events.getDefaultNotification()];
+            }
             
             controller.event = event;
                                     
@@ -178,6 +185,22 @@ rivets.components['firebase-event-form'] = {
         }
     };
     
+    controller.addNotification = function(event, env) {
+        if(!jumplink.utilities.isArray(controller.event.notifications)) {
+            controller.event.notifications = [];
+        }
+        controller.event.notifications.push(jumplink.events.getDefaultNotification());
+    };
+    
+    controller.removeNotification = function(event, env) {
+        if(!jumplink.utilities.isArray(controller.event.notifications)) {
+            controller.event.notifications = [];
+        }
+        if(controller.event.notifications.length > 1) {
+            controller.event.notifications.splice(-1,1);
+        }
+    };
+    
     controller.calcExampleTotal = function(priceObj) {
         var quanity = priceObj.min + 1;
         var total = jumplink.events.calcEventTotal(controller.event, quanity);
@@ -199,7 +222,7 @@ rivets.components['firebase-event-form'] = {
         }
         
         // save or create event with strg + s
-        $(window).undbind('keydown').bind('keydown', function(event) {
+        $(window).unbind('keydown').bind('keydown', function(event) {
             if (event.ctrlKey || event.metaKey) {
                 switch (String.fromCharCode(event.which).toLowerCase()) {
                 // ctrl-s

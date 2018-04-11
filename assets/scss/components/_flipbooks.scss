@@ -3,5 +3,8 @@ flipbooks {
     
     .flipbooks-container {
         bottom: 25px;
+        .col {
+            max-width: 200px;
+        }
     }
 }

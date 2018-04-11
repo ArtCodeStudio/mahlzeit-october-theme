@@ -84,7 +84,7 @@ rivets.components.flipbook = {
                 }, 1000);
             } else {
                 $zoom
-                .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview.y - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
+                .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview['fixed-y'] - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
                 closeFlipbook(flipbookDim);
                 resolve();
             }

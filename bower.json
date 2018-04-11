@@ -51,7 +51,8 @@
     "Vague.js": "vague.js#^0.0.6",
     "dragscroll": "^0.0.8",
     "jquery-touch-events": "master",
-    "bootstrap-material-design": "mdbootstrap/bootstrap-material-design#^4.5.0"
+    "bootstrap-material-design": "mdbootstrap/bootstrap-material-design#^4.5.0",
+    "pell": "jaredreich/pell#^1.0.4"
   },
   "resolutions": {
     "jquery": "2",

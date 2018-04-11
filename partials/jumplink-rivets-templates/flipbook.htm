@@ -15,15 +15,15 @@
 
 <div rv-show="open" class="mask" rv-on-click="closeBook">
     <div class="close-book text-white" rv-on-click="closeBook">
-        {% partial "jumplink-iconset" name="icon_close" color="white" size=32 class="m-2" %}
+        {% partial "jumplink-iconset" name="icon_close" color="text-white" size=32 class="m-2" %}
     </div>
     
     <div rv-hide="currentPageIndex | eq 1" class="prev-page" rv-on-click="prevPage">
-        {% partial "jumplink-iconset" name="arrow_carrot_thin" color="primary" direction="left" size=32 class="m-2" %}
+        {% partial "jumplink-iconset" name="arrow_carrot_thin" color="text-primary" direction="left" size=32 class="m-2" %}
     </div>
     
     <div rv-hide="book.pages | size | eq currentPageIndex" class="next-page" rv-on-click="nextPage">
-        {% partial "jumplink-iconset" name="arrow_carrot_thin" color="primary" direction="right" size=32 class="m-2" %}
+        {% partial "jumplink-iconset" name="arrow_carrot_thin" color="text-primary" direction="right" size=32 class="m-2" %}
     </div>
 
 </div>

@@ -134,12 +134,7 @@
 
     // black
     &.black, &.fill-black {
-        svg {
-            fill: $black !important;
-            * {
-                fill: $black !important;
-            }
-        }
+        color: $black;
     }
     &.stroke-black {
         svg {
@@ -151,12 +146,7 @@
 
     // gray
     &.gray, &.fill-gray {
-        svg {
-            fill: colors('gray') !important;
-            * {
-                fill: colors('gray') !important;
-            }
-        }
+        color: colors('gray');
     }
     &.stroke-gray {
         svg {
@@ -168,12 +158,7 @@
 
     // gray-light
     &.gray-light, &.fill-gray-light {
-        svg {
-            fill: colors('gray-light') !important;
-            * {
-                fill: colors('gray-light') !important;
-            }
-        }
+        color: colors('gray-light');
     }
     &.stroke-gray-light {
         svg {
@@ -185,12 +170,7 @@
 
     // gray-lighter
     &.gray-lighter, &.fill-gray-lighter {
-        svg {
-            fill: colors('gray-lighter') !important;
-            * {
-                fill: colors('gray-lighter')!important;
-            }
-        }
+        color: colors('gray-lighter');
     }
     &.stroke-gray-lighter {
         svg {
@@ -202,12 +182,7 @@
 
     // whote
     &.fill-white, &.white {
-        svg {
-            fill: colors('white') !important;
-            * {
-                fill: colors('white') !important;
-            }
-        }
+        color: colors('white');
     }
     &.stroke-white {
         svg {
@@ -219,12 +194,7 @@
     }
 
     &.fill-primary, &.primary {
-        svg {
-            fill: theme-color('primary') !important;
-            * {
-                fill: theme-color('primary') !important;
-            }
-        }
+        color: theme-color('primary');
     }
     &.stroke-primary {
         svg {
@@ -236,12 +206,7 @@
     }
     
     &.fill-success, &.success {
-        svg {
-            fill: theme-color('success') !important;
-            * {
-                fill: theme-color('success') !important;
-            }
-        }
+        color: theme-color('success');
     }
     &.stroke-success {
         svg {
@@ -253,12 +218,7 @@
     }
     
     &.fill-info, &.info {
-        svg {
-            fill: theme-color('info') !important;
-            * {
-                fill: theme-color('info') !important;
-            }
-        }
+        color: theme-color('info');
     }
     &.stroke-info {
         svg {
@@ -270,12 +230,7 @@
     }
     
     &.fill-warning, &.warning {
-        svg {
-            fill: theme-color('warning') !important;
-            * {
-                fill: theme-color('warning') !important;
-            }
-        }
+        color: theme-color('warning');
     }
     &.stroke-warning {
         svg {
@@ -287,12 +242,7 @@
     }
 
     &.fill-danger, &.danger {
-        svg {
-            fill: theme-color('danger') !important;
-            * {
-                fill: theme-color('danger') !important;
-            }
-        }
+        color: theme-color('danger');
     }
     &.stroke-danger {
         svg {
@@ -308,23 +258,13 @@ a {
     // fill color
     .iconset {
         &.fill-link-color, &.link-color {
-            svg {
-                fill: $link-color !important;
-                * {
-                    fill: $link-color !important;
-                }
-            }
+            color: $link-color;
         }
     }
     &:hover {
         .iconset {
             &.fill-link-color, &.link-color {
-                svg {
-                    fill: $link-hover-color !important;
-                    * {
-                        fill: $link-hover-color !important;
-                    }
-                }
+                color: $link-hover-color;
             }
         }
     }
@@ -358,23 +298,13 @@ a {
     // fill color
     .iconset {
         &.fill-pagination-color, &.pagination-color {
-            svg {
-                fill: $pagination-color !important;
-                * {
-                    fill: $pagination-color !important;
-                }
-            }
+            color: $pagination-color;
         }
     }
     &:hover {
         .iconset {
             &.fill-pagination-color, &.pagination-color {
-                svg {
-                    fill: $pagination-hover-color !important;
-                    * {
-                        fill: $pagination-hover-color !important;
-                    }
-                }
+                color: $pagination-hover-color;
             }
         }
     }
@@ -408,12 +338,7 @@ a {
     .page-link {
         .iconset {
             &.fill-pagination-color, &.pagination-color {
-                svg {
-                    fill: $pagination-disabled-color !important;
-                    * {
-                        fill: $pagination-disabled-color !important;
-                    }
-                }
+                 color: $pagination-disabled-color; }
             }
             &.stroke-pagination-color {
                 svg {

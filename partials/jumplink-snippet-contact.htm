@@ -33,7 +33,7 @@ snippetProperties[source][options][] = ""
                 </div>
                 <div class="col-xs-12">
                     {% if __SELF__.enableCaptcha %}
-                        <div class="form-group">
+                        <div class="form-group md-form">
                             <div class="g-recaptcha" data-sitekey="{{ __SELF__.siteKey }}"></div>
                         </div>
                     {% endif %}
@@ -47,22 +47,26 @@ snippetProperties[source][options][] = ""
                         </div>
                         <div class="col-xs-12 col-md-7">
                             <div class="form-groups">
-                                <fieldset class="form-group">
-                                    <textarea class="form-control" name="message" rows="16" required placeholder="Ihre Nachricht ..."></textarea>
+                                <fieldset class="form-group md-form">
+                                    <textarea class="form-control md-textarea" name="message" rows="16" required></textarea>
+                                    <label>Ihre Nachricht</label>
                                 </fieldset>
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-5 d-flex flex-column">
-                            <button type="submit" class="btn btn-outline-dark align-self-end d-none d-md-block">Absenden</button>
+                            <button type="submit" class="btn btn-outline-warning align-self-end d-none d-md-block">Absenden</button>
                             <div class="form-groups pt-3">
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-success" name="name" required placeholder="Name">
+                                <div class="form-group md-form">
+                                    <input type="text" class="form-control form-control-success" name="name" required>
+                                    <label>Name</label>
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-warning" name="email" required placeholder="E-Mail">
+                                <div class="form-group md-form">
+                                    <input type="email" class="form-control form-control-warning" name="email" required>
+                                    <label>E-Mail</label>
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-danger" name="phone" required placeholder="Telefon">
+                                <div class="form-group md-form">
+                                    <input type="text" class="form-control form-control-danger" name="phone" required>
+                                    <label>Telefon</label>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-outline-dark align-self-end d-block d-lg-none">Absenden</button>

@@ -1107,6 +1107,58 @@ form:
                 default: 3
                 tab: 'Bootstrap'
                 assetVar: spacer_factor_5
+            # Body
+            bs4-body_section:
+                label: 'Body'
+                type: section
+                cssClass: without-line
+                comment: Settings for the `<body>` element.
+                commentHtml: true
+                tab: Bootstrap
+            bs4-body-bg:
+                type: text
+                label: body-bg
+                default: $white
+                tab: 'Bootstrap'
+                assetVar: body-bg
+            bs4-body-color:
+                type: text
+                label: body-color
+                default: $gray-900
+                tab: 'Bootstrap'
+                assetVar: body-color
+            # Links
+            bs4-links_section:
+                label: 'Links'
+                type: section
+                cssClass: without-line
+                comment: Style anchor elements.
+                commentHtml: true
+                tab: Bootstrap
+            bs4-link-color:
+                type: text
+                label: link-color
+                default: theme-color("primary")
+                tab: 'Bootstrap'
+                assetVar: link-color
+            bs4-link-decoration:
+                type: text
+                label: link-decoration
+                default: none
+                tab: 'Bootstrap'
+                assetVar: link-decoration
+            bs4-link-hover-color:
+                type: text
+                label: link-hover-color
+                default: darken($link-color, 15%)
+                tab: 'Bootstrap'
+                assetVar: link-hover-color
+            bs4-link-hover-decoration:
+                type: text
+                label: link-hover-decoration
+                default: underline
+                tab: 'Bootstrap'
+                assetVar: link-hover-decoration
             # Components
             bs4-components_section:
                 label: 'Components'
@@ -1213,6 +1265,193 @@ form:
                 default: -SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
                 tab: 'Bootstrap'
                 assetVar: font-family-monospace
+            # Tables
+            bs4-tables_forms_section:
+                label: 'Tables'
+                type: section
+                cssClass: without-line
+                comment: Customizes the `.table` component with basic values, each used across all table variations.
+                commentHtml: true
+                tab: Bootstrap
+            # Buttons + Forms
+            bs4-buttons_forms_section:
+                label: 'Buttons + Forms'
+                type: section
+                cssClass: without-line
+                comment: Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
+                commentHtml: true
+                tab: Bootstrap
+            # Buttons
+            bs4-buttons_section:
+                label: 'Buttons'
+                type: section
+                cssClass: without-line
+                comment: For each of Bootstrap's buttons, define text, background, and border color.
+                commentHtml: true
+                tab: Bootstrap
+            # Forms
+            bs4-input-padding-y:
+                label: 'input-padding-y'
+                type: text
+                default: $input-btn-padding-y
+                tab: Bootstrap
+                assetVar: input-padding-y
+            bs4-input-padding-x:
+                label: 'input-padding-x'
+                type: text
+                default: $input-btn-padding-x
+                tab: Bootstrap
+                assetVar: input-padding-x
+            bs4-input-line-height:
+                label: 'input-line-height'
+                type: text
+                default: $input-btn-line-height
+                tab: Bootstrap
+                assetVar: input-line-height
+            bs4-input-padding-y-sm:
+                label: 'input-padding-y-sm'
+                type: text
+                default: $input-btn-padding-y-sm
+                tab: Bootstrap
+                assetVar: input-padding-y-sm
+            bs4-input-padding-x-sm:
+                label: 'input-padding-x-sm'
+                type: text
+                default: $input-btn-padding-x-sm
+                tab: Bootstrap
+                assetVar: input-padding-x-sm
+            bs4-input-line-height-sm:
+                label: 'input-line-height-sm'
+                type: text
+                default: $input-btn-line-height-sm
+                tab: Bootstrap
+                assetVar: input-line-height-sm
+            bs4-input-padding-y-lg:
+                label: 'input-padding-y-lg'
+                type: text
+                default: $input-btn-padding-y-lg
+                tab: Bootstrap
+                assetVar: input-padding-y-lg
+            bs4-input-padding-x-lg:
+                label: 'input-padding-x-lg'
+                type: text
+                default: $input-btn-padding-x-lg
+                tab: Bootstrap
+                assetVar: input-padding-x-lg
+            bs4-input-line-height-lg:
+                label: 'input-line-height-lg'
+                type: text
+                default: $input-btn-line-height-lg
+                tab: Bootstrap
+                assetVar: input-line-height-lg
+            bs4-input-bg:
+                label: 'input-bg'
+                type: text
+                default: $white
+                tab: Bootstrap
+                assetVar: input-bg
+            bs4-input-disabled-bg:
+                label: 'input-disabled-bg'
+                type: text
+                default: '$gray-200'
+                tab: Bootstrap
+                assetVar: input-disabled-bg
+            bs4-input-color:
+                label: 'input-color'
+                type: text
+                default: '$gray-700'
+                tab: Bootstrap
+                assetVar: input-color
+            bs4-input-border-color:
+                label: 'input-border-color'
+                type: text
+                default: '$gray-400'
+                tab: Bootstrap
+                assetVar: input-border-color
+            bs4-input-border-width:
+                label: 'input-border-width'
+                type: text
+                default: $input-btn-border-width
+                tab: Bootstrap
+                assetVar: input-border-width
+            bs4-input-box-shadow:
+                label: 'input-box-shadow'
+                type: text
+                default: inset 0 1px 1px rgba($black, .075)
+                tab: Bootstrap
+                assetVar: input-box-shadow
+            bs4-input-border-radius:
+                label: 'input-border-radius'
+                type: text
+                default: $border-radius
+                tab: Bootstrap
+                assetVar: input-border-radius
+            bs4-input-border-radius-lg:
+                label: 'input-border-radius-lg'
+                type: text
+                default: $border-radius-lg
+                tab: Bootstrap
+                assetVar: input-border-radius-lg
+            bs4-input-border-radius-sm:
+                label: 'input-border-radius-sm'
+                type: text
+                default: $border-radius-sm
+                tab: Bootstrap
+                assetVar: input-border-radius-sm
+            bs4-input-focus-bg:
+                label: 'input-focus-bg'
+                type: text
+                default: $input-bg
+                tab: Bootstrap
+                assetVar: input-focus-bg
+            bs4-input-focus-border-color:
+                label: 'input-focus-border-color'
+                type: text
+                default: lighten($component-active-bg, 25%)
+                tab: Bootstrap
+                assetVar: input-focus-border-color
+            bs4-input-focus-color:
+                label: 'input-focus-color'
+                type: text
+                default: $input-color
+                tab: Bootstrap
+                assetVar: input-focus-color
+            bs4-input-focus-width:
+                label: 'input-focus-width'
+                type: text
+                default: $input-btn-focus-width
+                tab: Bootstrap
+                assetVar: input-focus-width
+            bs4-input-focus-box-shadow:
+                label: 'input-focus-box-shadow'
+                type: text
+                default: $input-btn-focus-box-shadow
+                tab: Bootstrap
+                assetVar: input-focus-box-shadow
+            bs4-input-placeholder-color:
+                label: 'input-placeholder-color'
+                type: text
+                default: $gray-600
+                tab: Bootstrap
+                assetVar: input-placeholder-color
+            bs4-input-height-border:
+                label: 'input-height-border'
+                type: text
+                default: $input-border-width * 2
+                tab: Bootstrap
+                assetVar: input-height-border
+            # Dropdowns
+            bs4-dropdowns_section:
+                label: 'Dropdowns'
+                type: section
+                cssClass: without-line
+                tab: Bootstrap
+            # Z-index master list
+            bs4-zindex_section:
+                label: 'Z-index master list'
+                type: section
+                cssClass: without-line
+                tab: Bootstrap
             # Navs
             bs4-nav_section:
                 label: 'Navs'

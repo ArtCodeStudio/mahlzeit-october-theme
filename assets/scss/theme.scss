@@ -1,11 +1,12 @@
-// bootstrap 4 compatible with the scss version of octobercms
+@charset "UTF-8";
+
 @import '../vendor/bootstrap/scss/functions';
 
 // overwrite variables only for this theme 
-@import "theme-variables";
+@import "variables";
 
 // variables we neeed for all other scss files
-@import "variables";
+@import "bootstrap-variables";
 
 // browser prefixes rendered in scss
 @import '../vendor/sass-prefix-mixins/scss/prefixes';
@@ -18,8 +19,6 @@
 
 // fixes for bootstrap we nee
 @import 'fixes';
-
-
 
 @import "mixins";
 
@@ -57,9 +56,6 @@
 @import "partials/_index";
 @import "extensions/_index";
 @import "components/_index";
-
-// overwrite styles only for this theme 
-@import "theme-customisations";
 
 
 body /*, #layout-content*/ {

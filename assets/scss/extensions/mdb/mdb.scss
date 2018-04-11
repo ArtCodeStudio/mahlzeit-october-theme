@@ -1,0 +1,63 @@
+/*!
+ * Material Design for Bootstrap 4
+ * Version: MDB FREE 4.5.0
+ *
+ *
+ * Copyright: Material Design for Bootstrap
+ * https://mdbootstrap.com/
+ *
+ * Read the license: https://mdbootstrap.com/license/
+ *
+ *
+ * Documentation: https://mdbootstrap.com/
+ *
+ * Getting started: https://mdbootstrap.com/getting-started/
+ *
+ * Tutorials: https://mdbootstrap.com/bootstrap-tutorial/
+ *
+ * Templates: https://mdbootstrap.com/templates/
+ *
+ * Support: https://mdbootstrap.com/support/
+ *
+ * Contact: office@mdbootstrap.com
+ *
+ * Atribution: Animate CSS, Twitter Bootstrap, Materialize CSS, Normalize CSS, Waves JS, WOW JS, Toastr, Chart.js , Hammer.js
+ *
+ */
+
+@charset "UTF-8";
+
+
+// @import '../vendor/bootstrap-material-design/scss/mdb';
+
+// Bootstrap
+@import "../../../vendor/bootstrap-material-design/scss/core/bootstrap/functions";
+@import "../../../vendor/bootstrap-material-design/scss/core/bootstrap/variables";
+
+// CORE
+@import "../../../vendor/bootstrap-material-design/scss/core/mixins";
+@import "colors"; // @import "../vendor/bootstrap-material-design/scss/core/colors";
+@import "variables"; // @import "../vendor/bootstrap-material-design/scss/core/variables";
+@import "../../../vendor/bootstrap-material-design/scss/core/global";
+@import "../../../vendor/bootstrap-material-design/scss/core/helpers";
+// @import "../../../vendor/bootstrap-material-design/scss/core/typography";
+@import "../../../vendor/bootstrap-material-design/scss/core/masks";
+@import "../../../vendor/bootstrap-material-design/scss/core/waves";
+
+// FREE
+@import "../../../vendor/bootstrap-material-design/scss/free/animations-basic";
+@import "../../../vendor/bootstrap-material-design/scss/free/animations-extended";
+// @import "../../../vendor/bootstrap-material-design/scss/free/buttons";
+// @import "../../../vendor/bootstrap-material-design/scss/free/cards";
+// @import "../../../vendor/bootstrap-material-design/scss/free/dropdowns";
+// @import "../../../vendor/bootstrap-material-design/scss/free/navbars";
+// @import "../../../vendor/bootstrap-material-design/scss/free/pagination";
+// @import "../../../vendor/bootstrap-material-design/scss/free/badges";
+@import "../../../vendor/bootstrap-material-design/scss/free/modals";
+// @import "../../../vendor/bootstrap-material-design/scss/free/carousels";
+@import "../../../vendor/bootstrap-material-design/scss/free/forms";
+@import "../../../vendor/bootstrap-material-design/scss/free/input-group";
+// @import "../../../vendor/bootstrap-material-design/scss/free/msc";
+// @import "../../../vendor/bootstrap-material-design/scss/free/footers";
+// @import "../../../vendor/bootstrap-material-design/scss/free/list-group";
+// @import "../../../vendor/bootstrap-material-design/scss/free/tables";

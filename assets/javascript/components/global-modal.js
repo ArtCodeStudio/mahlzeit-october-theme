@@ -6,24 +6,23 @@
  * The data param should have title, body, ..
  * 
  * @events
- *  * rivets:global-modal (event, show, data)
+ *  * rivets:global-modal:show (event, data)
  */
 rivets.components['global-modal'] = {
 
   template: function() {
-    // return $('template#global-modal').html();
     return jumplink.templates['global-modal'];
   },
 
   initialize: function(el, data) {
     var controller = this;
     controller.debug = debug('rivets:global-modal');
-    controller.debug('initialize', el, data);
+    controller.debug('initialize', controller, el, data);
     
-    controller.data = {
-        title: '',
-        body: '',
-    };
+    controller.title = '';
+    controller.body = '';
+    
+    controller.width = 'lg'; // sm | md | lg
     
     var $el = $(el);
     var $modal = $el.find('#modal');
@@ -32,15 +31,34 @@ rivets.components['global-modal'] = {
      * global event to show / hide this modal 
      * 
      */
-    $(document).bind('rivets:global-modal', function (event, show, data) {
-        if(show) {
-            controller.data = data;
-            controller.debug('show', event, show, data, controller.data);
-            controller.show(event, controller);
+    var showEvent = jumplink.utilities.getComponentEventName('global-modal', 'show', data.handle);
+    controller.debug('showEvent', showEvent);
+    $(document).bind(showEvent, function (event, data) {        
+        controller.debug('['+showEvent+']', event, data);
+        
+        if(data.title) {
+            controller.title = data.title;
         } else {
-            controller.hide(event, controller);
+            controller.title = '';
         }
         
+        if(data.templateName) {
+            controller.body = jumplink.templates[data.templateName];
+        } else {
+            controller.body = data.template;
+        }
+        
+        rivets.bind($el.find('.modal-body').children(), data);
+        
+        controller.debug('show', event, data, controller.data);
+        controller.show(event, controller);
+    });
+    
+    var hideEvent = jumplink.utilities.getComponentEventName('global-modal', 'hide', data.handle);
+    controller.debug('hideEvent', hideEvent);
+    $(document).bind(hideEvent, function (event, data) {
+        controller.debug('['+hideEvent+']', event, data);
+        controller.hide(event, controller);
     });
     
     $modal.modal({
@@ -56,7 +74,7 @@ rivets.components['global-modal'] = {
     };
     
     controller.show = function(event, controller) {
-        controller.debug('show', controller.data);
+       controller.debug('show', controller.data);
        $modal.modal('show');
     };
     

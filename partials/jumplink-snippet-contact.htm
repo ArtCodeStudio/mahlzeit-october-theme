@@ -20,7 +20,7 @@ snippetProperties[source][options][] = ""
     <header class="py-3">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-12">
                     <h2 class="">{{headertext}}</h2>
                     {% if source %}
                         <img class="center-block p-b-2" src="{{source | media}}">
@@ -31,7 +31,7 @@ snippetProperties[source][options][] = ""
                         {% endif %}
                     </div>
                 </div>
-                <div class="col-xs-12">
+                <div class="col-12">
                     {% if __SELF__.enableCaptcha %}
                         <div class="form-group md-form">
                             <div class="g-recaptcha" data-sitekey="{{ __SELF__.siteKey }}"></div>
@@ -40,12 +40,12 @@ snippetProperties[source][options][] = ""
                     <form class="csontactForm row" role="form"
                           data-request="onSubmitContact"
                           data-request-update="'jumplink-forms/confirm': '.confirm-container'">
-                        <div class="col-xs-12">
+                        <div class="col-12">
                             <div class="confirm-container">
                                 {# This will contain the confirmation when the email is successfully sent #}
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-7">
+                        <div class="col-12 col-md-7">
                             <div class="form-groups">
                                 <fieldset class="form-group md-form">
                                     <textarea class="form-control md-textarea" name="message" rows="16" required></textarea>
@@ -53,8 +53,7 @@ snippetProperties[source][options][] = ""
                                 </fieldset>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-5 d-flex flex-column">
-                            <button type="submit" class="btn btn-outline-warning align-self-end d-none d-md-block">Absenden</button>
+                        <div class="col-12 col-md-5 d-flex flex-column">
                             <div class="form-groups pt-3">
                                 <div class="form-group md-form">
                                     <input type="text" class="form-control form-control-success" name="name" required>
@@ -69,7 +68,9 @@ snippetProperties[source][options][] = ""
                                     <label>Telefon</label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-outline-dark align-self-end d-block d-lg-none">Absenden</button>
+                        </div>
+                        <div class="col-12 d-flex flex-column">
+                            <button type="submit" class="btn btn-outline-warning align-self-end">Absenden</button>
                         </div>
                     </form>
                 </div>

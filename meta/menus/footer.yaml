@@ -41,26 +41,22 @@ items:
             isExternal: '0'
     -
         title: 'Gutschein schenken'
-        nesting: ''
-        type: url
-        url: /gutschein
+        nesting: '0'
+        type: static-page
         code: ''
-        reference: ''
-        cmsPage: ''
-        replace: ''
+        reference: gutschein-am-meer
+        replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: Gutschein
             isExternal: '0'
     -
         title: 'Tisch reservieren'
-        nesting: ''
-        type: url
-        url: '/Tisch reservieren'
+        nesting: '0'
+        type: static-page
         code: ''
-        reference: ''
-        cmsPage: ''
-        replace: ''
+        reference: tisch-reservieren
+        replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: tisch-reservieren
@@ -80,9 +76,13 @@ items:
             isExternal: '0'
     -
         title: Team
+        nesting: ''
         type: url
         url: /team
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: team

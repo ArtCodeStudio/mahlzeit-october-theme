@@ -1,18 +1,26 @@
 [viewBag]
 ==
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div 
+    class="modal-dialog modal-dialog-centered modal-notify modal-primary"
+    role="document"
+    rv-class-modal-xs="width | eq 'xs'"
+    rv-class-modal-sm="width | eq 'sm'"
+    rv-class-modal-lg="width | eq 'lg'"
+  >
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle" rv-text="data.title"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <h5 class="modal-title" id="modalTitle" rv-text="title"></h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          {% partial "jumplink-iconset" name="icon_close" size=32 class="m-0" %}
         </button>
       </div>
-      <div class="modal-body" rv-html="data.body"></div>
+      <div class="modal-body" rv-html="body"></div>
+      {#
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Schließen</button>
       </div>
+      #}
     </div>
   </div>
 </div>

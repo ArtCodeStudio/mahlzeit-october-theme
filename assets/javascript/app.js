@@ -272,7 +272,6 @@ var initStaticRivets = function() {
     .then(function(platform) {
         window.jumplink.model = window.jumplink.model || {};
         window.jumplink.model.platform = platform;
-        console.log('BIND RIVETS');
         rivets.bind($('#rivets-content-top'), window.jumplink.model);
         rivets.bind($('#rivets-content-bottom'), window.jumplink.model);
         

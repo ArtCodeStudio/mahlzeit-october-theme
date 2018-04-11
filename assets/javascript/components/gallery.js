@@ -102,6 +102,7 @@ rivets.components.gallery = {
         var scrollDirection = 1;
         var jumps = 5;
         var stop = false;
+        var delay = 100;
         var position = $slideScrollbar.scrollLeft();
         var maxScrollWidth = $slideScrollbar.prop('scrollWidth') - $slideScrollbar.outerWidth();
         var scroll = function (position) {
@@ -122,10 +123,10 @@ rivets.components.gallery = {
                 scrollDirection = -1;
             }
             
-            $slideScrollbar.animate({scrollLeft: position}, 100);
+            $slideScrollbar.animate({scrollLeft: position}, delay);
             var scrollDelay = setTimeout(function() {
                 scroll(position);
-            }, 100); // scrolls every 100 milliseconds
+            }, delay); // scrolls every 100 milliseconds
         };
         scroll(position);
         $slideScrollbar.off('mouseenter mouseover').on('mouseenter mouseover', function() {

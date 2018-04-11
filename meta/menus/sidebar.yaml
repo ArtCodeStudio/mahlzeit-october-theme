@@ -43,8 +43,10 @@ items:
         title: 'Tisch reservieren'
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
-        reference: kontaktformular
+        reference: tisch-reservieren
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -54,8 +56,10 @@ items:
         title: 'Schenken Sie Genuss'
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
-        reference: kontaktformular
+        reference: gutschein-am-meer
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -63,15 +67,19 @@ items:
             isExternal: '0'
     -
         title: Team
+        nesting: ''
         type: url
         url: /team
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: team
             isExternal: '0'
     -
-        title: Historie
+        title: 'Historie & Gallerie'
         type: url
         url: /historie
         code: ''

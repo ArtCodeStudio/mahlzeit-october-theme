@@ -26,12 +26,31 @@ jumplink.utilities.triggerResize = function () {
     window.dispatchEvent(new Event('resize'));
 };
 
-jumplink.utilities.getOpenPhotoswipeComponentEventName = function (handle) {
-    var openEvent = 'rivets:photoswipe:open';
-    if(handle) {
-        openEvent = openEvent+':'+handle;
+jumplink.utilities.getComponentEventName = function (componentName, eventName, handle) {
+    var event = 'rivets';
+    
+    if(componentName) {
+        event = event+':'+componentName;
     }
-    return openEvent;
+    
+    if(eventName) {
+        event = event+':'+eventName;
+    }
+    
+    if(handle) {
+        event = event+':'+handle;
+    }
+    return event;
+};
+
+jumplink.utilities.triggerComponentEvent = function(componentName, eventName, handle, dataArray) {
+    var event = jumplink.utilities.getComponentEventName(componentName, eventName, handle);
+    jumplink.debug.utilities('trigger event', event);
+    $.event.trigger(event, dataArray);
+};
+
+jumplink.utilities.getOpenPhotoswipeComponentEventName = function (handle) {
+    return jumplink.utilities.getComponentEventName('photoswipe', 'open', handle);
 };
 
 jumplink.utilities.openPhotoSwipe = function(handle, $imagesWrapper, index, images) {

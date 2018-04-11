@@ -1,0 +1,46 @@
+[viewBag]
+==
+<form class="contactForm row needs-validation" role="form" novalidate
+      {# data-request="onSubmitContact" #}
+      {# data-request-update="'jumplink-forms/confirm': '.confirm-container'" #}
+>
+    <div class="col-12">
+        <div class="confirm-container">
+            {# This will contain the confirmation when the email is successfully sent #}
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-groups">
+            <div class="form-group md-form">
+                <input type="text" class="form-control" name="name" rv-value="form.name" rv-class-is-invalid="validation.name.error" rv-class-is-valid="validation.name.error | not">
+                <label>Name</label>
+                <div class="invalid-feedback" rv-html="validation.name.error"></div>
+            </div>
+            <div class="form-group md-form">
+                <input type="email" class="form-control" name="email" rv-value="form.email" rv-class-is-invalid="validation.email.error" rv-class-is-valid="validation.email.error | not">
+                <label>E-Mail</label>
+                <div class="invalid-feedback" rv-html="validation.email.error"></div>
+            </div>
+            <div class="form-group md-form">
+                <input type="text" class="form-control" name="phone" rv-value="form.phone" rv-class-is-invalid="validation.phone.error" rv-class-is-valid="validation.phone.error | not">
+                <label>Telefon</label>
+                <div class="invalid-feedback" rv-html="validation.phone.error"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-groups">
+            <fieldset class="form-group md-form">
+                <textarea class="form-control md-textarea" name="message" rows="5" rv-value="form.message" rv-class-is-invalid="validation.message.error" rv-class-is-valid="validation.message.error | not"></textarea>
+                <label>Ihre Nachricht</label>
+                <div class="invalid-feedback">
+                    <span rv-show="form.message | size | lt 50">Noch mindestens {form.message | size | minus 50 | times -1} Zeichen</span>
+                    <span rv-html="validation.message.error"></span>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="col-12 d-flex flex-column">
+        <button type="button" class="btn btn-outline-warning align-self-end" rv-on-click="submit">Absenden</button>
+    </div>
+</form>

@@ -107,33 +107,92 @@ function onReguestEvent() {
                 {% partial 'jumplink-footer' %}
                 
                 {# Tisch reservieren (ab md) #}
-                <a rv-fixed-lower-edge="'#main-navbar'" rv-show-on-url="'/'" href="{{'termine-neu' | staticPage}}" class="swing-7deg" style="right: 50px; top: -1000px;  width: 200px; z-index: 1;">
+                <a
+                    rv-fixed-lower-edge="'#main-navbar'"
+                    rv-show-on-url="'/'"
+                    rv-show-global-modal-on-click='"{"templateName": "tisch-reservieren"}"'
+                    class="swing-7deg" style="right: 50px; top: -1000px;  width: 200px; z-index: 1;
+                ">
                     <img class="img-fluid d-none d-md-block" src="{{'assets/images/swing/reservieren.svg' | theme}}" alt="Reservieren Schild" >
                 </a>
                 
                 {# Tisch reservieren (bis sm) #}
-                <a rv-absolute-lower-edge="'#home-line hr'" rv-show-on-url="'/'" href="{{'termine-neu' | staticPage}}" class="swing-7deg" style="display: none; right: 50px; top: -1000px; width: 200px; z-index: 1;">
+                <a
+                    rv-absolute-lower-edge="'#home-line hr'"
+                    rv-show-on-url="'/'"
+                    rv-show-global-modal-on-click='"{"templateName": "tisch-reservieren"}"'
+                    class="swing-7deg"
+                    style="display: none; right: 50px; top: -1000px; width: 200px; z-index: 1;"
+                >
                     <img class="img-fluid d-block d-md-none" src="{{'assets/images/swing/reservieren.svg' | theme}}" alt="Reservieren Schild" >
                 </a>
                 
-                
-                <a rv-absolute-lower-edge="'#location-end hr'" rv-show-on-url="'/location'" href="{{'kontaktformular' | staticPage}}" class="swing-7deg" style="display: none; right: 20vw; top: -1000px; width: 200px; z-index: 1;">
-                    <img class="img-fluid" src="{{'assets/images/swing/genuss.svg' | theme}}" alt="Genuss verschenken Schild" >
-                </a>
-                
                 {# Täglich geöffnet (ab md) #}
-                <a rv-fixed-lower-edge="'#main-navbar'" rv-show-on-url="'/speisen'" class="swing-7deg" style="display: none; left: 100px; top: -1000px; width: 200px; z-index: 1;">
+                <a
+                    rv-fixed-lower-edge="'#main-navbar'"
+                    rv-show-on-url="'/speisen'"
+                    class="swing-7deg"
+                    style="display: none; left: 100px; top: -1000px; width: 200px; z-index: 1;"
+                >
                     <img class="img-fluid d-none d-md-block" src="{{'assets/images/swing/geoeffnet.svg' | theme}}" alt="Täglich geöffnet Schild" >
                 </a>
                 
                 {# Täglich geöffnet (bis sm) #}
-                <a rv-absolute-top-edge="'.jumplink-footer .footer-background'" rv-show-on-url="'/speisen'" class="swing-7deg" style="display: none; right: 0; top: -1000px; width: 200px; z-index: 1;">
+                <a
+                    rv-absolute-top-edge="'.jumplink-footer .footer-background'"
+                    class="swing-7deg"
+                    style="display: none; right: 0; top: -1000px; width: 200px; z-index: 1;"
+                >
                     <img class="img-fluid d-block d-md-none" src="{{'assets/images/swing/geoeffnet.svg' | theme}}" alt="Täglich geöffnet Schild" >
                 </a>
                 
-                <a rv-absolute-top-edge="'.jumplink-footer .footer-background'" rv-show-on-url="'/events'" href="{{'kontaktformular' | staticPage}}" class="swing-7deg" style="display: none; left: 100px; top: -1000px; width: 200px; z-index: 1;">
+                {# Jeden Tag Frühstücksbugget #}
+                <a
+                    rv-absolute-lower-edge="'#speisen-line hr'"
+                    rv-show-on-url="'/speisen'"
+                    rv-show-global-modal-on-click='"{"templateName": "fruestueck"}"'
+                    class="swing-7deg"
+                    style="display: none; left: 28vw; top: -1000px; width: 200px; z-index: 1;"
+                >
+                    <img class="img-fluid" src="{{'assets/images/swing/fruestueck.svg' | theme}}" alt="Jeden Tag Frühstücksbugget Schild" >
+                </a>
+                
+                {# Genuss verschenken #}
+                <a
+                    rv-absolute-lower-edge="'#location-end hr'"
+                    rv-show-on-url="'/location'"
+                    rv-show-global-modal-on-click='"{"templateName": "genuss-verschenken"}"'
+                    class="swing-7deg"
+                    style="display: none; right: 30vw; top: -10000px; width: 200px; z-index: 1;"
+                >
                     <img class="img-fluid" src="{{'assets/images/swing/genuss.svg' | theme}}" alt="Genuss verschenken Schild" >
                 </a>
+                
+                {# Location buchen #}
+                <a
+                    rv-absolute-top-edge="'.jumplink-footer .footer-background'"
+                     rv-show-on-url="'/events'"
+                    rv-show-global-modal-on-click='"{"templateName": "location-buchen"}"'
+                    class="swing-7deg"
+                    style="display: none; left: 100px; top: -1000px; width: 200px; z-index: 1;"
+                >
+                    <img class="img-fluid" src="{{'assets/images/swing/location.svg' | theme}}" alt="Location buchen Schild" >
+                </a>
+                
+                {# Speisekarten ansehen #}
+                <a
+                    rv-absolute-lower-edge="'#contact-line hr'"
+                    rv-show-on-url="'/kontakt'"
+                    href="{{'kreative-werkstatt' | staticPage}}"
+                    class="swing-7deg"
+                    style="display: none; left: 30vw; top: -1000px; width: 200px; z-index: 1;"
+                >
+                    <img class="img-fluid" src="{{'assets/images/swing/speisekarten.svg' | theme}}" alt="Speisekarten ansehen Schild" >
+                </a>
+                
+                
+                
+                <global-modal></global-modal>
             </div>
             
         </div>

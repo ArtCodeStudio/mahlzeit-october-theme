@@ -16,11 +16,6 @@ rivets.components['firebase-event-form'] = {
     controller.debug('initialize', el, data);
     
     var $el = $(el);
-    var db = firebase.firestore();
-    
-    var dbEvents = db.collection('customerDomains').doc(jumplink.firebase.config.customerDomain).collection('events');
-    var $eventDesc = $(el).find('#eventDesc');
-    var $eventNote = $(el).find('#eventNote');    
     
     controller.showTimesChanged = function(showTimes) {
         controller.debug('showTimesChanged', showTimes);
@@ -44,18 +39,13 @@ rivets.components['firebase-event-form'] = {
     
     controller.similarEvents = [];
     
-    // TODO save in own db
-    controller.calendars = [
-        {id:1, label: 'Watt', value: 'Watt'},
-        {id:2, label: 'Land', value: 'Land'},
-        {id:3, label: 'Fluss', value: 'Fluss'},
-        {id:4, label: 'Spezial', value: 'Spezial'},
-    ];
+    controller.calendars = [];
+    controller.calendarSelectValues = [];
     
     // TODO save types in own db
     controller.types = [
-        {id:1, label: 'öffentliche Führung', value: 'fix'},
-        {id:2, label: 'Führung anfragen', value: 'variable'},
+        {id:1, label: 'Fester Termin', value: 'fix'},
+        {id:2, label: 'Variabler Termin', value: 'variable'},
     ];
             
     // watch for upload event from :file-upload component
@@ -79,10 +69,10 @@ rivets.components['firebase-event-form'] = {
             event.endTimeAt = moment(event.endAt).format('HH:mm');
             event.endAt = moment(event.endAt).minute(0).hour(0).format('YYYY-MM-DD');
                         
-            event.active = event.active === true;
+            event.active = !!event.active;
             jumplink.utilities.setCheckboxValue('#eventActive', event.active);
             
-            event.showTimes = event.showTimes === true;
+            event.showTimes = !!event.showTimes;
             
             /**
              * validate prices
@@ -92,8 +82,12 @@ rivets.components['firebase-event-form'] = {
                 event.prices = [jumplink.events.getDefaultPrice()];
             }
             event.prices.forEach(function(price) {
-                price.eachAdditionalUnit = price.eachAdditionalUnit === true;
+                price.eachAdditionalUnit = !!price.eachAdditionalUnit;
             });
+            
+            if(!event.calendar) {
+                event.calendar = controller.calendarSelectValues[0].value;
+            }
             
             /**
              * validate prices
@@ -116,22 +110,18 @@ rivets.components['firebase-event-form'] = {
             });
         })
         .catch(function(error) {
-            var title = 'Ereignis konnte nicht geladen werden';
-            alertify.alert(title, error.message, function(){
-            
-            });
+            var title = 'Ereignis konnte nicht geladen werden.';
+            alertify.alert(title, error.message);
             controller.debug('error', error);
         });
     };
     
-    controller.updateEvent = function(event) {        
+    controller.updateEvent = function() {        
         return jumplink.events.update(controller.id, controller.event, controller.uploadedImages)
         .then(function() {
             controller.uploadedImages = [];
             var message = 'Ereignis erfolgreich aktualisiert';
-            var notification = alertify.notify(message, 'success' ,5, function(){
-                // console.log('dismissed');
-            });
+            alertify.notify(message, 'success', 5);
             
             controller.debug(message);
             return getEvent(controller.id);
@@ -139,9 +129,7 @@ rivets.components['firebase-event-form'] = {
         .catch(function(error) {
             console.error('error', error);
             var title = 'Ereignis konnte nicht aktualisiert werden';
-            alertify.alert(title, error.message, function(){
-            
-            });
+            alertify.alert(title, error.message);
         });
     };
     
@@ -209,51 +197,68 @@ rivets.components['firebase-event-form'] = {
     
 
     var ready = function() {
-        /**
-         *  Set default values or get event by id
-         */
-        if(controller.id) {
-            getEvent(controller.id)
-            .then(function() {
-                controller.debug('ready');
-            });
-        } else {
-            controller.event = jumplink.events.getDefaultValues(controller.calendars, controller.types);
-        }
         
-        // save or create event with strg + s
-        $(window).unbind('keydown').bind('keydown', function(event) {
-            if (event.ctrlKey || event.metaKey) {
-                switch (String.fromCharCode(event.which).toLowerCase()) {
-                // ctrl-s
-                case 's':
-                    event.preventDefault();
-                    controller.debug('ctrl-s');
-                    if(controller.id) {
-                        controller.updateEvent();
-                    } else {
-                        controller.createEvent();
-                    }
-                    break;
-                case 'f':
-                    // event.preventDefault();
-                    controller.debug('ctrl-f');
-                    break;
-                case 'g':
-                    // event.preventDefault();
-                    controller.debug('ctrl-g');
-                    break;
-                }
+        jumplink.events.getCalendars()
+        .then(function(calendars) {
+            controller.debug('calendars', calendars);
+            controller.calendarSelectValues = [];
+            controller.calendars = calendars;
+            
+            calendars.forEach(function(calendar, index) {
+                controller.debug('calendar', calendar);
+                controller.calendarSelectValues.push({
+                    id: calendar.id,
+                    label: calendar.name,
+                    value: calendar.handle,
+                });
+            });
+            
+            controller.debug('calendarSelectValues', controller.calendarSelectValues);
+            
+            /**
+             *  Set default values or get event by id
+             */
+            if(controller.id) {
+                return getEvent(controller.id);
+            } else {
+                controller.event = jumplink.events.getDefaultValues(controller.calendarSelectValues, controller.types);
+                return event;
             }
+        })
+        .then(function(event) {
+            // save or create event with strg + s
+            $(window).unbind('keydown').bind('keydown', function(event) {
+                if (event.ctrlKey || event.metaKey) {
+                    switch (String.fromCharCode(event.which).toLowerCase()) {
+                    // ctrl-s
+                    case 's':
+                        event.preventDefault();
+                        controller.debug('ctrl-s');
+                        if(controller.id) {
+                            controller.updateEvent();
+                        } else {
+                            controller.createEvent();
+                        }
+                        break;
+                    case 'f':
+                        // event.preventDefault();
+                        controller.debug('ctrl-f');
+                        break;
+                    case 'g':
+                        // event.preventDefault();
+                        controller.debug('ctrl-g');
+                        break;
+                    }
+                }
+            });
+        })
+        .catch(function(error) {
         });
-    
     };
     
-    $el.one('DOMSubtreeModified', function() {
-        setTimeout(function() {
-            ready();
-        }, 0);     
-    });
+    setTimeout(function() {
+        ready();
+    }, 0);
 
     return controller;
   }

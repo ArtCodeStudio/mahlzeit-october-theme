@@ -27,7 +27,7 @@ jumplink.events.calcEventTotal = function (event, quantity) {
     var total = 0;
     if(priceObj === null) {
         var warn = new Error('Kein Staffelpreis gefunden, TODO handle error');
-        window.jumplink.debug.events(warn);
+        jumplink.debug.events(warn);
         return null;
     }
     
@@ -253,6 +253,7 @@ jumplink.events.getDefaultValues = function (calendars, types) {
     event.note = '';
     
     // price
+    event.price = false;
     event.prices = [jumplink.events.getDefaultPrice()];
     event.pricetext = '';
     
@@ -261,26 +262,59 @@ jumplink.events.getDefaultValues = function (calendars, types) {
     
     return event;
 };
+
+/**
+ * Gets the default values for an caneldar e.g. if you want to create a new one
+ */
+jumplink.events.getDefaultCalendarValues = function (types) {
+    
+    var calendar = {};
+    
+    calendar.active = true;
+    
+    calendar.type = types[0].value;
+            
+    // title, subtitle
+    calendar.name = '';
+    calendar.title = '';
+    calendar.subtitle = '';
+    
+    // description
+    calendar.description = '';
+    
+    // note
+    calendar.note = '';
+    return calendar;
+};
     
 jumplink.events.getDatabaseCollection = function() {
     var dbEvents = db.collection('customerDomains').doc(jumplink.firebase.config.customerDomain).collection('events');
     return dbEvents;
 };
 
+jumplink.events.getDatabaseCalendarCollection = function() {
+    var dbCalendars = db.collection('customerDomains').doc(jumplink.firebase.config.customerDomain).collection('calendars');
+    return dbCalendars;
+};
+
+
 /**
  * prepair event object to store in firebase datastore database
  */
 jumplink.events.prepairForFirestore = function(event) {
     
+    jumplink.debug.events('prepairForFirestore', event);
+    
     var newEvent = {
         handle: rivets.formatters.handleize(event.title),
-        active: event.active,
-        title: event.title,
-        subtitle: event.subtitle,
-        description: event.description,
-        showTimes: event.showTimes,
+        active: !!event.active,
+        title: event.title || null,
+        subtitle: event.subtitle || null,
+        description: event.description || null,
+        showTimes: !!event.showTimes,
         startAt: moment(event.startAt),
         endAt: moment(event.startAt),
+        price: !!event.price,
         prices: event.prices,
         pricetext: event.pricetext || null,
         notifications: event.notifications,
@@ -294,7 +328,6 @@ jumplink.events.prepairForFirestore = function(event) {
         
         note: event.note || null,
         images: event.images,
-        price: null,
     };
 
     // split times in hour and minutes
@@ -311,13 +344,37 @@ jumplink.events.prepairForFirestore = function(event) {
     newEvent.startAt = newEvent.startAt.toDate();
     newEvent.endAt = newEvent.endAt.toDate();
     
-    // Merge old images with new uploaded images
     if(!jumplink.utilities.isArray(newEvent.images)) {
         jumplink.debug.events('no images are set, init image object with empty array!');
         newEvent.images = [];
     }
     
     return newEvent;
+};
+
+/**
+ * create a new event object to store in firebase datastore database
+ */
+jumplink.events.prepairCalendarForFirestore = function(calendar) {
+    
+    var prepairedCalendar = {
+        handle: rivets.formatters.handleize(calendar.name),
+        active: !!calendar.active,
+        name: calendar.name,
+        title: calendar.title || null,
+        subtitle: calendar.subtitle || null,
+        description: calendar.description || null,
+        type: calendar.type,
+        note: calendar.note || null,
+        images: calendar.images,
+    };
+        
+    if(!jumplink.utilities.isArray(prepairedCalendar.images)) {
+        jumplink.debug.events('no images are set, init image object with empty array!');
+        prepairedCalendar.images = [];
+    }
+    
+    return prepairedCalendar;
 };
 
 /**
@@ -369,7 +426,7 @@ jumplink.events.pushGroupedByProperty = function(events, event, groupBy) {
 };
 
 /**
- *  Get event by id and set it to the forms
+ *  Get event by id to use in in update form
  */
 jumplink.events.getById = function (id) {
     jumplink.debug.events('getById', id);
@@ -388,6 +445,35 @@ jumplink.events.getById = function (id) {
             var event = docRef.data();
             event.id = docRef.id;
             return event;
+        });
+    }
+    catch(error) {
+        return new Promise(function(resolve, reject) {
+            reject(error);
+        });
+    }
+};
+
+/**
+ *  Get calendar by id to use in in update form
+ */
+jumplink.events.getCalendarById = function (id) {
+    jumplink.debug.events('getCalendarById', id);
+    
+    var db = jumplink.events.getDatabaseCalendarCollection();
+    
+    try {
+        return db.doc(id).get()
+        .then(function(docRef) {
+            if (!docRef.exists) {
+                var error = new Error('Calender not found!');
+                jumplink.debug.events(error);
+                return null;
+            }
+            jumplink.debug.events('getCalendarById start', docRef.data());
+            var calendar = docRef.data();
+            calendar.id = docRef.id;
+            return calendar;
         });
     }
     catch(error) {
@@ -548,6 +634,32 @@ jumplink.events.get = function(hasType, hasActive, hasCalendar, startTimeIs, exc
 };
 
 /**
+ * Get calendars
+ * 
+ */
+jumplink.events.getCalendars = function() {
+    try {
+         var dbCalendars = jumplink.events.getDatabaseCalendarCollection();
+         return dbCalendars.get()
+        .then((querySnapshot) => {
+            jumplink.debug.events('calendars', querySnapshot);
+            var calendars = [];
+            querySnapshot.forEach((doc) => {
+                var calendar = doc.data();
+                calendar.id = doc.id;
+                calendars.push(calendar);
+            });
+            return calendars;
+        });
+    }
+    catch(error) {
+        return new Promise(function(resolve, reject) {
+            reject(error);
+        });
+    }
+};
+
+/**
  * Create new event
  */
 jumplink.events.add = function(event, uploadedImages) {
@@ -560,12 +672,12 @@ jumplink.events.add = function(event, uploadedImages) {
         newEvent.images.push.apply(newEvent.images, uploadedImages);
     }
     
-    jumplink.debug.events('[createEvent]', newEvent);
+    jumplink.debug.events('[add]', newEvent);
 
     try {
         return dbEvents.add(newEvent)
         .then(function(result) {        
-            jumplink.debug.events('[createEvent] result', result);
+            jumplink.debug.events('[add] result', result);
             return result;
         });
     }
@@ -577,12 +689,61 @@ jumplink.events.add = function(event, uploadedImages) {
 
 };
 
+/**
+ * Create new calendar
+ */
+jumplink.events.addCalendar = function(calendar, uploadedImages) {
+    
+    var dbCalendar = jumplink.events.getDatabaseCalendarCollection();
+    var newCalendar = jumplink.events.prepairCalendarForFirestore(calendar, uploadedImages);
+    
+    if(jumplink.utilities.isArray(uploadedImages)) {
+        newCalendar.images.push.apply(newCalendar.images, uploadedImages);
+    }
+    
+    jumplink.debug.events('[addCalendar]', newCalendar);
+
+    try {
+        return dbCalendar.add(newCalendar)
+        .then(function(result) {        
+            jumplink.debug.events('[addCalendar] result', result);
+            return result;
+        });
+    }
+    catch(error) {
+        return new Promise(function(resolve, reject) {
+            reject(error);
+        });
+    }
+
+};
+
+/**
+ * Update existing event
+ */
 jumplink.events.update = function(id, event, uploadedImages) {
     var dbEvents = jumplink.events.getDatabaseCollection();
     var updateEvent = jumplink.events.prepairForFirestore(event, uploadedImages);
     jumplink.debug.events('updateEvent', id, updateEvent);
     try {
         return dbEvents.doc(id).update(updateEvent);
+    }
+    catch(error) {
+        return new Promise(function(resolve, reject) {
+            reject(error);
+        });
+    }
+};
+
+/**
+ * Update existing calendar
+ */
+jumplink.events.updateCalendar = function(id, calendar, uploadedImages) {
+    var dbCalendars = jumplink.events.getDatabaseCalendarCollection();
+    var updateCalendar = jumplink.events.prepairCalendarForFirestore(calendar, uploadedImages);
+    jumplink.debug.events('updateCalendar', id, updateCalendar);
+    try {
+        return dbCalendars.doc(id).update(updateCalendar);
     }
     catch(error) {
         return new Promise(function(resolve, reject) {

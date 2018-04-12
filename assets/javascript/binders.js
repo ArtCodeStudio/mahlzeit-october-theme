@@ -112,15 +112,17 @@ rivets.binders.summernote = {
  */
 rivets.binders.pell = {
     bind: function(el) {
+        var self = this;
         jumplink.dependencies.pell()
         .then(function(pell) {
-            this.$el = $(el);
-            this.options = this.$el.data('options') || {};
+            self.$el = $(el);
+            self.options = self.$el.data('options') || {};
             
-            this.options.onChange = this.publish;
-            this.options.element = el;
-            window.jumplink.debug.binders('[pell] options', this.options);
-            pell.init(this.options);
+            self.options.onChange = self.publish;
+            self.options.element = el;
+            jumplink.debug.binders('[pell] options', self.options);
+            self.$el = $(pell.init(self.options));
+            console.log(self.$content);
         })
         .catch(function(error) {
             console.error(error);
@@ -129,19 +131,21 @@ rivets.binders.pell = {
 
     unbind: function(el) {
         // this.$el.pell('destroy');
+        delete this.$content;
     },
 
     routine: function(el, newValue) {
         if (newValue) {
             var oldValue = this.getValue(el);
             if(oldValue !== newValue) {
-                this.$el.html(newValue);
+                this.$el.find('.pell-content').html(newValue);
             }
         }
     },
 
     getValue: function(el) {
-        var value = this.$el.html();
+        var value = this.$el.find('.pell-content').html();
+        
         return value; 
     }
 };
@@ -471,11 +475,11 @@ rivets.binders.selected = {
         this.$el = $(el);
         this.tagName = this.$el.prop('tagName');
         this.initTemplateSelector(el);
-        this.$el.on('change', this.publish);
+        this.$el.on('change click', this.publish);
     },
 
     unbind: function(el) {
-        this.$el.off('change');
+        this.$el.off('change click');
         delete this.$el;
         delete this.tagName;
         delete this.$select;

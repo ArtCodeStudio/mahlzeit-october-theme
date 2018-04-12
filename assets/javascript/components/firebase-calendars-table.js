@@ -18,24 +18,17 @@ rivets.components['firebase-calendars-table'] = {
     controller.calendars = [];
 
     var getCalendars = function() {
-         dbCalendars.get()
-        .then((querySnapshot) => {
-            controller.debug('calendars', controller.calendars, querySnapshot);
-            controller.calendars = [];
-            querySnapshot.forEach((doc) => {
-                var calendar = doc.data();
-                calendar.id = doc.id;
-                controller.calendars.push(calendar);
-            });
+        jumplink.events.getCalendars()
+        .then((calendars) => {
+            controller.debug('calendars', controller.calendars);
+            controller.calendars = calendars;
         })
         .catch(function(error) {  
-            jumplink.utilities.showGlobalModal({
-                title: 'Kalender konnte nicht geladen werden',
-                body: error.message,
-            });
+            var title = 'Kalender konnte nicht geladen werden';
+            alertify.alert(title, error.message);
             controller.debug('error', error);
         });
-    }
+    };
    
     
     controller.delete = function(event, controller) {
@@ -49,12 +42,9 @@ rivets.components['firebase-calendars-table'] = {
             controller.debug(message);
             getCalendars();
         }).catch(function(error) {
-            var message = error.message;
-            jumplink.utilities.showGlobalModal({
-                title: 'Kalender konnte nicht gelöscht werden',
-                body: error.message,
-            });
-            controller.debug(message, error);
+            var title = 'Kalender konnte nicht gelöscht werden';
+            alertify.alert(title, error.message);
+            controller.debug('error', error);
         });
         
     };

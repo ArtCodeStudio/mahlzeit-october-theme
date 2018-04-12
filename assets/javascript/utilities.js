@@ -19,7 +19,7 @@ jumplink.utilities.cloneArray = function (array) {
 };
 
 jumplink.utilities.triggerResize = function () {
-    window.dispatchEvent(new Event('resize'));
+   $(document).trigger('resize'); 
 };
 
 jumplink.utilities.triggerResize = function () {

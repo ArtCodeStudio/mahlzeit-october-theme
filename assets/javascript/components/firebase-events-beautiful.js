@@ -11,7 +11,6 @@ rivets.components['firebase-events-beautiful'] = {
   initialize: function(el, data) {
     var controller = this;
     controller.debug = debug('rivets:firebase-events-beautiful');
-    controller.debug('initialize', el, data);
     var $el = $(el);
     var db = firebase.firestore();
     var dbEvents = db.collection('customerDomains').doc(jumplink.firebase.config.customerDomain).collection('events');
@@ -56,18 +55,23 @@ rivets.components['firebase-events-beautiful'] = {
     controller.active = data.active;
     
     controller.events = [];
+    
+    controller.debug('initialize', el, data, controller);
             
     var getEvents = function() {
         return jumplink.events.get(controller.type, controller.active, controller.calendar, controller.startTime, controller.excludeCalendar, controller.groupBy, controller.limit)
         .then(function(events) {
+            controller.debug('events', events);
             controller.events = events;
+            return controller.events;
+        })
+        .then(function(events) {
+            jumplink.utilities.triggerResize();
         })
         .catch(function(error) {
             controller.debug('error', error);
-            jumplink.utilities.showGlobalModal({
-                title: 'Ereignis konnte nicht geladen werden',
-                body: error.message,
-            });
+            var title =  'Ereignis konnte nicht geladen werden';
+            alertify.alert(title, error.message);
         });
     };
     
@@ -86,13 +90,15 @@ rivets.components['firebase-events-beautiful'] = {
         .then((event) => {
             controller.debug('event', event);
             controller.events = [event];
+            return controller.events;
+        })
+        .then(function(events) {
+            jumplink.utilities.triggerResize();
         })
         .catch(function(error) {
             controller.debug('error', error);
-            jumplink.utilities.showGlobalModal({
-                title: 'Ereignis konnte nicht geladen werden',
-                body: error.message,
-            });
+            var title =  'Ereignis konnte nicht geladen werden';
+            alertify.alert(title, error.message);
         });
     };
     

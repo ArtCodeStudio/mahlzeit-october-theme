@@ -59,6 +59,30 @@ snippetProperties[handle][options][] = ""
                             {% component 'contenteditor' file=tab.contentFilename tools="bold,italic,link,heading,subheading,subheading3,subheading4,subheading5,paragraph,unordered-list,ordered-list,table,indent,unindent,line-break,image,video,preformatted" %}
                         </div>
                     {% endif %}
+                    
+                    {% if tab.calendarHandle %}
+                        {# rivets component #}
+                        <firebase-events-beautiful
+                            style="'{{tab.calendarStyle}}'"
+                            container-class="'container'"
+                            text-title="'{{tab.calendarTitle}}'"
+                            type="'{{tab.calendarType}}'"
+                            calendar="'{{tab.calendarHandle}}'"
+                            exclude-calendar=""
+                            group-by="'none'" {# handle #}
+                            active="true"
+                            start-time="'{{tab.calendarStarttime}}'"
+                            limit="{{tab.calendarLimit}}"
+                            show-gallery="{{tab.calendarShowGallery}}"
+                            show-toolbar="{{tab.calendarBookingToolbar}}"
+                            show-book-button="{{tab.calendarBookingButton}}"
+                            gallery-title="'{{galleryTitle}}'"
+                            gallery-text="'{{galleryText}}'"
+                            detail-page="'{{detailPage | app }}'"
+                            get-event-by-url-id-param="'{{getEventByUrlIDParam}}'"
+                            >
+                        </firebase-events-beautiful>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

@@ -55,7 +55,7 @@ window.jumplink.templates.prepairTemplate = function(container, dataset) {
         
         // to load lasy images
         setTimeout(function() {
-            $(document).trigger('resize'); 
+            jumplink.utilities.triggerResize();
         }, 500);
     })
     .catch(function(exception) {

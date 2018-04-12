@@ -463,7 +463,8 @@ jumplink.events.getCalendarById = function (id) {
     var db = jumplink.events.getDatabaseCalendarCollection();
     
     try {
-        return db.doc(id).get()
+        return db.doc(id)
+        .get()
         .then(function(docRef) {
             if (!docRef.exists) {
                 var error = new Error('Calender not found!');
@@ -526,7 +527,7 @@ jumplink.events.getByTitle = function (title) {
  * @param groupBy 'none' | 'handle'
  * @param limit {number}
  */
-jumplink.events.get = function(hasType, hasActive, hasCalendar, startTimeIs, excludeCalendar, groupBy, limit) {
+jumplink.events.get = function(hasType, hasActive, hasCalendar, startTimeIs, excludeCalendar, groupBy, limit) {    
     // delete old getted events
     events = [];
     var ref = jumplink.events.getDatabaseCollection();
@@ -605,32 +606,41 @@ jumplink.events.get = function(hasType, hasActive, hasCalendar, startTimeIs, exc
         ref = ref.limit(limit);
     }
 
-    
-    // set order
-    ref = ref.orderBy("startAt");
-    
-    return ref.get()
-    .then((querySnapshot) => {
-        //yevents = querySnapshot.data();
-        jumplink.debug.events('event', querySnapshot);
-        var count = 0;
-        querySnapshot.forEach((doc) => {
-            // own client site limit to make excludeCalendar working
-            if(count <= limit) {
-                var event = doc.data();
-                event.id = doc.id;
-                if(event.calendar !== excludeCalendar) {
-                    count++;
-                    if(jumplink.utilities.isString(groupBy) && groupBy !== 'none') {
-                        jumplink.events.pushGroupedByProperty(events, event, groupBy);
-                    } else {
-                        events.push(event);
+    try {
+        // set order
+        ref = ref.orderBy("startAt");
+        
+        return ref.get()
+        .then(function(querySnapshot) {
+            //yevents = querySnapshot.data();
+            // jumplink.debug.events('event', querySnapshot);
+            var count = 0;
+            var events = [];
+            querySnapshot.forEach((doc) => {
+                // own client site limit to make excludeCalendar working
+                if(count <= limit) {
+                    var event = doc.data();
+                    event.id = doc.id;
+                    if(event.calendar !== excludeCalendar) {
+                        count++;
+                        if(jumplink.utilities.isString(groupBy) && groupBy !== 'none') {
+                            jumplink.events.pushGroupedByProperty(events, event, groupBy);
+                        } else {
+                            events.push(event);
+                        }
                     }
                 }
-            }
+            });
+            jumplink.debug.events(`jumplink.events.get(${hasType}, ${hasActive}, ${hasCalendar}, ${startTimeIs}, ${excludeCalendar}, ${groupBy}, ${limit})`);
+            jumplink.debug.events('events', events);
+            return events;
         });
-        return events;
-    });
+    }
+    catch(error) {
+        return new Promise(function(resolve, reject) {
+            reject(error);
+        });
+    }
 };
 
 /**
@@ -666,7 +676,7 @@ jumplink.events.add = function(event, uploadedImages) {
     
     var dbEvents = jumplink.events.getDatabaseCollection();
 
-    var newEvent = jumplink.events.prepairForFirestore(event, uploadedImages);
+    var newEvent = jumplink.events.prepairForFirestore(event);
     
     if(jumplink.utilities.isArray(uploadedImages)) {
         newEvent.images.push.apply(newEvent.images, uploadedImages);
@@ -695,7 +705,7 @@ jumplink.events.add = function(event, uploadedImages) {
 jumplink.events.addCalendar = function(calendar, uploadedImages) {
     
     var dbCalendar = jumplink.events.getDatabaseCalendarCollection();
-    var newCalendar = jumplink.events.prepairCalendarForFirestore(calendar, uploadedImages);
+    var newCalendar = jumplink.events.prepairCalendarForFirestore(calendar);
     
     if(jumplink.utilities.isArray(uploadedImages)) {
         newCalendar.images.push.apply(newCalendar.images, uploadedImages);
@@ -723,7 +733,12 @@ jumplink.events.addCalendar = function(calendar, uploadedImages) {
  */
 jumplink.events.update = function(id, event, uploadedImages) {
     var dbEvents = jumplink.events.getDatabaseCollection();
-    var updateEvent = jumplink.events.prepairForFirestore(event, uploadedImages);
+    var updateEvent = jumplink.events.prepairForFirestore(event);
+    
+    if(jumplink.utilities.isArray(uploadedImages)) {
+        updateEvent.images.push.apply(updateEvent.images, uploadedImages);
+    }
+    
     jumplink.debug.events('updateEvent', id, updateEvent);
     try {
         return dbEvents.doc(id).update(updateEvent);
@@ -740,7 +755,12 @@ jumplink.events.update = function(id, event, uploadedImages) {
  */
 jumplink.events.updateCalendar = function(id, calendar, uploadedImages) {
     var dbCalendars = jumplink.events.getDatabaseCalendarCollection();
-    var updateCalendar = jumplink.events.prepairCalendarForFirestore(calendar, uploadedImages);
+    var updateCalendar = jumplink.events.prepairCalendarForFirestore(calendar);
+    
+    if(jumplink.utilities.isArray(uploadedImages)) {
+        updateCalendar.images.push.apply(updateCalendar.images, uploadedImages);
+    }
+    
     jumplink.debug.events('updateCalendar', id, updateCalendar);
     try {
         return dbCalendars.doc(id).update(updateCalendar);

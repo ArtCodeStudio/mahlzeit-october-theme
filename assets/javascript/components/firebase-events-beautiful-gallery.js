@@ -87,9 +87,16 @@ rivets.components['firebase-events-beautiful-gallery'] = {
     controller.debug('images', controller.images);
     
     var ready = function(mutationsList) {
-        $imagesWrapper.masonry({
-          itemSelector: '.image-col',
+        /*
+        jumplink.dependencies.masonry()
+        .then(function() {
+            $imagesWrapper.masonry({
+              itemSelector: '.image-col',
+            });
+            observer.disconnect();
+            
         });
+        */
         observer.disconnect();
     };
     

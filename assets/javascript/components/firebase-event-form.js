@@ -107,7 +107,11 @@ rivets.components['firebase-event-form'] = {
             return jumplink.events.getByTitle(controller.event.title)
             .then(function(events) {
                 controller.similarEvents = events;
+                return controller.similarEvents;
             });
+        })
+        .then(function(similarEvents) {
+            jumplink.utilities.triggerResize();
         })
         .catch(function(error) {
             var title = 'Ereignis konnte nicht geladen werden.';
@@ -116,7 +120,8 @@ rivets.components['firebase-event-form'] = {
         });
     };
     
-    controller.updateEvent = function() {        
+    controller.updateEvent = function() {
+        controller.debug('controller.updateEvent', controller.id, controller.event, controller.uploadedImages);
         return jumplink.events.update(controller.id, controller.event, controller.uploadedImages)
         .then(function() {
             controller.uploadedImages = [];

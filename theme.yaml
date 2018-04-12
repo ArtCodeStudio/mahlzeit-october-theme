@@ -798,7 +798,72 @@ form:
                                         type: text
                                         comment: Filename of the content you want to display in this tab
                                         span: full
-
+                                    calendarSection:
+                                        label: Calendar
+                                        type: section
+                                        cssClass: without-line
+                                    calendarHandle:
+                                        label: Calendar handle
+                                        type: text
+                                        default: 
+                                        comment: Show events of this calendar handle, use "all" for all events of any calendar. Leave this empty if you do not want to show events in this tab.
+                                        span: full
+                                    calendarStarttime:
+                                        label: Start time 
+                                        type: dropdown
+                                        default: all
+                                        span: left
+                                        options:
+                                            all: All
+                                            future: Future
+                                            past: Past
+                                        default: all
+                                    calendarType:
+                                        label: Type
+                                        type: dropdown
+                                        default: all
+                                        span: right
+                                        options:
+                                            all: All types
+                                            fix: Fix date
+                                            variable: Variable date
+                                        default: all
+                                    calendarStyle:
+                                        label: Template style
+                                        type: dropdown
+                                        span: left
+                                        options:
+                                            fix: Fix date
+                                            variable: Variable date
+                                            single: Single date
+                                        default: fix
+                                        comment: Change the look of the displayed events
+                                    calendarLimit:
+                                        label: Limit of events
+                                        type: number
+                                        default: 0
+                                        span: right
+                                        comment: 0 for no limit
+                                    calendarTitle:
+                                        label: Title
+                                        type: text
+                                        default: 
+                                        span: left
+                                    calendarBookingButton:
+                                        label: Show booking button
+                                        type: checkbox
+                                        default: false
+                                        span: left
+                                    calendarBookingToolbar:
+                                        label: Show booking toolbar
+                                        type: checkbox
+                                        default: false
+                                        span: right
+                                    calendarShowGallery:
+                                        label: Show gallery
+                                        type: checkbox
+                                        default: false
+                                        span: left
         # bootstrap
             bs4-colors_section:
                 label: Color system

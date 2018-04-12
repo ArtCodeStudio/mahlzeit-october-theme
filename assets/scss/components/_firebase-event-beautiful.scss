@@ -1,8 +1,6 @@
 firebase-event-beautiful {
     display: block;
     .col-md-image-right, .col-md-image-left {
-        @include media-breakpoint-up(md) {
-             margin-top: -300px;
-        }
+
     }
 }

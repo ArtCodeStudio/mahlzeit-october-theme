@@ -19,11 +19,7 @@ jumplink.utilities.cloneArray = function (array) {
 };
 
 jumplink.utilities.triggerResize = function () {
-   $(document).trigger('resize'); 
-};
-
-jumplink.utilities.triggerResize = function () {
-    window.dispatchEvent(new Event('resize'));
+   $(document).trigger('resize');
 };
 
 jumplink.utilities.getComponentEventName = function (componentName, eventName, handle) {
@@ -86,7 +82,10 @@ jumplink.utilities.hyphenate = function() {
    *
    * Used internally to convert the shopify theme settings to better usable javascript objects.
    */
-jumplink.utilities.adhesiveKeyObjectToNestedObject = function (adhesiveKeyObject, separator = '_') {
+jumplink.utilities.adhesiveKeyObjectToNestedObject = function (adhesiveKeyObject, separator) {
+    if(!separator) {
+        separator = '_';
+    }
     var nestedObject = {};
     for (var adhesiveKey in adhesiveKeyObject) {
       // skip loop if the property is from prototype
@@ -458,7 +457,7 @@ jumplink.utilities.initPlatform = function(platform) {
       }
       break;
     case 'Safari':
-      if(platform.version_number >= 9) {
+      if(platform.version_number >= 10) {
         platform.supported = true;
       }
       break;
@@ -735,21 +734,27 @@ jumplink.utilities.getUrlParameter = function (name, url) {
  * console.debug(l.pathname)
  * >> "/path"
  */
-window.jumplink.getUrlLocation = function(href) {
-  var l = document.createElement("a");
-  l.href = href;
+jumplink.utilities.getUrlLocation = function(href) {
+  // var l = document.createElement("a");
+  // l.href = href;
+  var l = $('<a href="'+href+'"></a>')[0];
+  
   return l;
 };
 
-window.jumplink.getCurrentLocation = function() {
-  return jumplink.getUrlLocation(window.location);
+jumplink.getUrlLocation = window.jumplink.utilities.getUrlLocation;
+
+jumplink.utilities.getCurrentLocation = function() {
+  return jumplink.utilities.getUrlLocation(window.location);
 };
+
+jumplink.getCurrentLocation = window.jumplink.utilities.getCurrentLocation;
 
 /**
  * Cause back button to close Bootstrap modal windows
  * @see https://gist.github.com/thedamon/9276193
  */
-window.jumplink.utilities.initModalHistoryBack = function (modalSelector) {
+jumplink.utilities.initModalHistoryBack = function (modalSelector) {
 
   if(!modalSelector) {
     modalSelector = ".modal";
@@ -770,7 +775,7 @@ window.jumplink.utilities.initModalHistoryBack = function (modalSelector) {
  * Get Image of E-Mail by Gravawtar
  * @see https://stackoverflow.com/questions/705344/loading-gravatar-using-$
  */
-window.jumplink.utilities.getGravatar = function (emailOrHash, classes, withHash, placeholder) {
+jumplink.utilities.getGravatar = function (emailOrHash, classes, withHash, placeholder) {
   var src = null;
 
   if(typeof(emailOrHash) === 'undefined' || emailOrHash === null || !emailOrHash.length) {

@@ -500,7 +500,7 @@ jumplink.events.getByTitle = function (title) {
         return ref.get()
         .then(function(querySnapshot) {
             var events = [];
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach(function (doc) {
                 var event = doc.data();
                 event.id = doc.id;
                 events.push(event);
@@ -616,7 +616,7 @@ jumplink.events.get = function(hasType, hasActive, hasCalendar, startTimeIs, exc
             // jumplink.debug.events('event', querySnapshot);
             var count = 0;
             var events = [];
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach(function(doc) {
                 // own client site limit to make excludeCalendar working
                 if(count <= limit) {
                     var event = doc.data();
@@ -631,7 +631,6 @@ jumplink.events.get = function(hasType, hasActive, hasCalendar, startTimeIs, exc
                     }
                 }
             });
-            jumplink.debug.events(`jumplink.events.get(${hasType}, ${hasActive}, ${hasCalendar}, ${startTimeIs}, ${excludeCalendar}, ${groupBy}, ${limit})`);
             jumplink.debug.events('events', events);
             return events;
         });
@@ -651,10 +650,10 @@ jumplink.events.getCalendars = function() {
     try {
          var dbCalendars = jumplink.events.getDatabaseCalendarCollection();
          return dbCalendars.get()
-        .then((querySnapshot) => {
+        .then(function(querySnapshot) {
             jumplink.debug.events('calendars', querySnapshot);
             var calendars = [];
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach(function (doc) {
                 var calendar = doc.data();
                 calendar.id = doc.id;
                 calendars.push(calendar);

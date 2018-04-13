@@ -22,7 +22,7 @@ rivets.components['firebase-events-beautiful-book-modal'] = {
     
     controller.type = data.type;
     controller.calendar = data.calendar;
-    controller.style = data.style;
+    controller.style = data.templateStyle;
     
     controller.form = {};
     controller.form.date;

@@ -2,7 +2,9 @@ flipbooks {
     display: block;
     
     .flipbooks-container {
-        bottom: 25px;
+        bottom: 30px;
+        left: 0;
+        right: 0;
         .col {
             max-width: 200px;
         }

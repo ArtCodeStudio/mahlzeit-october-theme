@@ -38,5 +38,5 @@ function OnStart() {
 ?>
 ==
 {% if found_collection is not null %}
-    <flipbooks books="'{{found_collection.flipbooks | json_encode()}}'" {% if found_collection.background %} background="'{{found_collection.background | media}}'" {% endif %} handle="{{handle}}"></flipbooks>
+    <flipbooks platform="platform" books="'{{found_collection.flipbooks | json_encode()}}'" {% if found_collection.background %} background="'{{found_collection.background | media}}'" {% endif %} handle="{{handle}}"></flipbooks>
 {% endif %}

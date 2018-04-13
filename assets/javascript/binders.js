@@ -222,22 +222,26 @@ rivets.binders['fixed-top-edge'] = function (el, selector) {
  */
 rivets.binders['fixed-lower-edge'] = function (el, selector) {
     var $el = $(el);
-    var setPosition = function() {
-        var $under = $(selector);
-        if($under.length) {
-            var pos = jumplink.utilities.getElementPosition($under);
-            $el
-            .css('top', pos['fixed-y'] + pos.h + 'px')
-            .css('position', 'fixed');
-        }
-    };
-    $(window).on('resize', function() {
-        setTimeout(setPosition, 0);
-    });
-    if(Barba) {
-        Barba.Dispatcher.on('newPageReady', function() {
+    try {
+        var setPosition = function() {
+            var $under = $(selector);
+            if($under.length) {
+                var pos = jumplink.utilities.getElementPosition($under);
+                $el
+                .css('top', pos['fixed-y'] + pos.h + 'px')
+                .css('position', 'fixed');
+            }
+        };
+        $(window).on('resize', function() {
             setTimeout(setPosition, 0);
         });
+        if(Barba) {
+            Barba.Dispatcher.on('newPageReady', function() {
+                setTimeout(setPosition, 0);
+            });
+        }
+    } catch(error) {
+        console.error(error);
     }
 };
 
@@ -246,21 +250,25 @@ rivets.binders['fixed-lower-edge'] = function (el, selector) {
  */
 rivets.binders['absolute-top-edge'] = function (el, selector) {
     var $el = $(el);
-    var setPosition = function() {
-        var $under = $(selector);
-        if($under.length) {
-            var pos = jumplink.utilities.getElementPosition($under);
-            $el.css('top', pos.y + 'px')
-            .css('position', 'absolute');
-        }
-    };
-    $(window).on('resize', function() {
-        setTimeout(setPosition, 0);
-    });
-    if(Barba) {
-        Barba.Dispatcher.on('newPageReady', function() {
+    try {
+        var setPosition = function() {
+            var $under = $(selector);
+            if($under.length) {
+                var pos = jumplink.utilities.getElementPosition($under);
+                $el.css('top', pos.y + 'px')
+                .css('position', 'absolute');
+            }
+        };
+        $(window).on('resize', function() {
             setTimeout(setPosition, 0);
         });
+        if(Barba) {
+            Barba.Dispatcher.on('newPageReady', function() {
+                setTimeout(setPosition, 0);
+            });
+        }
+    } catch(error) {
+        console.error(error);
     }
 };
 
@@ -293,7 +301,7 @@ rivets.binders['show-on-url'] = function (el, url) {
     var $el = $(el);
     
     var checkURL = function() {
-        var pathname = window.jumplink.getCurrentLocation().pathname;
+        var pathname = jumplink.utilities.getCurrentLocation().pathname;
         if(url === pathname) {
             setTimeout(function() {
                 $el.show();

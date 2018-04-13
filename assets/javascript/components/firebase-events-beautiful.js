@@ -33,7 +33,7 @@ rivets.components['firebase-events-beautiful'] = {
     
     // start time of the orders in the future, from the past or all
     controller.startTime = data.startTime || 'future'; // 'future' | 'past' | 'all'
-    controller.style = data.style;
+    controller.style = data.templateStyle;
     data.limit = Number(data.limit);
     if(data.limit === 0) {
         data.limit = 100;
@@ -87,7 +87,7 @@ rivets.components['firebase-events-beautiful'] = {
         }
         controller.debug('getEventByID', id);
         return jumplink.events.getById(id)
-        .then((event) => {
+        .then(function(event) {
             controller.debug('event', event);
             controller.events = [event];
             return controller.events;

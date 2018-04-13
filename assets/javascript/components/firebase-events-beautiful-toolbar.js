@@ -15,7 +15,7 @@ rivets.components['firebase-events-beautiful-toolbar'] = {
 
     controller.type = data.type;
     controller.calendar = data.calendar;
-    controller.style = data.style;
+    controller.style = data.templateStyle;
     controller.events = data.events;
     
     controller.date;

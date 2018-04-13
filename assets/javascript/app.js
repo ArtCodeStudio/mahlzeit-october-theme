@@ -268,14 +268,20 @@ var initProductList = function() {
  * @note: rivets insite barba is bound each view in teplates.js 
  */
 var initStaticRivets = function() {
+
+  // try again if dependencies not ready
+  /*if(!jumplink.dependencies) {
+    console.error('jumplink.dependencies not loaded', jumplink.dependencies);
+    setTimeout(initStaticRivets, 1000);
+    return null;
+  }*/
+    
   jumplink.dependencies.platform()
     .then(function(platform) {
         window.jumplink.model = window.jumplink.model || {};
         window.jumplink.model.platform = platform;
         rivets.bind($('#rivets-content-top'), window.jumplink.model);
         rivets.bind($('#rivets-content-bottom'), window.jumplink.model);
-        
-        
   })
   .catch(function(exception) {
       window.jumplink.debug.templates('cant load platform', exception);
@@ -294,7 +300,9 @@ var initTemplates = function () {
   });
 
   Barba.Dispatcher.on('newPageReady', function(currentStatus, oldStatus, container) {
-    window.jumplink.templates.prepairTemplate(container, container.dataset);
+    if(jumplink.templates && jumplink.templates.prepairTemplate) {
+        jumplink.templates.prepairTemplate(container, container.dataset);
+    }
   });
 };
 

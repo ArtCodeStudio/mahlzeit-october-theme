@@ -6,7 +6,7 @@
     {% set show_pagination = true %}
 {% endif %}
 {% if column_classes is not defined %}
-    {% set column_classes = 'col-xs-12 col-sm-6 col-md-4 col-lg-3' %}
+    {% set column_classes = 'col-12 col-sm-6 col-md-4 col-lg-3' %}
 {% endif %}
 {% if show_price is not defined %}
     {% set show_price = false %}
@@ -21,16 +21,16 @@
 
 {% if (category) %}
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
             <h3>Viewing products of {{ category.name }}</h3>
             <div class="row">
                 {% if (category.description) != '' %}
-                <div class="col-xs-{% if not (category.cover) %}12{% else %}8{% endif %}">
+                <div class="col-{% if not (category.cover) %}12{% else %}8{% endif %}">
                     {{ category.description|raw }}
                 </div>
                 {% endif %}
                 {% if (category.cover != '') %}
-                <div class="col-xs-{% if not (category.description) %}12{% else %}4{% endif %}">
+                <div class="col-{% if not (category.description) %}12{% else %}4{% endif %}">
                     <img src="{{ category.cover.thumb(300, 300) }}" title="{{ category.cover.title }}" alt="{{ category.cover.description }}">
                 </div>
                 {% endif %}
@@ -44,7 +44,7 @@
         <p class="alert alert-info">{{ __SELF__.noProductsMessage }}</p>
     {% else %}
     <div class="row mt-3">
-        <div class="col-xs-12">
+        <div class="col-12">
             <div class="row">
                 {% for product in product_list %}
                 <div class="{{column_classes}} product-grid-item">

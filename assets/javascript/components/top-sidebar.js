@@ -64,7 +64,6 @@ rivets.components['top-sidebar'] = {
         controller.hide();
         
         $toggler.on('click', function(event) {
-            console.log('toggle');
             controller.toggle();
         });
     };

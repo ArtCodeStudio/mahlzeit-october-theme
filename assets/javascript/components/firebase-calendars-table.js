@@ -19,7 +19,7 @@ rivets.components['firebase-calendars-table'] = {
 
     var getCalendars = function() {
         jumplink.events.getCalendars()
-        .then((calendars) => {
+        .then(function(calendars) {
             controller.debug('calendars', controller.calendars);
             controller.calendars = calendars;
         })

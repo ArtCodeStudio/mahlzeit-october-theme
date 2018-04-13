@@ -17,6 +17,8 @@ rivets.components.flipbook = {
         
     controller.book = data.book;
     
+    controller.platform = data.platform;
+    
     controller.open = false;
     controller.currentPageIndex = 1;
     controller.previewPage = controller.book.pages[0];

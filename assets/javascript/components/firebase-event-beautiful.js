@@ -23,6 +23,7 @@ rivets.components['firebase-event-beautiful'] = {
     controller.showBookButton = data.showBookButton;
     controller.event = data.event;
     controller.index = data.index;
+    controller.size = data.size;
     controller.style = data.style; // choose template 'fix' | 'variable' | 'custom'
     controller.color = 'black';
     controller.number = jumplink.utilities.rand(1, 4);

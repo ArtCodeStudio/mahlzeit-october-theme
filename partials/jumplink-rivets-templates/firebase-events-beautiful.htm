@@ -25,6 +25,7 @@ description = "Schöne Darstellung der nächsten Events jeden Kalenders für die
         event="event"
         limit="limit"
         index="%event%"
+        size="events | size"
         start-time="startTime"
         container-class="containerClass"
         detail-page="detailPage"
@@ -44,7 +45,7 @@ description = "Schöne Darstellung der nächsten Events jeden Kalenders für die
         header-title="galleryTitle"
         header-text="galleryText"
     ></firebase-events-beautiful-gallery>
-    <hr class="col-12 col-md-8 offset-md-2 mt-5 border-warning border-2">
+    <hr rv-if="showGallery" class="col-12 col-md-8 offset-md-2 mt-5 border-warning border-2">
 </div>
 
 <div rv-if="ready | not" rv-class="containerClass | or 'container'" style="position: relative; height: 200px;">

@@ -365,7 +365,7 @@ rivets.binders.value = {
     },
 
     routine: function(el, newValue) {
-        if (newValue) {
+        if (jumplink.utilities.isString(newValue)) {
             var oldValue = this.getValue(el);
             if(oldValue !== newValue) {
                 switch(this.tagName) {

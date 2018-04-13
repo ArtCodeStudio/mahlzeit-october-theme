@@ -155,6 +155,7 @@ rivets.components['contact-form'] = {
     };
 
     controller.hideGlobalModal = function() {
+        controller.debug('hideGlobalModal');
         jumplink.utilities.triggerComponentEvent('global-modal', 'hide', null, null);
     };
     
@@ -173,15 +174,15 @@ rivets.components['contact-form'] = {
             // use the october cms javascript api function
             $.request('onSubmitContact', {
                 data: controller.form,
-                success: function(data) {
-                    this.success(data)
+                success: function(responseData) {
+                    this.success(responseData)
                     .done(function() {
-                        controller.debug('reuqest success', data);
+                        controller.debug('reuqest success 2', responseData);
                         
                         var message = 'Anfrage erfolgreich abgeschickt.';
-                        var notification = alertify.notify(message, 'success' ,5, function(){
-                            
-                        });
+                        alertify.notify(message, 'success', 5);
+                                            
+                         controller.form.message = "";
                         
                         // collapse('hide');
                         if(data.inModal) {
@@ -193,9 +194,7 @@ rivets.components['contact-form'] = {
             });
         } else {
             var message = 'Bitte überprüfen Sie Ihr Eingabeformular';
-            var notification = alertify.notify(message, 'error', 5, function(){
-                
-            });
+            var notification = alertify.notify(message, 'error', 5);
         }
     };
     

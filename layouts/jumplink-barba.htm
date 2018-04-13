@@ -30,7 +30,7 @@ function onSubmitContact() {
     };
 
     // mail to site owner
-    Mail::send('frontend::contact.notify', $vars, $buildOwnerMessage);
+    // Mail::send('frontend::contact.notify', $vars, $buildOwnerMessage);
     
     // mail to contact sender
     Mail::send('frontend::contact.notify-copy', $vars, $buildSenderMessage);

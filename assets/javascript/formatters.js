@@ -9,8 +9,18 @@
 window.jumplink.debug = window.jumplink.debug || {};
 window.jumplink.debug.formatters = debug('rivets:formatters');
 
+/**
+ * a === b
+ */
 rivets.formatters.eq = function(a, b) {
   return a === b;
+};
+
+/**
+ * a !== b
+ */
+rivets.formatters.ueq = function(a, b) {
+  return a !== b;
 };
 
 rivets.formatters.includes = function(a, b) {
@@ -26,11 +36,33 @@ rivets.formatters.lt = function(a, b) {
   return a < b;
 };
 
+/**
+ * a <= b
+ */
+rivets.formatters.elt = function(a, b) {
+  window.jumplink.debug.formatters('[elt]', a, b);
+  return a <= b;
+};
+
+/**
+ * a > b
+ */
 rivets.formatters.gt = function(a, b) {
   window.jumplink.debug.formatters('[gt]', a, b);
   return a > b;
 };
 
+/**
+ * a >= b
+ */
+rivets.formatters.egt = function(a, b) {
+  window.jumplink.debug.formatters('[egt]', a, b);
+  return a >= b;
+};
+
+/**
+ * !a
+ */
 rivets.formatters.not = function(a) {
   return !a;
 };
@@ -39,10 +71,16 @@ rivets.formatters.empty = function(a) {
   return !rivets.formatters.size(a);
 };
 
+/**
+ * a && b
+ */
 rivets.formatters.and = function(a, b) {
   return a && b;
 };
 
+/**
+ * a || b
+ */
 rivets.formatters.or = function(a, b) {
   return a || b;
 };

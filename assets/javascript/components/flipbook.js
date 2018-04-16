@@ -20,6 +20,7 @@ rivets.components.flipbook = {
     controller.platform = data.platform;
     
     controller.open = false;
+    controller.zoom = 1;
     controller.currentPageIndex = 1;
     controller.previewPage = controller.book.pages[0];
     controller.ratio = data.book.w + ':' + data.book.h;
@@ -65,28 +66,31 @@ rivets.components.flipbook = {
     };
     
     var scaleFlipbookBackToPreview = function (flipbookDim) {
-        var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
+        var $flipbookWrapper = $el.find('.flipbook-zoom-wrapper');
+        var $flipbook = $flipbookWrapper.find('.flipbook');
         var preview = getPreviewPosition();
         preview.w = Math.round(preview.w);
-        preview.h = Math.round(preview.h);
-        $zoom = $el.find('.flipbook-zoom-wrapper');
+        preview.h = Math.round(preview.h);       
         
         var scaleX = preview.w / flipbookDim.w;
         var scaleY = preview.h / flipbookDim.h;
         
         return new Promise(function(resolve, reject) {
+            zoomOut($flipbook, $flipbookWrapper);
             if(controller.currentPageIndex > 1) {
                 $flipbook.turn('page', 1);
                 setTimeout(function() {
-                    $zoom
-                    .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview['fixed-y'] - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
+                    $flipbookWrapper
+                    .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview['fixed-y'] - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' )
+                    .css('padding', 0);
                     
                     closeFlipbook(flipbookDim);
                     resolve();
                 }, 1000);
             } else {
-                $zoom
-                .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview['fixed-y'] - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' );
+                $flipbookWrapper
+                .css('transform', 'translate3d('+(preview.x - (flipbookDim.w / 2))+'px, '+ (preview['fixed-y'] - ((flipbookDim.h  - preview.h) / 2))+'px, 0px) scale3d('+(scaleX * 2)+', '+(scaleY)+', 1)' )
+                .css('padding', 0);
                 closeFlipbook(flipbookDim);
                 resolve();
             }
@@ -97,7 +101,8 @@ rivets.components.flipbook = {
      * Starts the zoome in animation and opens the first page if there are more then 2 pages
      */
     var scaleFlipbookToOriginal = function (flipbookDim) {
-        var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
+        var $flipbookWrapper = $el.find('.flipbook-zoom-wrapper');
+        var $flipbook = $flipbookWrapper.find('.flipbook');
         var $zoom = $el.find('.flipbook-zoom-wrapper');
         
         setTimeout(function() {
@@ -106,9 +111,14 @@ rivets.components.flipbook = {
             }
         }, 0);
              
+             
         setTimeout(function() {
             $zoom
-            .css('transform', 'translate3d('+ (flipbookDim.x) +'px, '+ (flipbookDim.y) +'px, 0px) scale3d(1, 1, 1)' );
+            .css('transform', 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)' );
+
+            $flipbookWrapper
+            .css('padding', flipbookDim.y +'px ' + flipbookDim.x +'px');
+            // .css('transform', 'translate3d('+ (flipbookDim.x) +'px, '+ (flipbookDim.y) +'px, 0px) scale3d(1, 1, 1)' );
         }, 0);
     };
     
@@ -315,11 +325,69 @@ rivets.components.flipbook = {
         });
     };
     
+    var zoomIn = function($flipbook, $flipbookWrapper) {
+        if(controller.zoom === 1) {
+    		$flipbook.turn('zoom', 2, 500);
+    		$flipbook.turn('disable', true);
+    		$flipbookWrapper.addClass('dragscroll');
+    		// $flipbook.addClass('cursor-zoom-in').removeClass('cursor-zoom-out');
+    		setTimeout(dragscroll.reset, 0);
+    		controller.zoom = 2;
+        }
+    }
+    
+    var zoomOut = function($flipbook, $flipbookWrapper) {
+        if(controller.zoom !== 1) {
+    	    $flipbookWrapper.removeClass('dragscroll');
+    	    $// flipbook.addClass('cursor-zoom-in').removeClass('cursor-zoom-out');
+    	    setTimeout(dragscroll.reset, 0);
+    		$flipbook.turn('zoom', 1, 500);
+    		$flipbook.turn('disable', false);
+    		controller.zoom = 1;
+        }
+    }
+    
+    controller.showPrevPageAction = function (currentPageIndex, zoom, open) {
+        if(currentPageIndex > 1 && zoom === 1 && open) {
+            return true;
+        }
+    }
+    
+    controller.showNextPageAction = function (pages, currentPageIndex, zoom, open) {
+        if(currentPageIndex < pages.length && zoom === 1 && open) {
+            return true;
+        }
+    }
+    
+    controller.showCloseAction = function (zoom, open) {
+        if(zoom === 1 && open) {
+            return true;
+        }
+    }
+    
+    controller.zoomTo = function(event) {
+        var $flipbookWrapper = $el.find('.flipbook-zoom-wrapper');
+        var $flipbook = $flipbookWrapper.find('.flipbook');
+        controller.zoom = $flipbook.turn('zoom');
+		if (controller.zoom === 1) {
+			zoomIn($flipbook, $flipbookWrapper);
+		} else {
+		    zoomOut($flipbook, $flipbookWrapper);
+		}
+		return false;
+    };
+    
     
     var ready = function() {
         jumplink.dependencies['turn.js']()
         .then(function() {
             return jumplink.dependencies['vague.js']();
+        })
+        .then(function() {
+            return jumplink.dependencies.dragscroll()
+        })
+        .then(function() {
+            return jumplink.dependencies['jquery-touch-events']();
         })
         .then(function() {
             initBlur();

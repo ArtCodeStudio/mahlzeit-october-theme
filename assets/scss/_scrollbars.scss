@@ -5,3 +5,7 @@
 .scrollbar-transparent {
     @include scrollbars(.5em, transparent, transparent);
 }
+
+.scrollbar-hidden {
+    @include scrollbars(0, transparent, transparent);
+}

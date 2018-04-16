@@ -14,18 +14,18 @@
 >
     <div rv-class="containerClass | append ' my-0 py-5'">
         <div rv-if="index | lt 1" class="row">
-            <div class="col-xs-12 col-md-6 offset-md-6">
+            <div class="col-12 col-md-6 offset-md-6">
                 <p class="pb-2 pt-1"><strong class="hyphenate">{title}</strong></p>
             </div>
         </div>
          
         <div class="row">
     
-            <div rv-if="index | even" class="col-xs-12 col-md-6 col-md-image-left" rv-class-mt-0="index | eq 0">
+            <div rv-if="index | even" class="col-12 col-md-6 col-md-image-left" rv-class-mt-0="index | eq 0">
                 <rv-img src="imageSrc" alt="imageAlt" width="imageW" height="imageH" class="py-2">
             </div>
             
-            <div class="col-xs-12 col-md-6">
+            <div class="col-12 col-md-6">
                 <h1
                     class="hyphenate"
                 >
@@ -67,13 +67,16 @@
                 
             </div>
             
-            <div rv-if="index | uneven" class="col-xs-12 col-md-6 col-md-image-right">
+            <div rv-if="index | uneven" class="col-12 col-md-6 col-md-image-right">
                 <rv-img src="imageSrc" alt="imageAlt" width="imageW" height="imageH" class="py-2">
             </div>
             
         </div>
         
-        <hr class="col-12 col-md-8 offset-md-2 mt-5 border-warning border-2">
+        
+        <div class="col-12 col-md-8 offset-md-2 mt-5">
+            <hr class="border-warning border-2">
+        </div>
         
     </div>
     
@@ -90,7 +93,7 @@
      <div class="row my-5">
 
         
-        <div class="col-xs-12">
+        <div class="col-12">
             <h3
                 class="mb-3"
             >
@@ -154,14 +157,14 @@
     rv-class="containerClass"
 >
     <div class="row my-5" rv-show="event">
-        <div class="col-xs-12 col-md-6">
+        <div class="col-12 col-md-6">
             <p class="pb-md-2 hidden-md-up">
               <strong class="hyphenate">{title}</strong>
             </p>
             <rv-img src="imageSrc" alt="imageAlt" width="imageW" height="imageH" class="pt-md-5">
         </div>
         
-        <div class="col-xs-12 col-md-6">
+        <div class="col-12 col-md-6">
           <p class="pb-2 hidden-sm-down">
               <strong class="hyphenate">{title}</strong>
           </p>

@@ -8,8 +8,6 @@
     <div
         class="flipbook"
         rv-class-with-shadow="book.pages | size | gt 2"
-        rv-class-cursor-zoom-in="zoom | eq 1"
-        rv-class-cursor-zoom-out="zoom | eq 2"
         {# tab event comes from https://github.com/benmajor/jQuery-Touch-Events #}
         rv-on-tap="zoomTo"
         >
@@ -26,7 +24,16 @@
 
 
 <div rv-show="showCloseAction | call zoom open" class="close-book text-white action" rv-on-click="closeBook">
-    {% partial "jumplink-iconset" name="icon_close" color="text-white" size=32 class="m-2" %}
+    {% partial "jumplink-iconset" name="icon_close2" color="text-white" size=24 class="m-2" %}
+</div>
+
+<div rv-show="open" class="zoom-book text-white action" rv-on-click="zoomTo">
+    <div rv-show="zoom | eq 1" >
+        {% partial "jumplink-iconset" name="icon_zoom-in_alt" color="text-white" size=24 class="m-2" %}
+    </div>
+    <div rv-show="zoom | gt 1" >
+        {% partial "jumplink-iconset" name="icon_zoom-out_alt" color="text-white" size=24 class="m-2" %}
+    </div>
 </div>
 
 <div rv-show="showPrevPageAction | call currentPageIndex zoom open" off-rv-show="currentPageIndex | gt 1 | and zoom | eg 1 | and open" class="prev-page action" rv-on-click="prevPage">

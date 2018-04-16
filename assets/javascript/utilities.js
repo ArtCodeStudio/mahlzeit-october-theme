@@ -674,7 +674,7 @@ jumplink.utilities.eventTarget = function(e) {
  * Mouse position relative to the document
  * @see http://www.quirksmode.org/js/events_properties.html
  */
-jumplink.utilities.mousePositionDocument = function(e) {
+jumplink.utilities.eventPositionDocument = function(e) {
 	var posx = 0;
 	var posy = 0;
 		
@@ -735,7 +735,7 @@ jumplink.utilities.getElementPosition = function(selector) {
  * @see https://gist.github.com/electricg/4435259
  */
 jumplink.utilities.mousePositionElement = function(e, target) {
-	var mousePosDoc = jumplink.utilities.mousePositionDocument(e);
+	var mousePosDoc = jumplink.utilities.eventPositionDocument(e);
 	// if target not set try to get target from event
 	if(!target) {
 	    var target = jumplink.utilities.eventTarget(e);
@@ -755,7 +755,7 @@ jumplink.utilities.mousePositionElement = function(e, target) {
  * @see https://gist.github.com/electricg/4435259
  */
 jumplink.utilities.mousePositionElementInPercent = function(e, target) {
-	var mousePosDoc = jumplink.utilities.mousePositionDocument(e);
+	var mousePosDoc = jumplink.utilities.eventPositionDocument(e);
 	// if target not set try to get target from event
 	if(!target) {
 	    var target = jumplink.utilities.eventTarget(e);

@@ -1,0 +1,18 @@
+description = "Video"
+
+[viewBag]
+snippetCode = "jumplink-snippet-video"
+snippetName = "Video"
+==
+{% set partialId = 'jumplink-snippet-video' %}
+{% set handle = 'home-header-video' %}
+
+<div
+    class=" jumplink-partial {{partialId}}"
+    data-partial-name="{{partialId}}"
+    >
+    <video autoplay muted loop id="{{handle}}">
+        <source src="{{'/assets/videos/imagefilm_kurz-01.mp4' | theme}}" type="video/mp4">
+        <source src="{{'/assets/videos/imagefilm_kurz-01.webm' | theme}}" type="video/webm">
+    </video>
+</div>

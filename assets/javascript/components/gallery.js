@@ -103,19 +103,23 @@ rivets.components.gallery = {
         var jumps = 5;
         var stop = false;
         var delay = 100;
-        var position = $slideScrollbar.scrollLeft();
+        var position = null;
         var maxScrollWidth = $slideScrollbar.prop('scrollWidth') - $slideScrollbar.outerWidth();
-        var scroll = function (position) {
+        
+        var scroll = function (event) {
             if(stop) {
                 return;
             }
+            
+            position = $slideScrollbar.scrollLeft();
+            
             if(scrollDirection > 0) {
                 position = position + jumps;
             } else {
                 position = position - jumps;
             }
             
-            if ( position <= 0 || position >= maxScrollWidth) {
+            if ( position <= 0) {
                 scrollDirection = 1;
             }
             
@@ -123,20 +127,26 @@ rivets.components.gallery = {
                 scrollDirection = -1;
             }
             
-            $slideScrollbar.animate({scrollLeft: position}, delay);
-            var scrollDelay = setTimeout(function() {
-                scroll(position);
-            }, delay); // scrolls every 100 milliseconds
+            return $slideScrollbar.animate({
+                scrollLeft: position
+            }, delay, scroll);
         };
-        scroll(position);
-        $slideScrollbar.off('mouseenter mouseover').on('mouseenter mouseover', function() {
-            stop = true;
+        $slideScrollbar.off('mouseenter mouseover').on('mouseenter mouseover', function(e) {
+            setTimeout(function() {
+                if($slideScrollbar.filter(':hover').length) {
+                    stop = true;
+                }
+            }, 100);
+            
         });
-        $slideScrollbar.off('mouseleave').on('mouseleave', function() {
-            stop = false;
-            position = $slideScrollbar.scrollLeft();
-            scroll(position);
+        $slideScrollbar.off('mouseleave').on('mouseleave', function(e) {
+            if(stop && !$slideScrollbar.filter(':hover').length) {
+                stop = false;
+                return scroll(e);
+            }
         });
+        
+        return scroll();
     };
     
     var initScrollbar = function() {        

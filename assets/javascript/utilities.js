@@ -659,14 +659,57 @@ jumplink.utilities.calculateAspectRatioFit = function (srcWidth, srcHeight, maxW
     return { w: srcWidth*ratio, h: srcHeight*ratio };
 };
 
+/**
+ * Which HTML element is the target of the event
+ * @see https://gist.github.com/electricg/4435259
+ */
+jumplink.utilities.mouseTarget = function(e) {
+	var targ;
+	if (!e) var e = window.event;
+	if (e.target) targ = e.target;
+	else if (e.srcElement) targ = e.srcElement;
+	if (targ.nodeType == 3) // defeat Safari bug
+		targ = targ.parentNode;
+	return targ;
+}
+
+/**
+ * Mouse position relative to the document
+ * @see http://www.quirksmode.org/js/events_properties.html
+ */
+jumplink.utilities.mousePositionDocument = function(e) {
+	var posx = 0;
+	var posy = 0;
+	if (!e) {
+		var e = window.event;
+	}
+	if (e.pageX || e.pageY) {
+		posx = e.pageX;
+		posy = e.pageY;
+	}
+	else if (e.clientX || e.clientY) {
+		posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+		posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+	}
+	return {
+		x : posx,
+		y : posy
+	};
+}
+
+/**
+ * Get the position of an element
+ */
 jumplink.utilities.getElementPosition = function(selector) {
     $el = $(selector);
     var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+    var pageXScroll = window.pageXOffset || document.documentElement.scrollLeft;
     // optionally get horizontal scroll
     // get position of element relative to viewport
     var rect = $el[0].getBoundingClientRect();
     var result = {
-        x: rect.left,
+        x: rect.left + pageXScroll,
+        'fixed-x': rect.left,
         y: rect.top + pageYScroll,
         'fixed-y': rect.top,
         w: rect.width,
@@ -674,6 +717,53 @@ jumplink.utilities.getElementPosition = function(selector) {
     };
     return result;
 }
+
+/**
+ * Mouse position relative to the element  (not working on IE7 and below)
+ * @see https://gist.github.com/electricg/4435259
+ */
+jumplink.utilities.mousePositionElement = function(e, target) {
+	var mousePosDoc = jumplink.utilities.mousePositionDocument(e);
+	// if target not set try to get target from event
+	if(!target) {
+	    var target = jumplink.utilities.mouseTarget(e);
+	}
+	var targetPos = jumplink.utilities.getElementPosition(target);
+	var posx = mousePosDoc.x - targetPos.x;
+	var posy = mousePosDoc.y - targetPos.y;
+	return {
+		x : posx,
+		y : posy,
+		element: target
+	};
+}
+
+/**
+ * Mouse position relative to the element in percent (not working on IE7 and below)
+ * @see https://gist.github.com/electricg/4435259
+ */
+jumplink.utilities.mousePositionElementInPercent = function(e, target) {
+	var mousePosDoc = jumplink.utilities.mousePositionDocument(e);
+	// if target not set try to get target from event
+	if(!target) {
+	    var target = jumplink.utilities.mouseTarget(e);
+	}
+	var width = target.offsetWidth;
+	var height = target.offsetHeight;
+	var targetPos = jumplink.utilities.getElementPosition(target);
+	var posx = mousePosDoc.x - targetPos.x;
+	var posy = mousePosDoc.y - targetPos.y;
+	return {
+		x: posx,
+		y: posy,
+		left: posx / width,
+		top: posy / height,
+		w: width,
+		h: height,
+		element: target
+	};
+}
+
 
 /**
  * Get the browser viewport dimensions

@@ -325,14 +325,44 @@ rivets.components.flipbook = {
         });
     };
     
-    var zoomIn = function($flipbook, $flipbookWrapper) {
+    var zoomIn = function(event, $flipbook, $flipbookWrapper) {
+        
+        var zoomFactor = 2;
+        
+        var mousePos = jumplink.utilities.mousePositionElementInPercent(event, $flipbook.get(0));
+        
+        var scrollLeft = mousePos.w * zoomFactor * mousePos.left;
+        var scrollTop = mousePos.h * zoomFactor * mousePos.top;
+        
+        if(scrollLeft > mousePos.w) {
+            scrollLeft += (mousePos.w / 2);
+        }
+        
+        if(scrollLeft > mousePos.w) {
+            scrollLeft += (mousePos.w / 2);
+        } else {
+            scrollLeft -= (mousePos.w / 2);
+        }
+        
+        if(scrollTop > mousePos.h) {
+            scrollTop += (mousePos.h / 2);
+        } else {
+            scrollTop -= (mousePos.h / 2);
+        }
+        
+        controller.debug('zoomIn mousePos', mousePos, 'scrollLeft', scrollLeft, 'scrollTop', scrollTop);
+        
         if(controller.zoom === 1) {
-    		$flipbook.turn('zoom', 2, 500);
+    		$flipbook.turn('zoom', zoomFactor, 500);
     		$flipbook.turn('disable', true);
     		$flipbookWrapper.addClass('dragscroll');
+    		
+    		$flipbookWrapper.scrollLeft(scrollLeft);
+    		$flipbookWrapper.scrollTop(scrollTop);
+    		
     		// $flipbook.addClass('cursor-zoom-in').removeClass('cursor-zoom-out');
     		setTimeout(dragscroll.reset, 0);
-    		controller.zoom = 2;
+    		controller.zoom = zoomFactor;
         }
     }
     
@@ -370,11 +400,11 @@ rivets.components.flipbook = {
         var $flipbook = $flipbookWrapper.find('.flipbook');
         controller.zoom = $flipbook.turn('zoom');
 		if (controller.zoom === 1) {
-			zoomIn($flipbook, $flipbookWrapper);
+			zoomIn(event, $flipbook, $flipbookWrapper);
 		} else {
 		    zoomOut($flipbook, $flipbookWrapper);
 		}
-		return false;
+		return event.stopPropagation();
     };
     
     

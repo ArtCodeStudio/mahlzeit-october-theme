@@ -100,9 +100,9 @@ rivets.components.gallery = {
     
     var initAutoscroll = function($slideScrollbar) {
         var scrollDirection = 1;
-        var jumps = 5;
+        var jumps = 25;
         var stop = false;
-        var delay = 100;
+        var delay = 500;
         var position = null;
         var maxScrollWidth = $slideScrollbar.prop('scrollWidth') - $slideScrollbar.outerWidth();
         
@@ -110,6 +110,8 @@ rivets.components.gallery = {
             if(stop) {
                 return;
             }
+            
+            console.log('scroll');
             
             position = $slideScrollbar.scrollLeft();
             
@@ -119,31 +121,32 @@ rivets.components.gallery = {
                 position = position - jumps;
             }
             
-            if ( position <= 0) {
+            if ( position <= 5) {
                 scrollDirection = 1;
-            }
-            
-            if (position >= maxScrollWidth) {
+            } else if (position >= maxScrollWidth) {
                 scrollDirection = -1;
             }
             
             return $slideScrollbar.animate({
                 scrollLeft: position
-            }, delay, scroll);
+            }, delay, 'linear', scroll);
         };
         $slideScrollbar.off('mouseenter mouseover').on('mouseenter mouseover', function(e) {
+            
             setTimeout(function() {
                 if($slideScrollbar.filter(':hover').length) {
                     stop = true;
                 }
-            }, 100);
+            }, 200);
             
         });
         $slideScrollbar.off('mouseleave').on('mouseleave', function(e) {
-            if(stop && !$slideScrollbar.filter(':hover').length) {
-                stop = false;
-                return scroll(e);
-            }
+            setTimeout(function() {
+                if(stop && !$slideScrollbar.filter(':hover').length) {
+                    stop = false;
+                    return scroll(e);
+                }
+            }, 200);
         });
         
         return scroll();

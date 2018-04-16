@@ -8,6 +8,7 @@ snippetProperties[handle][type] = "string"
 snippetProperties[handle][default] = ""
 snippetProperties[handle][options][] = ""
 ==
+{% set partialId = 'jumplink-snippet-tabs' %}
 {% set tabs_collections = this.theme.tabs_collection %}
 {% set found = null %}
 
@@ -18,10 +19,10 @@ snippetProperties[handle][options][] = ""
 {% endfor %}
 
 {% if found is not null %}
-    <div rv-tabs="{{handle}}">
-        <div class="container pb-3 pt-5">
+    <div class="jumplink-partial {{partialId}}" rv-tabs="{{handle}}">
+        <div class="container-fluid pb-3 pt-5">
             <ul
-                class="nav nav-tabs nav-tabs-underline d-flex justify-content-center"
+                class="col col-md-8 offset-md-2 nav nav-tabs nav-tabs-underline d-flex flex-nowrap justify-content-start justify-content-md-center dragscroll"
                 id="{{handle}}-tabs"
                 role="tablist"
             >

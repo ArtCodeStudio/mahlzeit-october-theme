@@ -1,0 +1,9 @@
+.jumplink-snippet-tabs {
+    .dragscroll {
+        overflow-y: auto;
+        @include scrollbars(0, transparent, transparent);
+    }
+    .nav-link {
+        white-space: nowrap;
+    }
+}

@@ -350,7 +350,7 @@ rivets.components.flipbook = {
             scrollTop -= (mousePos.h / 2);
         }
         
-        controller.debug('zoomIn mousePos', mousePos, 'scrollLeft', scrollLeft, 'scrollTop', scrollTop);
+        controller.debug('zoomIn', 'event', event, 'mousePos', mousePos, 'scrollLeft', scrollLeft, 'scrollTop', scrollTop);
         
         if(controller.zoom === 1) {
     		$flipbook.turn('zoom', zoomFactor, 500);

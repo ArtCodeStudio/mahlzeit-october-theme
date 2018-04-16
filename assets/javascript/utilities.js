@@ -402,9 +402,6 @@ jumplink.utilities.rand = function (min, max) {
  * @see https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
  */
 jumplink.utilities.isTouchDevice = function (platform) {
-  if(platform.name === 'Epiphany') {
-    return false;
-  }
   return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 };
 
@@ -663,7 +660,7 @@ jumplink.utilities.calculateAspectRatioFit = function (srcWidth, srcHeight, maxW
  * Which HTML element is the target of the event
  * @see https://gist.github.com/electricg/4435259
  */
-jumplink.utilities.mouseTarget = function(e) {
+jumplink.utilities.eventTarget = function(e) {
 	var targ;
 	if (!e) var e = window.event;
 	if (e.target) targ = e.target;
@@ -680,17 +677,32 @@ jumplink.utilities.mouseTarget = function(e) {
 jumplink.utilities.mousePositionDocument = function(e) {
 	var posx = 0;
 	var posy = 0;
+		
 	if (!e) {
 		var e = window.event;
 	}
-	if (e.pageX || e.pageY) {
+	
+	if(e.originalEvent) {
+	   e = e.originalEvent;
+	}
+	
+	if(e.changedTouches && e.changedTouches[0] && (e.changedTouches[0].pageX || e.changedTouches[0].pageY)) {
+		posx = e.changedTouches[0].pageX;
+		posy = e.changedTouches[0].pageY;
+	}
+	else if (e.pageX || e.pageY) {
 		posx = e.pageX;
 		posy = e.pageY;
+	}
+	else if (e.touches && e.changedTouches[0] && (e.changedTouches[0].clientX || e.changedTouches[0].clientY)) {
+		posx = e.changedTouches[0].clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+		posy = e.changedTouches[0].clientY + document.body.scrollTop + document.documentElement.scrollTop;
 	}
 	else if (e.clientX || e.clientY) {
 		posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
 		posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
 	}
+	
 	return {
 		x : posx,
 		y : posy
@@ -726,7 +738,7 @@ jumplink.utilities.mousePositionElement = function(e, target) {
 	var mousePosDoc = jumplink.utilities.mousePositionDocument(e);
 	// if target not set try to get target from event
 	if(!target) {
-	    var target = jumplink.utilities.mouseTarget(e);
+	    var target = jumplink.utilities.eventTarget(e);
 	}
 	var targetPos = jumplink.utilities.getElementPosition(target);
 	var posx = mousePosDoc.x - targetPos.x;
@@ -746,7 +758,7 @@ jumplink.utilities.mousePositionElementInPercent = function(e, target) {
 	var mousePosDoc = jumplink.utilities.mousePositionDocument(e);
 	// if target not set try to get target from event
 	if(!target) {
-	    var target = jumplink.utilities.mouseTarget(e);
+	    var target = jumplink.utilities.eventTarget(e);
 	}
 	var width = target.offsetWidth;
 	var height = target.offsetHeight;

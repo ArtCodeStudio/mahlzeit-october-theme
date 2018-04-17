@@ -18,6 +18,11 @@ jumplink.utilities.cloneArray = function (array) {
     return array.slice(0);
 };
 
+/**
+ * Trigger resize event, many libs like liteshows or lazy image are watching this event to update thehis injected dom elements.
+ * The most libs are not written for rivets or barba.js and run only once on the first load of the lib,
+ * to trigger the resize event this will help us to minimize this problem somethimes.
+ */
 jumplink.utilities.triggerResize = function () {
    $(document).trigger('resize');
 };
@@ -55,16 +60,20 @@ jumplink.utilities.openPhotoSwipe = function(handle, $imagesWrapper, index, imag
 };
 
 /**
- * run Hyphenopoly
+ * run Hyphenopoly, a polyfill for client-side hyphenation
  * @see https://github.com/mnater/Hyphenopoly
  */
 jumplink.utilities.hyphenate = function() {
-    window.clearTimeout(Hyphenopoly.setup.timeOutHandler);
-    if(Hyphenopoly && Hyphenopoly.elementsReady) {
-        setTimeout(function () {
-            // Hyphenopoly.evt(["timeout"]);
-            Hyphenopoly.evt(["DOMContentLoaded"]);
-        }, Hyphenopoly.c.timeout);
+    try {
+        window.clearTimeout(Hyphenopoly.setup.timeOutHandler);
+        if(Hyphenopoly && Hyphenopoly.elementsReady) {
+            setTimeout(function () {
+                // Hyphenopoly.evt(["timeout"]);
+                Hyphenopoly.evt(["DOMContentLoaded"]);
+            }, Hyphenopoly.c.timeout);
+        }
+    } catch (error) {
+        console.error(error);
     }
 };
 
@@ -670,10 +679,10 @@ jumplink.utilities.eventTarget = function(e) {
 	if (targ.nodeType == 3) // defeat Safari bug
 		targ = targ.parentNode;
 	return targ;
-}
+};
 
 /**
- * Mouse position relative to the document
+ * Get the mouse / touch position relative to the document
  * @see http://www.quirksmode.org/js/events_properties.html
  */
 jumplink.utilities.eventPositionDocument = function(e) {
@@ -709,10 +718,10 @@ jumplink.utilities.eventPositionDocument = function(e) {
 		x : posx,
 		y : posy
 	};
-}
+};
 
 /**
- * Get the position of an element
+ * Get the position of an element relative to document
  */
 jumplink.utilities.getElementPosition = function(selector) {
     $el = $(selector);
@@ -728,9 +737,32 @@ jumplink.utilities.getElementPosition = function(selector) {
         'fixed-y': rect.top,
         w: rect.width,
         h: rect.height,
+        $element: $el,
     };
     return result;
-}
+};
+
+/**
+ * Get the position of an element relative to another element e.g. his parent element
+ * E.g. used in rv-tabs to get the scrollpostion of an element insite a scrollable element to scroll the active tab to left
+ */
+jumplink.utilities.getElementPositionInElement = function(selector, parentSelector) {
+    var elementPos = jumplink.utilities.getElementPosition(selector);
+    var parentElementPos = jumplink.utilities.getElementPosition(parentSelector);
+    var result = {
+        x: elementPos.x - parentElementPos.x,
+        y: elementPos.y - parentElementPos.y,
+        'fixed-x': elementPos['fixed-x'] - parentElementPos['fixed-x'],
+        'fixed-y': elementPos['fixed-y'] - parentElementPos['fixed-y'],
+        w: elementPos.w,
+        h: elementPos.h,
+        $element: elementPos.$element,
+        $parent: parentElementPos.$element,
+        elementPos: elementPos,
+        parentPos: parentElementPos,
+    };
+    return result;
+};
 
 /**
  * Mouse position relative to the element  (not working on IE7 and below)
@@ -750,7 +782,7 @@ jumplink.utilities.mousePositionElement = function(e, target) {
 		y : posy,
 		element: target
 	};
-}
+};
 
 /**
  * Mouse position relative to the element in percent (not working on IE7 and below)
@@ -770,13 +802,13 @@ jumplink.utilities.mousePositionElementInPercent = function(e, target) {
 	return {
 		x: posx,
 		y: posy,
-		left: posx / width,
-		top: posy / height,
+		left: posx / width, // percent value
+		top: posy / height, // percent value
 		w: width,
 		h: height,
 		element: target
 	};
-}
+};
 
 
 /**
@@ -825,7 +857,7 @@ jumplink.utilities.getUrlParameter = function (name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+};
 
 /**
  * get hostname an path of address bar

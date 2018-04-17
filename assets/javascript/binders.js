@@ -5,23 +5,37 @@ window.jumplink.debug = window.jumplink.debug || {};
 window.jumplink.debug.binders = debug('rivets:binders');
 
 /**
- * 
+ * Automatic activate bootstrap 4 tabs and make it scrollable on smartphones
  * @see https://getbootstrap.com/docs/4.0/components/navs/#via-javascript
  */
 rivets.binders.tabs = function (el, handle) {
     var $el = $(el);
-    var $tabLinks = $el.find('.nav-tabs a');
-    $tabLinks.on('click', function(event) {
+    var $tabs = $el.find('.nav-tabs a');
+    var $scrollable = $el.find('[scrollable]');
+    
+    $tabs.on('click', function(event) {
+        var $tab = $(this);
         event.preventDefault();
-        $(this).tab('show');
-        
-        // to load lasy images
-        setTimeout(function() {
-            $(document).trigger('resize'); 
-        }, 200);
-        
+        $tab.tab('show');        
     });
-    $tabLinks.first().tab('show');
+    
+    $tabs.on('shown.bs.tab', function (event) {
+      // previous active tab
+      // var $prevTab = $(event.relatedTarget);
+      
+      // newly activated tab
+      var $tab = $(event.target);
+      
+      // to load lasy images
+      jumplink.utilities.triggerResize();
+      
+      var tabScrollPosition = jumplink.utilities.getElementPositionInElement($tab, $scrollable);
+      var scrollLeftTo = $scrollable.scrollLeft() + tabScrollPosition.x;
+      // $scrollable.scrollLeft(scrollLeftTo);
+      $scrollable.animate({ scrollLeft: scrollLeftTo}, 'slow');
+    });
+    
+    $tabs.first().tab('show');
 };
 
 /**

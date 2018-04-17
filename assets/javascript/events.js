@@ -438,7 +438,7 @@ jumplink.events.getById = function (id) {
         .then(function(docRef) {
             if (!docRef.exists) {
                 var error = new Error('Event not found!');
-                jumplink.debug.events(error);
+                console.error(error);
                 return null;
             }
             jumplink.debug.events('getById start', docRef.data());

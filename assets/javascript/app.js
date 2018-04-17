@@ -284,7 +284,7 @@ var initStaticRivets = function() {
         rivets.bind($('#rivets-content-bottom'), window.jumplink.model);
   })
   .catch(function(exception) {
-      window.jumplink.debug.templates('cant load platform', exception);
+      console.error('cant load platform', exception);
   });
 };
 

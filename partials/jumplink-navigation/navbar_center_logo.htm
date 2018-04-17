@@ -61,7 +61,7 @@ code = "sidebar"
      # Toggle sidebar from top
      #}
     {% if topSidebarEnabled %}
-      <top-sidebar menu-items="'{{sidebar.menuItems | json_encode()}}'"></top-sidebar>
+      <top-sidebar data-menu-items='{{sidebar.menuItems | json_encode()}}'></top-sidebar>
     {% endif %}
 
 </nav>

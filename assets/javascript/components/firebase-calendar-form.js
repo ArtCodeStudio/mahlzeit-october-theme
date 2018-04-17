@@ -64,7 +64,7 @@ rivets.components['firebase-calendar-form'] = {
         .catch(function(error) {  
             var title = 'Kalender konnte nicht geladen werden';
             alertify.alert(title, error.message);
-            controller.debug(title, error);
+            console.error(title, error);
         });
     };
     
@@ -84,6 +84,7 @@ rivets.components['firebase-calendar-form'] = {
             console.error('error', error);
             var title = 'Kalender konnte nicht aktualisiert werden';
             alertify.alert(title, error.message);
+            console.error(error);
         });
     };
       

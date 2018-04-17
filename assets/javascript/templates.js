@@ -59,7 +59,7 @@ window.jumplink.templates.prepairTemplate = function(container, dataset) {
         }, 500);
     })
     .catch(function(exception) {
-        window.jumplink.debug.templates('cant load platform', exception);
+        console.error('cant load platform', exception);
     });
     
     

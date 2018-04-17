@@ -1,5 +1,5 @@
 .jumplink-snippet-tabs {
-    .dragscroll {
+    [scrollable], .dragscroll {
         overflow-y: auto;
         @include scrollbars(0, transparent, transparent);
     }

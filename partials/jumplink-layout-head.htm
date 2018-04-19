@@ -8,7 +8,7 @@
     <title>{{ this.theme.site_name }} - {{ this.page.title }}</title>
     <meta name="author" content="{{this.theme.owner_name}}">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    {% component 'seoTags' %}
+    {% component 'seoTags' %} {# https://octobercms.com/plugin/renatio-seomanager #}
     {% partial 'jumplink-favicons' %}
     {% styles %}
     <link href="{{ ['assets/scss/theme.scss'] | theme }}" rel="stylesheet">

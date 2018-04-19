@@ -23,40 +23,42 @@ function OnStart() {
     $this['foundGallery'] = null;
         
     // find image by handle
-    foreach ($this->theme->page_historie_galleries as $key => $gallery) {
-        if($gallery['handle'] == $handle) {
-            // Debugbar::info($gallery);
-            // convert images to photoswipe format
-            $images = [];
-            foreach ($gallery['images'] as $key => $image) {
-                $image['src'] = $mediaPath.$image['image'];
-                $fullImagePath = $fullMediaPath.$image['image'];
-                if (!file_exists($fullImagePath)) {
-                    // throw new Exception('File not found '.$fullImagePath);
-                } else {
-                    try {
-                        list($width, $height) = getimagesize($fullImagePath);
-                        $image['w'] = $width;
-                        $image['h'] = $height;
-                    } catch (Exception $e) {
-                        throw new Exception('Can not read image '.$fullImagePath);
+    if(isset($this->theme->page_historie_galleries)) {
+        foreach ($this->theme->page_historie_galleries as $key => $gallery) {
+            if($gallery['handle'] == $handle) {
+                // Debugbar::info($gallery);
+                // convert images to photoswipe format
+                $images = [];
+                foreach ($gallery['images'] as $key => $image) {
+                    $image['src'] = $mediaPath.$image['image'];
+                    $fullImagePath = $fullMediaPath.$image['image'];
+                    if (!file_exists($fullImagePath)) {
+                        // throw new Exception('File not found '.$fullImagePath);
+                    } else {
+                        try {
+                            list($width, $height) = getimagesize($fullImagePath);
+                            $image['w'] = $width;
+                            $image['h'] = $height;
+                        } catch (Exception $e) {
+                            throw new Exception('Can not read image '.$fullImagePath);
+                        }
+                        
+                        /**
+                         * generate thumbnail
+                         * @see https://github.com/toughdeveloper/oc-imageresizer-plugin
+                         */
+                        $imageObj = new Image($fullImagePath);
+                        $imageObj->resize(300, false, [ 'mode' => 'crop' ]);
+                        $thumbPath = $imageObj->getCachedImagePath(true);
+                        $image['msrc'] = $thumbPath;
+                        $image['id'] = $key;
+                        $images[] = $image;
                     }
-                    
-                    /**
-                     * generate thumbnail
-                     * @see https://github.com/toughdeveloper/oc-imageresizer-plugin
-                     */
-                    $imageObj = new Image($fullImagePath);
-                    $imageObj->resize(300, false, [ 'mode' => 'crop' ]);
-                    $thumbPath = $imageObj->getCachedImagePath(true);
-                    $image['msrc'] = $thumbPath;
-                    $image['id'] = $key;
-                    $images[] = $image;
                 }
+                $gallery['images'] = $images;
+                
+                $this['foundGallery'] = $gallery;
             }
-            $gallery['images'] = $images;
-            
-            $this['foundGallery'] = $gallery;
         }
     }
 }

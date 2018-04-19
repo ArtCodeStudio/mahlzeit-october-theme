@@ -42,5 +42,5 @@ package-lock.json
 nohup.out
 
 
-# Vender files we do not need
-assets/vendor/rivets/docs/
+# Vender files
+assets/vendor/

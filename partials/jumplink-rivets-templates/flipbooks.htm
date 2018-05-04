@@ -8,7 +8,7 @@
     </div>
     <div rv-if="ready" class="flipbooks-container w-100 justify-content-center px-md-5" rv-class-position-absolute="background">
         <div class="row" rv-class-justify-content-between="platform.handle | eq 'ie' | not">
-            <div class="col" rv-each-book="books">
+            <div class="col mx-auto" rv-each-book="books">
                 <flipbook book="book"></flipbook>
             </div>
         </div>

@@ -55,6 +55,8 @@ rivets.components.flipbook = {
         var scaleY = preview.h / flipbookDim.h;
         
         initFlipbook(flipbookDim);
+        
+        
 
         $zoom
         .css('visibility', 'visible')
@@ -117,7 +119,10 @@ rivets.components.flipbook = {
             .css('transform', 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)' );
 
             $flipbookWrapper
-            .css('padding', flipbookDim.y +'px ' + flipbookDim.x +'px');
+            .css('padding-top', flipbookDim.y +'px')
+            .css('padding-bottom', flipbookDim.y +'px')
+            .css('padding-left', flipbookDim.x +'px')
+            .css('padding-right', flipbookDim.x +'px');
             // .css('transform', 'translate3d('+ (flipbookDim.x) +'px, '+ (flipbookDim.y) +'px, 0px) scale3d(1, 1, 1)' );
         }, 0);
     };
@@ -125,14 +130,14 @@ rivets.components.flipbook = {
     var getFlipbookDim = function() {
         var viewportDim = jumplink.utilities.getViewportDimensions();
         
-        var offsetX = 5;
-        var offseetY = 50;
+        var offsetX = 5; // 5
+        var offseetY = 5; // 50
         
         /* Generate the demensions of the flipbook with border
          * - controller.book.w * 2 because we have to pages
          * - w and h -100 for 50px spacing on all sites
          */
-        var flipbookDim = jumplink.utilities.calculateAspectRatioFit(controller.book.w * 2, controller.book.h, viewportDim.w - (offsetX * 2), viewportDim.h - (offseetY * 2));
+        var flipbookDim = jumplink.utilities.calculateAspectRatioFit(controller.book.w * 2, controller.book.h, viewportDim.w - (offsetX * 2), viewportDim.h - (offseetY * 2) );
         
         flipbookDim.w = Math.round(flipbookDim.w);
         flipbookDim.h = Math.round(flipbookDim.h);
@@ -162,6 +167,18 @@ rivets.components.flipbook = {
         scaleFlipbookToOriginal(flipbookDim);
         
         blur();
+        
+        $( window ).resize(function() {
+            var $flipbook = $el.find('.flipbook-zoom-wrapper .flipbook');
+            var $flipbookWrapper = $el.find('.flipbook-zoom-wrapper');
+            flipbookDim = getFlipbookDim();
+            $flipbook.turn('size', flipbookDim.w, flipbookDim.h);
+            $flipbookWrapper
+            .css('padding-top', flipbookDim.y +'px')
+            .css('padding-bottom', flipbookDim.y +'px')
+            .css('padding-left', flipbookDim.x +'px')
+            .css('padding-right', flipbookDim.x +'px');
+        });
     };
     
     controller.closeBook = function(event) {
@@ -290,11 +307,11 @@ rivets.components.flipbook = {
         var x = flipbookDim.x - offsetX;
         x = x >= 0 ? x : 0;
         
-        $close.css('right', (x) + 'px');
+        // $close.css('right', (x) + 'px');
         
-        $prev.css('left', (x) + 'px');
+        // $prev.css('left', (x) + 'px');
         
-        $next.css('right', (x) + 'px');
+        // $next.css('right', (x) + 'px');
     };
     
     var initBlur = function() {

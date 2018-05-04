@@ -20,7 +20,7 @@ code = "sidebar"
     <div class="navbar navbar-background {{navsColorClass}} navbar-expand justify-content-between">
       
       {# navbar left #}
-      <div class="d-flex flex-row justify-center-center">
+      <div class="d-flex flex-row justify-content-center">
         {% if leftSidebarEnabled %}
           <button class="d-flex navbar-toggler sidebar-toggler left-sidebar-toggler tcon tcon-menu--xcross hidden-print" type="button" data-toggle="sidebar" data-target="#left-sidebar" aria-controls="left-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
               <span class="tcon-menu__lines" aria-hidden="true"></span>
@@ -39,14 +39,14 @@ code = "sidebar"
       </div>
 
       {# navbar center #}
-      <div class="navbar-brand d-flex justify-center-center justify-content-center">
+      <div class="navbar-brand d-flex justify-content-center">
         <a class="d-flex align-items-center justify-content-center" href="/">
             <img class="img-fluid d-block mx-auto" src="{{'assets/images/logo.svg' | theme}}" alt="{{this.theme.site_name}}">
         </a>
       </div>
 
       {# navbar right #}
-      <div class="d-flex flex-row justify-center-center">
+      <div class="d-flex flex-row justify-content-center">
         {% partial 'jumplink-navigation/navbar-items' items=second.menuItems class='navbar-nav d-none d-md-flex justify-center-center' itemClass='nav-item' %}
         {% if rightSidebarEnabled %}
           <button class="d-flex navbar-toggler sidebar-toggler right-sidebar-toggler tcon tcon-menu--xcross hidden-print" type="button" data-toggle="sidebar" data-target="#right-sidebar" aria-controls="right-sidebar" aria-expanded="false" aria-label="Toggle Sidebar">

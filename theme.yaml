@@ -1247,7 +1247,7 @@ form:
             bs4-border-width:
                 type: text
                 label: border-width
-                default: $gray-300 $gray-300 $nav-tabs-link-active-bg
+                default: 1px
                 tab: 'Bootstrap'
                 assetVar: border-width
             bs4-border-color:
@@ -2462,4 +2462,5 @@ require:
     - Samuell.ContentEditor
     - RainLab.GoogleAnalytics
     - Renatio.SeoManager
+    - ToughDeveloper.ImageResizer
     # - Bedard.Debugbar

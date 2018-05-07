@@ -111,8 +111,6 @@ rivets.components.gallery = {
                 return;
             }
             
-            console.log('scroll');
-            
             position = $slideScrollbar.scrollLeft();
             
             if(scrollDirection > 0) {

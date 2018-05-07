@@ -57,11 +57,18 @@ rivets.components['top-sidebar'] = {
         $toggler = $('.top-sidebar-toggler');
         
         $el.attr('menu-items');
+        
         try {
-            // controller.menuItems = JSON.parse($el.attr('data-menu-items'));
+            controller.menuItems = JSON.parse($el.attr('data-menu-items'));
+        } catch(error){
+            console.error(error, data, controller.menuItems);
+        }
+        
+        try {
             controller.menuItems = $el.data('menu-items');
         } catch(error){
-            console.error(error, data, data.menuItems, );
+            console.error(error, data, controller.menuItems);
+
         }
         controller.hide();
         

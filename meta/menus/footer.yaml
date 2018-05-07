@@ -43,8 +43,10 @@ items:
         title: 'Gutschein schenken'
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
         reference: gutschein-am-meer
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -54,25 +56,14 @@ items:
         title: 'Tisch reservieren'
         nesting: '0'
         type: static-page
-        code: ''
-        reference: tisch-reservieren
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: tisch-reservieren
-            isExternal: '0'
-    -
-        title: Kontakt
-        nesting: '0'
-        type: static-page
         url: ''
         code: ''
-        reference: kontakt
+        reference: tisch-reservieren
         cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
-            cssClass: kontakt
+            cssClass: tisch-reservieren
             isExternal: '0'
     -
         title: Team
@@ -86,6 +77,19 @@ items:
         viewBag:
             isHidden: '0'
             cssClass: team
+            isExternal: '0'
+    -
+        title: Kontakt
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: kontakt
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: kontakt
             isExternal: '0'
     -
         title: Impressum
@@ -114,6 +118,32 @@ items:
             cssClass: datenschutz
             isExternal: '0'
     -
+        title: 'Fehler melden'
+        nesting: ''
+        type: cms-page
+        url: ''
+        code: ''
+        reference: system/browser-detection
+        cmsPage: ''
+        replace: ''
+        viewBag:
+            isHidden: '1'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Links
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: links
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
         title: Credits
         nesting: ''
         type: url
@@ -127,15 +157,11 @@ items:
             cssClass: credits
             isExternal: '0'
     -
-        title: 'Fehler melden'
-        nesting: ''
-        type: cms-page
-        url: ''
+        title: 'Like us on facebook'
+        type: url
+        url: 'https://www.facebook.com/ammeercuxhaven/?ref=bookmarks'
         code: ''
-        reference: system/browser-detection
-        cmsPage: ''
-        replace: ''
         viewBag:
-            isHidden: '1'
+            isHidden: '0'
             cssClass: ''
             isExternal: '0'

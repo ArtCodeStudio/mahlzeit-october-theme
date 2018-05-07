@@ -65,9 +65,9 @@ jumplink.utilities.openPhotoSwipe = function(handle, $imagesWrapper, index, imag
  */
 jumplink.utilities.hyphenate = function() {
     try {
-        window.clearTimeout(Hyphenopoly.setup.timeOutHandler);
         if(Hyphenopoly && Hyphenopoly.elementsReady) {
             setTimeout(function () {
+                // window.clearTimeout(Hyphenopoly.setup.timeOutHandler);
                 // Hyphenopoly.evt(["timeout"]);
                 Hyphenopoly.evt(["DOMContentLoaded"]);
             }, Hyphenopoly.c.timeout);

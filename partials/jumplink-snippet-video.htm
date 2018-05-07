@@ -10,9 +10,12 @@ snippetName = "Video"
 <div
     class=" jumplink-partial {{partialId}}"
     data-partial-name="{{partialId}}"
+    data-handle="{{handle}}"
     >
-    <video autoplay muted loop id="{{handle}}">
-        <source src="{{'/assets/videos/imagefilm_kurz-01.mp4' | theme}}" type="video/mp4">
-        <source src="{{'/assets/videos/imagefilm_kurz-01.webm' | theme}}" type="video/webm">
+    <video autoplay muted loop autobuffer id="{{handle}}" poster="{{'/videos/poster.jpg' | media}}">
+        <source src="{{'/videos/imagefilm_mahlzeit_am_meer_beschnitten.webm' | media}}" type="video/webm">
+        <source src="{{'/videos/imagefilm_mahlzeit_am_meer_beschnitten.mp4' | media}}" type="video/mp4">
+        <source src="{{'/videos/imagefilm_mahlzeit_am_meer_beschnitten.ogv' | media}}" type="video/ogg">
+        <p>Your browser does not support the video element.</p>
     </video>
 </div>

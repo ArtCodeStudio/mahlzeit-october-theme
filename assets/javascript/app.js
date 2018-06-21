@@ -521,7 +521,8 @@ var initBarba = function () {
    * æsee https://developers.google.com/analytics/devguides/collection/analyticsjs/events
    */
   Barba.Dispatcher.on('initStateChange', function(currentStatus) {
-    if(window.ga) {
+    // if jumplink.cache.lastElementClicked is null this is the first page request wich is already tracked by the plugin
+    if(window.ga && jumplink.cache.lastElementClicked !== null) {
       ga('set', 'location', currentStatus.url);
       ga('send', 'pageview');
     }

@@ -159,7 +159,7 @@ items:
     -
         title: 'Like us on facebook'
         type: url
-        url: 'https://www.facebook.com/ammeercuxhaven/?ref=bookmarks'
+        url: 'https://www.facebook.com/MahlzeitAmMeer/?ref=bookmarks'
         code: ''
         viewBag:
             isHidden: '0'

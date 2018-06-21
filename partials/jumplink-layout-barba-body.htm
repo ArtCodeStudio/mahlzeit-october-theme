@@ -1,6 +1,8 @@
 description = "bottom html code for barba layouts"
 
 [viewBag]
+
+[googleTracker]
 ==
 <?php
 use Cms\Classes\Theme;
@@ -51,6 +53,8 @@ function onStart()
 </template>
 
 <p class="hyphenate" lang="de" style="display:none;">FORCEHYPHENOPOLY</p>
+
+{#{% component 'googleTracker' %}#}
 
 {# templates for rivets.js #}
 {% partial 'jumplink-rivets-templates/index' %}

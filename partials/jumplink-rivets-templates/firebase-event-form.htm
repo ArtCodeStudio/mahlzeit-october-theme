@@ -13,7 +13,12 @@ description = "For Admins: Edit or create an event"
     </div>
     
     <div class="col-12 col-md-6">
-        <rv-select id="'eventType'" label="'Typ'" description="'Öffentliche Führungen sind Führungen mit Datum, Führung die angefragt werden können haben kein Datum.'" values="types" rv-selected="event.type"></rv-select>
+        <rv-select
+            id="'eventType'"
+            label="'Typ'"
+            description="'Öffentliche Führungen sind Führungen mit Datum, Führung die angefragt werden können haben kein Datum.'"
+            values="types"
+            rv-selected="event.type"></rv-select>
     </div>
 
     <div class="col-12 col-md-6">
@@ -85,7 +90,6 @@ description = "For Admins: Edit or create an event"
         <label for="eventStartAt">Tag</label>
         <input type="date" class="form-control" id="eventStartAt" aria-describedby="eventStartAtDesc" rv-pignose-calendar="event.startAt" data-options='{
             "lang": "de",
-            "minDate":  "today",
             "format": "YYYY-MM-DD",
             "buttons": true
         }'>

@@ -27,7 +27,11 @@
         return '%' + modelName + '%';
       },
       handler: function(context, ev, binding) {
-        return this.call(context, ev, binding.view.models);
+        try {
+            return this.call(context, ev, binding.view.models);
+        } catch(error) {
+            console.error(error, context, ev, binding);
+        }
       },
       configure: function(options) {
         var descriptor, key, option, value;

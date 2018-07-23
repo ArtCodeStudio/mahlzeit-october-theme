@@ -115,8 +115,8 @@ rivets.components['rv-select'] = {
             return controller.get();
         };
         
-        var onChange = function(value) {
-            var value = controller.get();
+        controller.onChange = function(value) {
+            value = controller.get();
             controller.debug('onChange', value );
             
             $el.trigger('change', value);

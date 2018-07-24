@@ -73,11 +73,6 @@
             
         </div>
         
-        
-        <div class="col-12 col-md-8 offset-md-2 mt-5">
-            <hr class="border-warning border-2">
-        </div>
-        
     </div>
     
     
@@ -168,14 +163,7 @@
           <p class="pb-2 hidden-sm-down">
               <strong class="hyphenate">{title}</strong>
           </p>
-          <div
-            rv-class-text-primary="event.calendar | eq 'Fluss'"
-            rv-class-text-warning="event.calendar | eq 'Watt'"
-            rv-class-text-success="event.calendar | eq 'Land'"
-            rv-class-gradient-text="event.calendar | eq 'Spezial'"
-            rv-class-bg-gradient-success-info-warning="event.calendar | eq 'Spezial'"
-            rv-class-animated-gradient="event.calendar | eq 'Spezial'"
-          >
+          <div>
               <h2 class="hyphenate pt-1">
                   {event.startAt | date 'DD.MM.YYYY'}
                   <small rv-if="event.showTimes">{event.startAt | time 'HH:mm'} Uhr</small>

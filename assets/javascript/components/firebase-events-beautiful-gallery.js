@@ -22,40 +22,54 @@ rivets.components['firebase-events-beautiful-gallery'] = {
     controller.type = data.type;
     controller.calendar = data.calendar;
     controller.style = data.style;
-    controller.events = data.events;
+    if(data.events) {
+        controller.events = data.events;
+    }
+    
+    if(data.event) {
+        controller.event = data.event;
+    }
+    
     controller.headerTitle = data.headerTitle;
     controller.headerText = data.headerText;
     
     controller.images = [];
     
+    var getImagesFromEvent = function(event) {
+        var images = [];
+        controller.debug('event', event);
+        /** converts images to the photoswipe format */
+        event.images.forEach(function(image, index) {        
+            /** path to image */
+            image.src = image.downloadURL;
+            /** path to small image placeholder, large image will be loaded on top */
+            image.msrc = image.downloadURL;
+            if (image.customMetadata) {
+                /** image width */
+                image.w = image.customMetadata.width || 800;
+                /** image height */
+                image.h = image.customMetadata.height || 600;
+            } else {
+                /** image width */
+                image.w = 800;
+                /** image height */
+                image.h = 600;
+            }
+            /** image caption */
+            image.title = image.metadata.name;
+            image.index = index;
+            // image.ratio = image.w + ':' + image.h;
+
+            images.push(image);
+        });
+        return images;
+    };
+    
     var getImagesFromEvents = function(events) {
         var images = [];
         events.forEach(function(event) {
-            controller.debug('event', event);
-            /** converts images to the photoswipe format */
-            event.images.forEach(function(image, index) {        
-                /** path to image */
-                image.src = image.downloadURL;
-                /** path to small image placeholder, large image will be loaded on top */
-                image.msrc = image.downloadURL;
-                if (image.customMetadata) {
-                    /** image width */
-                    image.w = image.customMetadata.width || 800;
-                    /** image height */
-                    image.h = image.customMetadata.height || 600;
-                } else {
-                    /** image width */
-                    image.w = 800;
-                    /** image height */
-                    image.h = 600;
-                }
-                /** image caption */
-                image.title = image.metadata.name;
-                image.index = index;
-                // image.ratio = image.w + ':' + image.h;
-    
-                images.push(image);
-            });
+            var _images = getImagesFromEvent(event);
+            images.push.apply(images, _images);
         });
         return images;
     };
@@ -72,18 +86,28 @@ rivets.components['firebase-events-beautiful-gallery'] = {
 
         if(data.index >= 0) {
             // open PhotoSwipe if valid index found
-            openPhotoSwipe(data.index);
+            if(controller.event) {
+                openPhotoSwipe(data.index, controller.event.id);
+            } else {
+                openPhotoSwipe(data.index);
+            }
         }
         return false;
     };
 
-    var openPhotoSwipe = function(index) {
-        $.event.trigger('rivets:photoswipe:open', [$imagesWrapper, index, controller.images]);
+    var openPhotoSwipe = function(index, handle) {
+        var openEvent = jumplink.utilities.getOpenPhotoswipeComponentEventName(handle);
+        $.event.trigger(openEvent, [$imagesWrapper, index, controller.images]);
     };
     
     controller.ready = true;
-        
-    controller.images = getImagesFromEvents(controller.events);
+    
+    if (controller.events) {
+        controller.images = getImagesFromEvents(controller.events);
+    } else if(controller.event) {
+        controller.images = getImagesFromEvent(controller.event);
+    }
+    
     controller.debug('images', controller.images);
     
     var ready = function(mutationsList) {

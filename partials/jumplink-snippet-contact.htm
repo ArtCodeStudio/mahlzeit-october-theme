@@ -11,11 +11,22 @@ snippetProperties[source][title] = "Bild Quelle"
 snippetProperties[source][type] = "string"
 snippetProperties[source][default] = ""
 snippetProperties[source][options][] = ""
+snippetProperties[type][title] = "Typ"
+snippetProperties[type][type] = "dropdown"
+snippetProperties[type][default] = "contact"
+snippetProperties[type][options][contact] = "contact"
+snippetProperties[type][options][reservation] = "reservation"
 ==
 <?php
-// you find onSubmitContact in layout telmates
+// you find onSubmitContact and onSubmitReservation in layouts
 ?>
 ==
+{% if type == 'contact' %}
+    {% set requestName = 'onSubmitContact' %}
+{% else %}
+    {% set requestName = 'onSubmitReservation' %}
+{% endif %}
+
 <div class="" id="contact" data-target="#contact">
     <header class="py-3">
         <div class="container">
@@ -33,7 +44,7 @@ snippetProperties[source][options][] = ""
                 </div>
                 
                 <div class="col-12">
-                    <contact-form layout="'2-columns'" in-modal="false" request-name="'onSubmitContact'"></contact-form>
+                    <contact-form layout="'2-columns'" in-modal="false" request-name="'{{requestName}}'"></contact-form>
                 </div>
                 
             </div>

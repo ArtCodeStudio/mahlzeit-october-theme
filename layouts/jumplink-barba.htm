@@ -39,6 +39,36 @@ function onSubmitContact() {
     $this['result'] = "Nachricht abgeschickt";
 }
 
+function onSubmitReservation() {
+    
+    Log::info('Used reservation form '.post('name'));
+    
+    $vars = [
+        'name' => post('name'),
+        'email' => post('email'),
+        'phone' => post('phone'),
+        'userMessage' => post('message'),
+    ];
+    
+    
+    $buildOwnerMessage = function ($message) use ($vars) {
+        $message->to($this->theme->email_address, $this->theme->site_name);
+    };
+    
+    $buildSenderMessage = function ($message) use ($vars) {
+        $message->to($vars['email'], $vars['name']);
+    };
+
+    // mail to site owner
+    Mail::send('frontend::reservation.notify', $vars, $buildOwnerMessage);
+    
+    // mail to contact sender
+    Mail::send('frontend::reservation.notify-copy', $vars, $buildSenderMessage);
+    
+    // TODO catch errors
+    $this['result'] = "Reservierung abgeschickt";
+}
+
 
 function onReguestEvent() {
     

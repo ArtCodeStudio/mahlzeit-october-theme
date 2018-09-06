@@ -172,7 +172,7 @@ rivets.components['contact-form'] = {
         
         if(controller.validation.valid) {
             // use the october cms javascript api function
-            $.request('onSubmitContact', {
+            $.request(data.requestName, {
                 data: controller.form,
                 success: function(responseData) {
                     this.success(responseData)

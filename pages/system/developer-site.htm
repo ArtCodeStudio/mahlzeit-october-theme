@@ -1,0 +1,31 @@
+title = "Developer Site"
+url = "/developer-site"
+layout = "jumplink-info"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+contentType = "html"
+force_show = 0
+
+[viewBag]
+localeUrl[en] = "/developer-site"
+==
+<div class="gradient-primary-info-bg animated-gradient bg-as-border-4-px h-vh w-vw">
+    <div class="bg-white h-100 d-flex align-items-center">
+        <div class="text-center w-100">
+            <span class="subtext">
+                mmmm ...<br>
+            </span>
+            <span class="lead gradient-primary-info-bg gradient-text animated-gradient">
+                {{this.theme.site_name}}<br>
+            </span>
+            <span class="subtext">
+                Dies ist die Entwicklerversion von <a href="https://mahlzeit-am-meer.de/">Mahlzeit Am Meer</a>, bitte besuchen Sie stattdessen <a href="https://mahlzeit-am-meer.de/">mahlzeit-am-meer.de</a>.<br>
+            </span>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.location.replace("https://mahlzeit-am-meer.de/");
+</script>

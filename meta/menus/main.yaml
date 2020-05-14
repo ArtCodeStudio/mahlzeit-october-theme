@@ -1,35 +1,52 @@
 name: main
 items:
     -
-        title: Speisen
-        nesting: '1'
-        type: static-page
-        code: ''
-        reference: kreative-werkstatt
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: speisen
-            isExternal: '0'
-    -
-        title: Events
+        title: 'Gutscheine kaufen'
         nesting: '0'
         type: static-page
         code: ''
-        reference: fuehrungen-spezial
+        reference: gutschein-kaufen
         replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
     -
+        title: Speisekarten
+        nesting: '1'
+        type: static-page
+        url: ''
+        code: ''
+        reference: kreative-werkstatt
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: speisen
+            isExternal: '0'
+    -
         title: Location
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
         reference: termine-neu
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: oeffentliche_fuehrung
+            isExternal: '0'
+    -
+        title: Rundgang
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: rundgang
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
             isExternal: '0'

@@ -1,25 +1,23 @@
 name: sidebar
 items:
     -
-        title: Speisekarte
+        title: 'Gutscheine kaufen'
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: gutschein-kaufen
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: gutschein
+            isExternal: '0'
+    -
+        title: Speisekarten
         nesting: '0'
         type: static-page
         url: ''
         code: ''
         reference: kreative-werkstatt
-        cmsPage: ''
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: ''
-            isExternal: '0'
-    -
-        title: 'Aktuelle Events'
-        nesting: '0'
-        type: static-page
-        url: ''
-        code: ''
-        reference: fuehrungen-spezial
         cmsPage: ''
         replace: '0'
         viewBag:
@@ -40,12 +38,12 @@ items:
             cssClass: ''
             isExternal: '0'
     -
-        title: 'Tisch reservieren'
+        title: Rundgang
         nesting: '0'
         type: static-page
         url: ''
         code: ''
-        reference: tisch-reservieren
+        reference: rundgang
         cmsPage: ''
         replace: '0'
         viewBag:
@@ -53,17 +51,17 @@ items:
             cssClass: ''
             isExternal: '0'
     -
-        title: 'Schenken Sie Genuss'
+        title: Events
         nesting: '0'
         type: static-page
         url: ''
         code: ''
-        reference: gutschein-am-meer
+        reference: fuehrungen-spezial
         cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
-            cssClass: gutschein
+            cssClass: ''
             isExternal: '0'
     -
         title: Team
@@ -80,10 +78,40 @@ items:
             isExternal: '0'
     -
         title: 'Historie & Galerie'
+        nesting: ''
         type: url
         url: /historie
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: historie
+            isExternal: '0'
+    -
+        title: Kontakt
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: kontakt
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Öffnungszeiten
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: oeffnungszeiten
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
             isExternal: '0'

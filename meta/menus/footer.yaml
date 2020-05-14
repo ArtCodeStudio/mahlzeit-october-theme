@@ -92,6 +92,17 @@ items:
             cssClass: kontakt
             isExternal: '0'
     -
+        title: Öffnungszeiten
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: oeffnungszeiten
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
         title: Impressum
         nesting: ''
         type: url
@@ -158,8 +169,21 @@ items:
             isExternal: '0'
     -
         title: 'Like us on facebook'
+        nesting: ''
         type: url
         url: 'https://www.facebook.com/MahlzeitAmMeer/?ref=bookmarks'
+        code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Instagram
+        type: url
+        url: 'https://www.instagram.com/mahlzeitammeer/'
         code: ''
         viewBag:
             isHidden: '0'

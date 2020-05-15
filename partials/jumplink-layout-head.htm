@@ -12,4 +12,14 @@
     {% partial 'jumplink-favicons' %}
     {% styles %}
     <link href="{{ ['assets/scss/theme.scss'] | theme }}" rel="stylesheet">
+    {# Prefetch flipbook images #}
+    {%- for collection in this.theme.flipbooks_collection -%}
+        {%- for book in collection.flipbooks -%}
+            {%- if book.show -%}
+                {%- for page in book.pages -%}
+                    <link rel="prefetch" href="{{ page.image | media }}">
+                {%- endfor -%}
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endfor -%}
 </head>

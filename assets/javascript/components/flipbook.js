@@ -12,7 +12,7 @@ rivets.components.flipbook = {
     var vagues;
     
     data.book.pages.forEach(function(page, index) {
-        page.image = jumplink.settings.media_path+page.image;
+        page.image = jumplink.settings.media_path + (page.image.replace(jumplink.settings.media_path, ''));
     });
         
     controller.book = data.book;
@@ -298,19 +298,14 @@ rivets.components.flipbook = {
     };
     
     var initControls = function(flipbookDim) {
-        var $close = $el.find('.close-book');
-        var $prev = $el.find('.prev-page');
-        var $next = $el.find('.next-page');
-        
-        var offsetX = flipbookDim.offsetX + 50;
-        
-        var x = flipbookDim.x - offsetX;
-        x = x >= 0 ? x : 0;
-        
+        // var $close = $el.find('.close-book');
+        // var $prev = $el.find('.prev-page');
+        // var $next = $el.find('.next-page');
+        // var offsetX = flipbookDim.offsetX + 50;
+        // var x = flipbookDim.x - offsetX;
+        // x = x >= 0 ? x : 0;
         // $close.css('right', (x) + 'px');
-        
         // $prev.css('left', (x) + 'px');
-        
         // $next.css('right', (x) + 'px');
     };
     

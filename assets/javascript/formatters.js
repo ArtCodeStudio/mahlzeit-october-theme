@@ -198,6 +198,16 @@ rivets.formatters.last = function(array) {
 };
 
 /**
+ * Similar to shopify map filter
+ * @see https://shopify.dev/docs/themes/liquid/reference/filters/array-filters#map
+ */
+rivets.formatters.map = function(array, key) {
+  var result = (array && array.length) ? array.map(x => x[key]) : [];
+  // console.debug('map', result);
+  return result;
+};
+
+/**
  * Formats a number as a currency (ie $1,234.56). When no currency symbol is provided, default symbol for current locale is used.
  * @param amount Input to filter.
  * @param symbol Currency symbol or identifier to be displayed. (optional)

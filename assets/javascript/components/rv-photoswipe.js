@@ -86,6 +86,9 @@ rivets.components['rv-photoswipe'] = {
             var pageYScroll = window.pageYOffset || document.documentElement.scrollTop; 
             // optionally get horizontal scroll
             // get position of element relative to viewport
+            if (!$thumbnail[0]) {
+                return null;
+            }
             var rect = $thumbnail[0].getBoundingClientRect();
             controller.debug('[getThumbBoundsFn] rect', rect);
             // w = width

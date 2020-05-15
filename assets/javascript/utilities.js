@@ -725,6 +725,9 @@ jumplink.utilities.eventPositionDocument = function(e) {
  */
 jumplink.utilities.getElementPosition = function(selector) {
     $el = $(selector);
+    if (!$el[0]) {
+      return null;
+    }
     var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
     var pageXScroll = window.pageXOffset || document.documentElement.scrollLeft;
     // optionally get horizontal scroll

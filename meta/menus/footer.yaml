@@ -43,10 +43,8 @@ items:
         title: 'Gutschein schenken'
         nesting: '0'
         type: static-page
-        url: ''
         code: ''
-        reference: gutschein-am-meer
-        cmsPage: ''
+        reference: gutschein-kaufen
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -95,8 +93,10 @@ items:
         title: Öffnungszeiten
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
         reference: oeffnungszeiten
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -182,9 +182,26 @@ items:
             isExternal: '0'
     -
         title: Instagram
+        nesting: ''
         type: url
         url: 'https://www.instagram.com/mahlzeitammeer/'
         code: ''
+        reference: ''
+        cmsPage: ''
+        replace: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Auszeit Am Meer'
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: auszeit
+        cmsPage: ''
+        replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: ''

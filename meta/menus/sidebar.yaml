@@ -4,8 +4,10 @@ items:
         title: 'Gutscheine kaufen'
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
         reference: gutschein-kaufen
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -110,6 +112,17 @@ items:
         code: ''
         reference: oeffnungszeiten
         cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Auszeit Am Meer'
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: auszeit
         replace: '0'
         viewBag:
             isHidden: '0'

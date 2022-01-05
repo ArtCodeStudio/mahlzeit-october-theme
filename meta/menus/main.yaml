@@ -1,7 +1,7 @@
 name: main
 items:
     -
-        title: 'Gutscheine kaufen'
+        title: 'Gutschein kaufen'
         nesting: '0'
         type: static-page
         code: ''
@@ -23,19 +23,6 @@ items:
         viewBag:
             isHidden: '0'
             cssClass: speisen
-            isExternal: '0'
-    -
-        title: Location
-        nesting: '0'
-        type: static-page
-        url: ''
-        code: ''
-        reference: termine-neu
-        cmsPage: ''
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: oeffentliche_fuehrung
             isExternal: '0'
     -
         title: Rundgang

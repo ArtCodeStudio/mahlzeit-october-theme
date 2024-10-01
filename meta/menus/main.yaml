@@ -1,11 +1,11 @@
 name: main
 items:
     -
-        title: 'Gutschein kaufen'
+        title: Reservierung
         nesting: '0'
         type: static-page
         code: ''
-        reference: gutschein-kaufen
+        reference: reservierungen
         replace: '0'
         viewBag:
             isHidden: '0'

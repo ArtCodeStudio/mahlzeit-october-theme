@@ -11,13 +11,16 @@
 // browser prefixes rendered in scss
 @import '../vendor/sass-prefix-mixins/scss/prefixes';
 
+// Portet theme settings
+@import "theme_settings";
+
 // bootstrap 4 compatible with the scss version of octobercms
 @import '../vendor/bootstrap/scss/bootstrap';
 
 // utilities also bootstrap need
 @import 'utilities';
 
-// fixes for bootstrap we nee
+// fixes for bootstrap we need
 @import 'fixes';
 
 @import "mixins";

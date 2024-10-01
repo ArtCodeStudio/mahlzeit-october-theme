@@ -11,7 +11,8 @@
     {% component 'seoTags' %} {# https://octobercms.com/plugin/renatio-seomanager #}
     {% partial 'jumplink-favicons' %}
     {% styles %}
-    <link href="{{ ['assets/scss/theme.scss'] | theme }}" rel="stylesheet">
+    {# <link href="{{ ['assets/scss/theme.scss'] | theme }}" rel="stylesheet"> #}
+    <link href="{{ ['assets/css/theme.css'] | theme }}" rel="stylesheet">
     {# Prefetch flipbook images #}
     {%- for collection in this.theme.flipbooks_collection -%}
         {%- for book in collection.flipbooks -%}

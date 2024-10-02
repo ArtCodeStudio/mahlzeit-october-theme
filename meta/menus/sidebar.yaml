@@ -1,19 +1,6 @@
 name: sidebar
 items:
     -
-        title: 'Gutscheine kaufen'
-        nesting: '0'
-        type: static-page
-        url: ''
-        code: ''
-        reference: gutschein-kaufen
-        cmsPage: ''
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: gutschein
-            isExternal: '0'
-    -
         title: Speisekarten
         nesting: '0'
         type: static-page
@@ -62,7 +49,7 @@ items:
         cmsPage: ''
         replace: '0'
         viewBag:
-            isHidden: '0'
+            isHidden: '1'
             cssClass: ''
             isExternal: '0'
     -
@@ -92,6 +79,17 @@ items:
             cssClass: historie
             isExternal: '0'
     -
+        title: Reservierung
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: reservierungen
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
         title: Kontakt
         nesting: '0'
         type: static-page
@@ -103,6 +101,19 @@ items:
         viewBag:
             isHidden: '0'
             cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Gutscheine kaufen'
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: gutschein-kaufen
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: gutschein
             isExternal: '0'
     -
         title: Öffnungszeiten
@@ -121,8 +132,10 @@ items:
         title: 'Auszeit Am Meer'
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
         reference: auszeit
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'

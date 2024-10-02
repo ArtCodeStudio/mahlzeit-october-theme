@@ -8,11 +8,11 @@
 // variables we neeed for all other scss files
 @import "bootstrap-variables";
 
-// browser prefixes rendered in scss
-@import '../vendor/sass-prefix-mixins/scss/prefixes';
-
 // Portet theme settings
 @import "theme_settings";
+
+// browser prefixes rendered in scss
+@import '../vendor/sass-prefix-mixins/scss/prefixes';
 
 // bootstrap 4 compatible with the scss version of octobercms
 @import '../vendor/bootstrap/scss/bootstrap';

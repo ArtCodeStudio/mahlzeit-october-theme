@@ -60,7 +60,7 @@ $border-radius : 0;
 $border-radius-lg : 0;
 $border-radius-sm : 0;
 $component-active-color : $white;
-$component-active-bg : theme-color("primary");
+$component-active-bg : $primary;
 $caret-width : .3em;
 $transition-base : all .2s ease-in-out;
 $transition-fade : opacity .15s linear;
@@ -72,6 +72,7 @@ $input-padding-x : .75rem;
 $input-line-height : 1.25;
 $input-padding-y-sm : .25rem;
 $input-padding-x-sm : .5rem;
+$input-btn-line-height-sm:    $line-height-sm !default;
 $input-line-height-sm : $input-btn-line-height-sm;
 $input-padding-y-lg : .75rem;
 $input-padding-x-lg : 1.5rem;
@@ -105,3 +106,15 @@ $nav-tabs-link-active-border-color : $warning;
 $nav-pills-border-radius : $border-radius;
 $nav-pills-link-active-color : $component-active-color;
 $nav-pills-link-active-bg : $component-active-bg;
+
+$theme-colors: () !default;
+$theme-colors: map-merge((
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+), $theme-colors);

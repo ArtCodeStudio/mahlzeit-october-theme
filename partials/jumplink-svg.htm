@@ -3,7 +3,12 @@
 function onStart() {
     $this['debug'] = Config::get('app.debug');
     try {
-      $this['svgContents'] = File::get(themes_path($this->theme->getDirName().'/'.$this->file));
+      $themePath = themes_path($this->theme->getDirName());
+      // Entfernt '../' aus dem Pfad
+      $filePath = str_replace('../', '', $this->file);
+      // Entfernt den Theme-Namen vom Anfang des Pfads, falls vorhanden
+      $filePath = preg_replace('/^' . preg_quote($this->theme->getDirName(), '/') . '\//', '', $filePath);
+      $this['svgContents'] = File::get($themePath . '/' . $filePath);
     } catch(Exception $e) {
       $this['error'] = $e->getMessage();
     }
@@ -12,7 +17,10 @@ function onStart() {
 ==
 {% if svgContents %}
   {{ svgContents|raw }}
-{% elseif debug %}
-  <pre><code>{{ error }}</code></pre>
+{% else %}
+  <script>
+    console.error("Cant load svg: {{ error }}");
+  </script>
 {% endif %}
+
 

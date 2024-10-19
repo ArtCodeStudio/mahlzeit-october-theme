@@ -82,13 +82,32 @@ rivets.components.flipbooks = {
         });
     };
     
-    ready();
+    //ready();
 
-    /*$el.one('DOMSubtreeModified', function() {
+    // $el.one('DOMSubtreeModified', function() {
+    //     setTimeout(function() {
+    //         ready();
+    //     }, 0);     
+    // });
+
+    var observerOptions = {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        characterData: true
+    };
+
+    // Replace the DOMSubtreeModified event with MutationObserver
+    var observer = new MutationObserver(function(mutations) {
+        observer.disconnect(); // Stop observing once we've detected a change
         setTimeout(function() {
-            ready();
-        }, 0);     
-    });*/
+          ready();
+        }, 0);
+    });
+
+    // Start observing the element for childList changes
+    observer.observe(el, observerOptions);
+              
             
     return controller;
   }

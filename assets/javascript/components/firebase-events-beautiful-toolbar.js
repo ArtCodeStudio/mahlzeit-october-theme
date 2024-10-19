@@ -159,13 +159,33 @@ rivets.components['firebase-events-beautiful-toolbar'] = {
         controller.debug('show.bs.collapse', controller.collapsed);
     });
             
-    $el.one('DOMSubtreeModified', function() {
+    // $el.one('DOMSubtreeModified', function() {
+    //     setTimeout(function() {
+    //         controller.onSelectEventChanged({index: 0});
+    //         controller.onDateChanged([moment()]);
+    //         controller.validation = jumplink.events.getValidationsForEvent(controller.event);
+    //     }, 0);     
+    // });
+
+    var observerOptions = {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        characterData: true
+    };
+
+    // Replace the DOMSubtreeModified event with MutationObserver
+    var observer = new MutationObserver(function(mutations) {
+        observer.disconnect(); // Stop observing once we've detected a change
         setTimeout(function() {
-            controller.onSelectEventChanged({index: 0});
-            controller.onDateChanged([moment()]);
-            controller.validation = jumplink.events.getValidationsForEvent(controller.event);
-        }, 0);     
+          controller.onSelectEventChanged({index: 0});
+          controller.onDateChanged([moment()]);
+          controller.validation = jumplink.events.getValidationsForEvent(controller.event);
+        }, 0);
     });
+
+    // Start observing the element for childList changes
+    observer.observe(el, observerOptions);
         
     return controller;
   }

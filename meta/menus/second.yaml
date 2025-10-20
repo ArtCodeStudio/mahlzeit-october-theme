@@ -1,17 +1,6 @@
 name: second
 items:
     -
-        title: 'Ferienwohnung buchen'
-        nesting: '0'
-        type: static-page
-        code: ''
-        reference: auszeit
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: ''
-            isExternal: '0'
-    -
         title: Kontakt
         nesting: '0'
         type: static-page
@@ -29,8 +18,10 @@ items:
                 title: 'Ferienwohnung buchen'
                 nesting: '0'
                 type: static-page
+                url: ''
                 code: ''
                 reference: auszeit
+                cmsPage: ''
                 replace: '0'
                 viewBag:
                     isHidden: '0'

@@ -43,8 +43,10 @@ items:
         title: 'Gutschein schenken'
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
         reference: gutschein-kaufen
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -197,12 +199,10 @@ items:
         title: 'Auszeit Am Meer'
         nesting: '0'
         type: static-page
-        url: ''
         code: ''
         reference: auszeit
-        cmsPage: ''
         replace: '0'
         viewBag:
-            isHidden: '0'
+            isHidden: '1'
             cssClass: ''
             isExternal: '0'

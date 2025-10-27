@@ -4,7 +4,7 @@
 use Cms\Classes\Theme;
 // use Debugbar as Debugbar;
 
-function onStart()
+public function onStart()
 {
     $theme = Theme::getActiveTheme();
     $path = $theme->getPath()."/partials/jumplink-rivets-global-modal-templates/";

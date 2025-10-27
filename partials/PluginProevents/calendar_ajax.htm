@@ -6,23 +6,23 @@
 <input type="hidden" id="month" value="{{ month }}" />
 {% if euro_cal == 1 %}
     <ul class="weekdays">
-        <li>{{'Monday'|_}}</li>
-        <li>{{'Tuesday'|_}}</li>
-        <li>{{'Wednesday'|_}}</li>
-        <li>{{'Thursday'|_}}</li>
-        <li>{{'Friday'|_}}</li>
-        <li>{{'Saturday'|_}}</li>
-        <li>{{'Sunday'|_}}</li>
+        <li>Montag</li>
+        <li>Dienstag</li>
+        <li>Mittwoch</li>
+        <li>Donnerstag</li>
+        <li>Freitag</li>
+        <li>Samstag</li>
+        <li>Sonntag</li>
     </ul>
 {% else %}
     <ul class="weekdays">
-        <li>{{'Sunday'|_}}</li>
-        <li>{{'Monday'|_}}</li>
-        <li>{{'Tuesday'|_}}</li>
-        <li>{{'Wednesday'|_}}</li>
-        <li>{{'Thursday'|_}}</li>
-        <li>{{'Friday'|_}}</li>
-        <li>{{'Saturday'|_}}</li>
+        <li>Sonntag</li>
+        <li>Montag</li>
+        <li>Dienstag</li>
+        <li>Mittwoch</li>
+        <li>Donnerstag</li>
+        <li>Freitag</li>
+        <li>Samstag</li>
     </ul>
 {% endif %}
 <ul class="days">
@@ -65,7 +65,7 @@
 			                {% endif %} -->
 							<h5>{{ event_item.date|date("M dS") }}</h5>
 							{% if event_item.allday > 0 %}
-								{{'All Day'|_}}
+								den ganzen Tag
 							{% else %}
 								{{ event_item.sttime|date("g:i a") }}  - {{ event_item.entime|date("g:i a") }}
 							{% endif %}

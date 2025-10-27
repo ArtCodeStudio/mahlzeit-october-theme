@@ -1,6 +1,6 @@
 ==
 <?php
-function onStart() {
+public function onStart() {
     $this['debug'] = Config::get('app.debug');
     try {
       $themePath = themes_path($this->theme->getDirName());

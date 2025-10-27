@@ -6,7 +6,7 @@ description = "Alle Rivets.js templates zum einmaligen einfügen ins Layout"
 use Cms\Classes\Theme;
 // use Debugbar as Debugbar;
 
-function onStart()
+public function onStart()
 {
     $theme = Theme::getActiveTheme();
     $path = $theme->getPath()."/partials/jumplink-rivets-templates/";

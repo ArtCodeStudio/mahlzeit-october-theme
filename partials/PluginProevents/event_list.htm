@@ -11,7 +11,7 @@ use Radiantweb\Proevents\Components;
 use Radiantweb\Proevents\Models\GeneratedDate as GeneratedDateModel;
 use Radiantweb\Proevents\Models\Calendar as CalendarModel;
 
-function onStart()
+public function onStart()
 {
     // anonymos classes only working on php7
     $this['code'] = new class {
@@ -72,7 +72,7 @@ function onStart()
 				{% else %}
 					am {{ event_item.event_date|date(PE_DATE_SPOKEN) }}
 					{% if event_item.allday > 0 %}
-						{{'den ganzen Tag'|_}}
+						den ganzen Tag
 					{% else %}
 						um {{ event_item.sttime|date(PE_DATE_TIME) }} bis {{ event_item.entime|date(PE_DATE_TIME) }} Uhr
 					{% endif %}
@@ -88,7 +88,7 @@ function onStart()
                     <p>
                         {{ event_item.title }}<br>
                         <small class="text-muted">{{code.getCalender(event_item.calendar_id).name}}</small>
-                        {% if event_item.status != '' %}<small class="event_{{event_item.status}}">- {{event_item.status |_}}</small>{% endif %}
+                        {% if event_item.status != '' %}<small class="event_{{event_item.status}}">- {{event_item.status}}</small>{% endif %}
                     </p>
                     
                 </strong>

@@ -100,10 +100,10 @@ form:
                 label: Navbar Type
                 type: dropdown
                 options:
-                    default: 'Default'
+                    navbar_default: 'Default'
                     center_logo: 'Center Logo'
                     only_sidebar: 'Only Sidebar'
-                default: 'default'
+                default: 'navbar_default'
                 tab: Navigation
             navigation_navbar_background_color:
                 label: Navbar Background Color
@@ -811,7 +811,6 @@ form:
                                     calendarStarttime:
                                         label: Start time 
                                         type: dropdown
-                                        default: all
                                         span: left
                                         options:
                                             all: All
@@ -821,7 +820,6 @@ form:
                                     calendarType:
                                         label: Type
                                         type: dropdown
-                                        default: all
                                         span: right
                                         options:
                                             all: All types

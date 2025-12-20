@@ -29,14 +29,27 @@ function onSubmitContact() {
         $message->to($vars['email'], $vars['name']);
     };
 
-    // mail to site owner
-    Mail::send('frontend::contact.notify', $vars, $buildOwnerMessage);
+    // Set a shorter timeout for SMTP connection
+    $originalTimeout = ini_get('default_socket_timeout');
+    ini_set('default_socket_timeout', 5); // 5 seconds timeout
     
-    // mail to contact sender
-    Mail::send('frontend::contact.notify-copy', $vars, $buildSenderMessage);
-    
-    // TODO catch errors
-    $this['result'] = "Nachricht abgeschickt";
+    try {
+        // mail to site owner
+        Mail::send('frontend::contact.notify', $vars, $buildOwnerMessage);
+        
+        // mail to contact sender
+        Mail::send('frontend::contact.notify-copy', $vars, $buildSenderMessage);
+        
+        ini_set('default_socket_timeout', $originalTimeout);
+        $this['result'] = "Nachricht abgeschickt";
+    } catch (\Exception $e) {
+        ini_set('default_socket_timeout', $originalTimeout);
+        Log::error('Contact form mail error: ' . $e->getMessage());
+        // AjaxException returns HTTP 406 which October CMS handles as "smart error"
+        throw new \Winter\Storm\Exception\AjaxException([
+            'X_WINTER_ERROR_MESSAGE' => 'Die E-Mail konnte nicht gesendet werden. Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt per Telefon.'
+        ]);
+    }
 }
 
 function onSubmitReservation() {
@@ -59,14 +72,27 @@ function onSubmitReservation() {
         $message->to($vars['email'], $vars['name']);
     };
 
-    // mail to site owner
-    Mail::send('frontend::reservation.notify', $vars, $buildOwnerMessage);
+    // Set a shorter timeout for SMTP connection
+    $originalTimeout = ini_get('default_socket_timeout');
+    ini_set('default_socket_timeout', 5); // 5 seconds timeout
     
-    // mail to contact sender
-    Mail::send('frontend::reservation.notify-copy', $vars, $buildSenderMessage);
-    
-    // TODO catch errors
-    $this['result'] = "Reservierung abgeschickt";
+    try {
+        // mail to site owner
+        Mail::send('frontend::reservation.notify', $vars, $buildOwnerMessage);
+        
+        // mail to contact sender
+        Mail::send('frontend::reservation.notify-copy', $vars, $buildSenderMessage);
+        
+        ini_set('default_socket_timeout', $originalTimeout);
+        $this['result'] = "Reservierung abgeschickt";
+    } catch (\Exception $e) {
+        ini_set('default_socket_timeout', $originalTimeout);
+        Log::error('Reservation form mail error: ' . $e->getMessage());
+        // AjaxException returns HTTP 406 which October CMS handles as "smart error"
+        throw new \Winter\Storm\Exception\AjaxException([
+            'X_WINTER_ERROR_MESSAGE' => 'Die Reservierung konnte nicht gesendet werden. Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt per Telefon.'
+        ]);
+    }
 }
 
 

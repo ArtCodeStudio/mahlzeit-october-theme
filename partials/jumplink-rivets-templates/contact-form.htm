@@ -8,6 +8,10 @@
         <div class="confirm-container">
             {# This will contain the confirmation when the email is successfully sent #}
         </div>
+        {# Error message display #}
+        <div class="alert alert-danger" role="alert" rv-show="errorMessage">
+            <span rv-html="errorMessage"></span>
+        </div>
     </div>
     <div
         class="col-12"
@@ -52,6 +56,12 @@
         class="col-12 d-flex flex-column"
         rv-class-order-3="layout | eq '2-columns'"
     >
-        <button type="button" class="btn btn-outline-warning align-self-end" rv-on-click="submit">Absenden</button>
+        <button type="button" class="btn btn-outline-warning align-self-end" rv-on-click="submit" rv-disabled="loading">
+            <span rv-show="loading | not">Absenden</span>
+            <span rv-show="loading">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Wird gesendet...
+            </span>
+        </button>
     </div>
 </form>

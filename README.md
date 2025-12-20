@@ -127,6 +127,3 @@ The theme includes pre-built content sections for:
 ## Credits
 
 Built by [JumpLink Network](https://www.jumplink.eu) for Mahlzeit Am Meer.
-
-See also:
-- [Bootstrap 4 Boilerplate for Shopify](https://github.com/JumpLinkNetwork/jumplink-shopify-boilerplate)

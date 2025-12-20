@@ -23,7 +23,14 @@ description = "Anrufen"
                 <div class="row">
                     <div class="col-xs-12 col-md-8 offset-md-2 px-3">
                         {% if contentPath %}
-                            {% component 'contenteditor' file=contentPath tools="bold,italic,link,heading,subheading,subheading3,subheading4,subheading5,paragraph,unordered-list,ordered-list,table,indent,unindent,line-break,image,video,preformatted" %}
+                            {# Sanitize contentPath to ensure valid filename #}
+                            {% set sanitizedContentPath = contentPath|replace({' ': '-', '  ': '-'})|trim %}
+                            {% set pathParts = sanitizedContentPath|split('.') %}
+                            {% set hasExtension = pathParts|length > 1 and (pathParts|last|lower == 'htm' or pathParts|last|lower == 'txt' or pathParts|last|lower == 'md') %}
+                            {% if not hasExtension %}
+                                {% set sanitizedContentPath = sanitizedContentPath ~ '.htm' %}
+                            {% endif %}
+                            {% component 'contenteditor' file=sanitizedContentPath tools="bold,italic,link,heading,subheading,subheading3,subheading4,subheading5,paragraph,unordered-list,ordered-list,table,indent,unindent,line-break,image,video,preformatted" %}
                         {% endif %}
                         <p class="text-center display-4">
                             <a href="tel:{{str_camel(this.theme.phone_number)}}">{{this.theme.phone_number}}</a>

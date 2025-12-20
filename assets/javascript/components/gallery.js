@@ -9,7 +9,13 @@ rivets.components.gallery = {
 
   initialize: function(el, data) {
     var controller = this;
-    data.data = JSON.parse(data.data);
+    
+    try {
+      data.data = JSON.parse(data.data);
+    } catch (e) {
+      return;
+    }
+    
     var $el = $(el);
     controller.debug = debug('rivets:gallery');
     controller.debug('initialize', $el, data);
@@ -178,8 +184,12 @@ rivets.components.gallery = {
     };
    
         
-    controller.images = themeSettingImagesToArray(data.data.images);
-    controller.debug('images', controller.images);
+    if (!data.data.images) {
+        controller.images = [];
+    } else {
+        controller.images = themeSettingImagesToArray(data.data.images);
+        controller.debug('images', controller.images);
+    }
     
     var ready = function(mutationsList) {
         controller.ready = true;

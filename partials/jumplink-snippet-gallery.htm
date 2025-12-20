@@ -10,53 +10,69 @@ snippetProperties[handle][options][] = ""
 ==
 <?php
 // use Debugbar as Debugbar;
-use ToughDeveloper\ImageResizer\Classes\Image;
+use System\Classes\ImageResizer;
+use System\Classes\MediaLibrary;
 
 public function OnStart() {
     
     $handle = $this->handle;
-    $rootPath = realpath(dirname(__FILE__).'/../../..');
-    // WORKADOUND
-    $rootPath = str_replace('/storage/cms','',$rootPath);
+    
+    // Get the correct base path (without /cache)
+    $basePath = base_path();
     $mediaPath = Config::get('cms.storage.media.path');
-    $fullMediaPath = $rootPath.$mediaPath;
+    $mediaFolder = Config::get('cms.storage.media.folder', 'media');
+    $fullMediaPath = $basePath . '/storage/app/' . $mediaFolder;
     $this['foundGallery'] = null;
         
     // find image by handle
     if(isset($this->theme->page_historie_galleries)) {
         foreach ($this->theme->page_historie_galleries as $key => $gallery) {
-            if($gallery['handle'] == $handle) {
-                // Debugbar::info($gallery);
+            if(isset($gallery['handle']) && $gallery['handle'] == $handle) {
                 // convert images to photoswipe format
                 $images = [];
-                foreach ($gallery['images'] as $key => $image) {
-                    $image['src'] = $mediaPath.$image['image'];
-                    $fullImagePath = $fullMediaPath.$image['image'];
-                    if (!file_exists($fullImagePath)) {
-                        // throw new Exception('File not found '.$fullImagePath);
-                    } else {
+                
+                if (!isset($gallery['images']) || !is_array($gallery['images'])) {
+                    // Gallery has no images
+                } else {
+                    foreach ($gallery['images'] as $key => $image) {
+                        if (!isset($image['image'])) {
+                            continue;
+                        }
+                        
+                        // Get the image path relative to media folder (remove leading slash if present)
+                        $imageRelativePath = ltrim($image['image'], '/');
+                        $fullImagePath = $fullMediaPath . '/' . $imageRelativePath;
+                        
+                        if (!file_exists($fullImagePath)) {
+                            continue; // Skip this image if file doesn't exist
+                        }
+                        
                         try {
+                            // Get image dimensions
                             list($width, $height) = getimagesize($fullImagePath);
                             $image['w'] = $width;
                             $image['h'] = $height;
+                            
+                            // Get the full URL to the original image
+                            $imageUrl = MediaLibrary::url($imageRelativePath);
+                            $image['src'] = $imageUrl;
+                            
+                            /**
+                             * Generate thumbnail using Winter CMS ImageResizer
+                             * @see https://wintercms.com/docs/v1.2/docs/services/image-resizing
+                             */
+                            $thumbUrl = ImageResizer::filterGetUrl($imageUrl, 300, 0, ['mode' => 'crop']);
+                            $image['msrc'] = $thumbUrl;
+                            
+                            $image['id'] = $key;
+                            $images[] = $image;
                         } catch (Exception $e) {
-                            throw new Exception('Can not read image '.$fullImagePath);
+                            continue; // Skip this image on error
                         }
-                        
-                        /**
-                         * generate thumbnail
-                         * @see https://github.com/toughdeveloper/oc-imageresizer-plugin
-                         */
-                        $imageObj = new Image($fullImagePath);
-                        $imageObj->resize(300, false, [ 'mode' => 'crop' ]);
-                        $thumbPath = $imageObj->getCachedImagePath(true);
-                        $image['msrc'] = $thumbPath;
-                        $image['id'] = $key;
-                        $images[] = $image;
                     }
                 }
-                $gallery['images'] = $images;
                 
+                $gallery['images'] = $images;
                 $this['foundGallery'] = $gallery;
             }
         }

@@ -28,6 +28,7 @@ rivets.components['contact-form'] = {
     
     controller.loading = false;
     controller.errorMessage = "";
+    controller.successMessage = "";
     
     var getValidation = function() {
         var validation = {
@@ -224,8 +225,9 @@ rivets.components['contact-form'] = {
         controller.debug('validation', controller.validation, 'form', controller.form);
         
         if(controller.validation.valid) {
-            // Clear any previous error message
+            // Clear any previous error and success messages
             controller.errorMessage = "";
+            controller.successMessage = "";
             
             // Set loading state
             controller.loading = true;
@@ -257,7 +259,9 @@ rivets.components['contact-form'] = {
                         // Clear error message on success
                         controller.errorMessage = "";
                         
+                        // Set success message for Rivets.js binding
                         var message = 'Anfrage erfolgreich abgeschickt.';
+                        controller.successMessage = message;
                         alertify.notify(message, 'success', 5);
                                             
                         controller.form.message = "";

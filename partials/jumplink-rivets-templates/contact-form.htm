@@ -1,16 +1,16 @@
 [viewBag]
 ==
 <form class="contactForm row needs-validation" role="form" novalidate
-      {# data-request="onSubmitContact" #}
-      {# data-request-update="'jumplink-forms/confirm': '.confirm-container'" #}
+
 >
     <div class="col-12">
-        <div class="confirm-container">
-            {# This will contain the confirmation when the email is successfully sent #}
-        </div>
         {# Error message display #}
         <div class="alert alert-danger" role="alert" rv-show="errorMessage">
             <span rv-html="errorMessage"></span>
+        </div>
+        {# Success message display #}
+        <div class="confirm-container" role="alert" rv-show="successMessage">
+            <span rv-html="successMessage"></span>
         </div>
     </div>
     <div

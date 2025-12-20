@@ -41,7 +41,9 @@ function onSubmitContact() {
         Mail::send('frontend::contact.notify-copy', $vars, $buildSenderMessage);
         
         ini_set('default_socket_timeout', $originalTimeout);
-        $this['result'] = "Nachricht abgeschickt";
+        Log::info('Contact form mail sent successfully to ' . $vars['email']);
+        // Return success message as array for October CMS AJAX response
+        return ['result' => "Nachricht abgeschickt"];
     } catch (\Exception $e) {
         ini_set('default_socket_timeout', $originalTimeout);
         Log::error('Contact form mail error: ' . $e->getMessage());
@@ -84,7 +86,9 @@ function onSubmitReservation() {
         Mail::send('frontend::reservation.notify-copy', $vars, $buildSenderMessage);
         
         ini_set('default_socket_timeout', $originalTimeout);
-        $this['result'] = "Reservierung abgeschickt";
+        Log::info('Reservation form mail sent successfully to ' . $vars['email']);
+        // Return success message as array for October CMS AJAX response
+        return ['result' => "Reservierung abgeschickt"];
     } catch (\Exception $e) {
         ini_set('default_socket_timeout', $originalTimeout);
         Log::error('Reservation form mail error: ' . $e->getMessage());

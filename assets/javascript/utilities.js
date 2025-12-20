@@ -39,7 +39,10 @@ jumplink.utilities.getComponentEventName = function (componentName, eventName, h
     }
     
     if(handle) {
-        event = event+':'+handle;
+        // Normalize handle: replace spaces with dashes, convert to lowercase
+        // This ensures event names work correctly even with handles containing spaces
+        var normalizedHandle = String(handle).toLowerCase().replace(/\s+/g, '-');
+        event = event+':'+normalizedHandle;
     }
     return event;
 };

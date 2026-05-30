@@ -1,5 +1,4 @@
 /**
- * Single file of the preview-files component
  */
 rivets.components['load-script'] = {
 

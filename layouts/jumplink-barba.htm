@@ -21,17 +21,32 @@ getEventByUrlIdParam = 0
 use Debugbar as Debugbar;
 
 function onSubmitContact() {
-    
+
     Log::info('Used contact form '.post('name'));
-    
+
     $vars = [
         'name' => post('name'),
         'email' => post('email'),
         'phone' => post('phone'),
         'userMessage' => post('message'),
     ];
-    
-    
+
+    // Einsendung zusätzlich im CMS speichern (JumpLink.Forms). Bewusst in eigenem
+    // try/catch: ein Speicherfehler darf den E-Mail-Versand nicht verhindern.
+    if (class_exists(\JumpLink\Forms\Models\Submission::class)) {
+        try {
+            \JumpLink\Forms\Models\Submission::store('contact', [
+                'name'    => post('name'),
+                'email'   => post('email'),
+                'phone'   => post('phone'),
+                'message' => post('message'),
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Kontaktformular: Speichern der Einsendung fehlgeschlagen: '.$e->getMessage());
+        }
+    }
+
+
     $buildOwnerMessage = function ($message) use ($vars) {
         $message->to($this->theme->email_address, $this->theme->site_name);
     };

@@ -9,55 +9,50 @@ description = "Schöne Darstellung der nächsten Events jeden Kalenders für die
         rv-if="showToolbar"
         type="type"
         calendar="calendar"
-        template-style="style"
+        style="style"
         events="events"
         class="pos-sticky"
     ></firebase-events-beautiful-toolbar>
 
 
-    <div rv-each-event="events">
-        <firebase-event-beautiful
-            type="type"
-            calendar="calendar"
-            active="active"
-            template-style="style"
-            text-title="title"
-            event="event"
-            limit="limit"
-            index="%event%"
-            size="events | size"
-            start-time="startTime"
-            container-class="containerClass"
-            detail-page="detailPage"
-            show-book-button="showBookButton"
-        ></firebase-event-beautiful>
-        
-        <firebase-events-beautiful-gallery
-            rv-if="showGallery"
-            text-title="title"
-            type="type"
-            calendar="calendar"
-            template-style="style"
-            event="event"
-            container-class="containerClass"
-            header-title="galleryTitle"
-            header-text="galleryText"
-        ></firebase-events-beautiful-gallery>
-        
-        <div class="col-12 col-md-8 offset-md-2 mt-5">
-            <hr class="border-warning border-2">
-        </div>
-        
-    </div>
+    <firebase-event-beautiful
+        rv-each-event="events"
+        type="type"
+        calendar="calendar"
+        active="active"
+        style="style"
+        text-title="title"
+        event="event"
+        limit="limit"
+        index="%event%"
+        start-time="startTime"
+        container-class="containerClass"
+        detail-page="detailPage"
+        show-book-button="showBookButton"
+    ></firebase-event-beautiful>
 </div>
     
+<div class="gallery-wrapper" rv-if="ready | and events | empty | not">
+    <firebase-events-beautiful-gallery
+        rv-if="showGallery"
+        text-title="title"
+        type="type"
+        calendar="calendar"
+        style="style"
+        events="events"
+        container-class="containerClass"
+        header-title="galleryTitle"
+        header-text="galleryText"
+    ></firebase-events-beautiful-gallery>
+</div>
+
 <div rv-if="ready | not" rv-class="containerClass | or 'container'" style="position: relative; height: 200px;">
     <spinner name="'wandering-cubes'" color-class="'gray-lighter'"></spinner>
 </div>
    
 <div rv-if="ready | and events | empty" rv-class="containerClass">
     <div class="row">
-        <div class="col-12">
+        <div class="col-xs-12">
             <span rv-if="startTime | eq 'future'">
                 {# Leider gibt es momentan keine zukünftige Veranstaltung. #}
             </span>
@@ -74,5 +69,5 @@ description = "Schöne Darstellung der nächsten Events jeden Kalenders für die
 <firebase-events-beautiful-book-modal
     type="type"
     calendar="calendar"
-    template-style="style"
+    style="style"
 ></firebase-events-beautiful-book-modal>

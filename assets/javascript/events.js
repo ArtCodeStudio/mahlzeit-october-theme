@@ -6,6 +6,143 @@ window.jumplink.debug = window.jumplink.debug || {};
 window.jumplink.debug.events = debug('theme:events');
 
 /**
+ * Unterordner im CMS-Media-Ordner, in den die Event-Bilder migriert wurden.
+ * Wird per tools/migrate-event-images.js befüllt und spiegelt den früheren
+ * Firebase-Storage-Pfad ( <domain>/events/images/<datei> ).
+ */
+jumplink.events.MEDIA_SUBFOLDER = 'events/images';
+
+/**
+ * Liefert die anzuzeigende Bild-URL für ein Event-Bild.
+ *
+ * Die Bilder werden nicht mehr aus dem Firebase-Storage geladen, sondern aus
+ * dem lokalen Winter-CMS Media-Ordner. Der Dateiname wird – exakt wie im
+ * Migrationsskript – aus der (alten) downloadURL abgeleitet, damit on-disk-Name
+ * und URL garantiert übereinstimmen (Leerzeichen/Umlaute etc.).
+ *
+ * Fallback: Steht kein Media-Pfad zur Verfügung oder lässt sich der Dateiname
+ * nicht ermitteln, wird die ursprüngliche Firebase-downloadURL verwendet – so
+ * funktioniert die Anzeige auch während einer stückweisen Migration weiter.
+ */
+jumplink.events.getImageUrl = function (image) {
+    if (!image) return '';
+    var base = (window.jumplink.settings && jumplink.settings.media_path) || '';
+    var downloadURL = image.downloadURL || '';
+    if (!base) return downloadURL;
+    // downloadURL: https://firebasestorage.googleapis.com/v0/b/<bucket>/o/<urlenc-pfad>?alt=media&token=...
+    var match = downloadURL.match(/\/o\/([^?]+)/);
+    if (!match) {
+        // Bild ohne Firebase-URL: ggf. nur der Dateiname in den Metadaten
+        var metaName = image.metadata && image.metadata.name;
+        if (metaName) return base + jumplink.events.MEDIA_SUBFOLDER + '/' + encodeURIComponent(metaName);
+        return downloadURL;
+    }
+    var objectPath = decodeURIComponent(match[1]); // <domain>/events/images/<datei>
+    var name = objectPath.substring(objectPath.lastIndexOf('/') + 1);
+    return base + jumplink.events.MEDIA_SUBFOLDER + '/' + encodeURIComponent(name);
+};
+
+/**
+ * Lokale Plugin-API (JumpLink.Events) – einzige Datenquelle für Führungen
+ * (Kalender, Events, Buchungen). Ersetzt die frühere Firebase/Firestore-Lösung.
+ */
+jumplink.events.api = {
+    base: (window.jumplink.settings && jumplink.settings.events_api_base) || '/api/jumplink/events'
+};
+
+/** GET-Request gegen die lokale API, liefert ein natives Promise mit JSON. */
+jumplink.events.apiGet = function(path, params) {
+    var url = jumplink.events.api.base + path;
+    return new Promise(function(resolve, reject) {
+        $.ajax({ url: url, method: 'GET', dataType: 'json', data: params || {} })
+            .done(function(data) { resolve(data); })
+            .fail(function(xhr) { reject(new Error('API-Fehler ' + xhr.status + ' bei ' + url)); });
+    });
+};
+
+/** POST-Request gegen die lokale API (JSON), liefert ein natives Promise. */
+jumplink.events.apiPost = function(path, payload) {
+    var url = jumplink.events.api.base + path;
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: url, method: 'POST', dataType: 'json',
+            contentType: 'application/json', data: JSON.stringify(payload || {})
+        })
+            .done(function(data) {
+                if (data && data.success === false) {
+                    reject(data);
+                } else {
+                    resolve(data);
+                }
+            })
+            .fail(function(xhr) {
+                var res = xhr.responseJSON || { error: 'API-Fehler ' + xhr.status };
+                reject(res);
+            });
+    });
+};
+
+/**
+ * Buchungsanfrage an die lokale API senden, liefert ein Promise.
+ */
+jumplink.events.requestBooking = function(form, event) {
+    var payload = {
+        event_id:  event && event.id,
+        handle:    event && event.handle,
+        title:     event && event.title,
+        calendar:  event && event.calendar,
+        firstname: form.name,
+        lastname:  form.lastname,
+        email:     form.email,
+        phone:     form.phone,
+        street:    form.street,
+        zip:       form.zip,
+        quantity:  form.quantity,
+        total:     form.total,
+        date:      form.date
+    };
+    return jumplink.events.apiPost('/book', payload);
+};
+
+/** Events aus der lokalen API (gleiche Signatur wie jumplink.events.get). */
+jumplink.events.getFromApi = function(hasType, hasActive, hasCalendar, startTimeIs, excludeCalendar, groupBy, limit) {
+    var params = {
+        type: hasType || 'all',
+        calendar: (jumplink.utilities.isString(hasCalendar) && hasCalendar.length) ? hasCalendar : 'all',
+        excludeCalendar: jumplink.utilities.isString(excludeCalendar) ? excludeCalendar : 'none',
+        active: (hasActive === true || hasActive === false) ? String(hasActive) : 'all',
+        startTime: startTimeIs || 'all',
+        limit: limit || 0
+    };
+    return jumplink.events.apiGet('/events', params).then(function(rawEvents) {
+        var events = [];
+        rawEvents.forEach(function(event) {
+            event = jumplink.events.parse(event);
+            if (jumplink.utilities.isString(groupBy) && groupBy !== 'none') {
+                jumplink.events.pushGroupedByProperty(events, event, groupBy);
+            } else {
+                events.push(event);
+            }
+        });
+        jumplink.debug.events('getFromApi', events);
+        return events;
+    });
+};
+
+jumplink.events.getByIdFromApi = function(id) {
+    return jumplink.events.apiGet('/events', { id: id }).then(function(rawEvents) {
+        if (!rawEvents || !rawEvents.length) return null;
+        return jumplink.events.parse(rawEvents[0]);
+    });
+};
+
+jumplink.events.getByTitleFromApi = function(title) {
+    return jumplink.events.apiGet('/events', { title: title }).then(function(rawEvents) {
+        return (rawEvents || []).map(function(event) { return jumplink.events.parse(event); });
+    });
+};
+
+/**
  * Gibt den Staffelpreis (der für die Anzahl der Personen passt) zurück
  */
 jumplink.events.getEventScalePriceByQuantity = function(event, quanity) {
@@ -26,8 +163,9 @@ jumplink.events.calcEventTotal = function (event, quantity) {
     var priceObj = jumplink.events.getEventScalePriceByQuantity(event, quantity);
     var total = 0;
     if(priceObj === null) {
-        var warn = new Error('Kein Staffelpreis gefunden, TODO handle error');
-        jumplink.debug.events(warn);
+        // Keine passende Preisstufe für diese Personenzahl – normal bei
+        // "auf Anfrage"-Touren ohne (passende) Staffel. Kein Fehler.
+        window.jumplink.debug.events('calcEventTotal: keine passende Preisstufe für Menge', quantity);
         return null;
     }
     
@@ -57,13 +195,13 @@ jumplink.events.validate = function(validation, form, keys) {
         
         // value is requred
         if(validation[key].required) {
-            if(jumplink.utilities.isString(form[key])) {
-                if(form[key].length <= 0) {
-                    validation[key].error = 'Dieses Feld ist erforderlich.';
-                }
-            }
-            
-            if(jumplink.utilities.isUndefined(form[key])) {
+            var value = form[key];
+            var isEmpty =
+                jumplink.utilities.isUndefined(value) ||
+                value === null ||
+                (jumplink.utilities.isString(value) && value.replace(/\s/g, '').length <= 0) ||
+                (typeof value === 'number' && isNaN(value));
+            if(isEmpty) {
                 validation[key].error = 'Dieses Feld ist erforderlich.';
             }
         }
@@ -191,12 +329,21 @@ jumplink.events.getValidationsForEvent = function(event) {
         if(validation.quantity.min === null || priceObj.min < validation.quantity.min) {
             validation.quantity.min = priceObj.min;
         }
-        
+
         if(validation.quantity.max === null || priceObj.max > validation.quantity.max) {
             validation.quantity.max = priceObj.max;
         }
     });
-    
+
+    // Fallback, falls keine (gültige) Staffel vorhanden ist – sonst würde die
+    // Mindestanzahl-Prüfung übersprungen und "0 Teilnehmer" durchrutschen.
+    if(!jumplink.utilities.isNumber(validation.quantity.min) || validation.quantity.min < 1) {
+        validation.quantity.min = 1;
+    }
+    if(!jumplink.utilities.isNumber(validation.quantity.max) || validation.quantity.max < validation.quantity.min) {
+        validation.quantity.max = 99;
+    }
+
     return validation;
 };
 
@@ -253,7 +400,6 @@ jumplink.events.getDefaultValues = function (calendars, types) {
     event.note = '';
     
     // price
-    event.price = false;
     event.prices = [jumplink.events.getDefaultPrice()];
     event.pricetext = '';
     
@@ -262,121 +408,7 @@ jumplink.events.getDefaultValues = function (calendars, types) {
     
     return event;
 };
-
-/**
- * Gets the default values for an caneldar e.g. if you want to create a new one
- */
-jumplink.events.getDefaultCalendarValues = function (types) {
     
-    var calendar = {};
-    
-    calendar.active = true;
-    
-    calendar.type = types[0].value;
-            
-    // title, subtitle
-    calendar.name = '';
-    calendar.title = '';
-    calendar.subtitle = '';
-    
-    // description
-    calendar.description = '';
-    
-    // note
-    calendar.note = '';
-    return calendar;
-};
-    
-jumplink.events.getDatabaseCollection = function() {
-    var dbEvents = db.collection('customerDomains').doc(jumplink.firebase.config.customerDomain).collection('events');
-    return dbEvents;
-};
-
-jumplink.events.getDatabaseCalendarCollection = function() {
-    var dbCalendars = db.collection('customerDomains').doc(jumplink.firebase.config.customerDomain).collection('calendars');
-    return dbCalendars;
-};
-
-
-/**
- * prepair event object to store in firebase datastore database
- */
-jumplink.events.prepairForFirestore = function(event) {
-    
-    jumplink.debug.events('prepairForFirestore', event);
-    
-    var newEvent = {
-        handle: rivets.formatters.handleize(event.title),
-        active: !!event.active,
-        title: event.title || null,
-        subtitle: event.subtitle || null,
-        description: event.description || null,
-        showTimes: !!event.showTimes,
-        startAt: moment(event.startAt),
-        endAt: moment(event.startAt),
-        price: !!event.price,
-        prices: event.prices,
-        pricetext: event.pricetext || null,
-        notifications: event.notifications,
-        type: event.type,
-        calendar: event.calendar,
-        
-        // additional attributes
-        offer: event.offer || null,
-        location: event.location || null,
-        equipment: event.equipment || null,
-        
-        note: event.note || null,
-        images: event.images,
-    };
-
-    // split times in hour and minutes
-    var startTimes = event.startTimeAt.split(':');
-    var endTimes = event.endTimeAt.split(':');
-    
-    // set time to start and end date
-    newEvent.startAt.hour(startTimes[0]);
-    newEvent.startAt.minute(startTimes[1]);
-    newEvent.endAt.hour(endTimes[0]);
-    newEvent.endAt.minute(endTimes[1]);
-    
-    // firestore need the default date object to store
-    newEvent.startAt = newEvent.startAt.toDate();
-    newEvent.endAt = newEvent.endAt.toDate();
-    
-    if(!jumplink.utilities.isArray(newEvent.images)) {
-        jumplink.debug.events('no images are set, init image object with empty array!');
-        newEvent.images = [];
-    }
-    
-    return newEvent;
-};
-
-/**
- * create a new event object to store in firebase datastore database
- */
-jumplink.events.prepairCalendarForFirestore = function(calendar) {
-    
-    var prepairedCalendar = {
-        handle: rivets.formatters.handleize(calendar.name),
-        active: !!calendar.active,
-        name: calendar.name,
-        title: calendar.title || null,
-        subtitle: calendar.subtitle || null,
-        description: calendar.description || null,
-        type: calendar.type,
-        note: calendar.note || null,
-        images: calendar.images,
-    };
-        
-    if(!jumplink.utilities.isArray(prepairedCalendar.images)) {
-        jumplink.debug.events('no images are set, init image object with empty array!');
-        prepairedCalendar.images = [];
-    }
-    
-    return prepairedCalendar;
-};
-
 /**
  * Get event from array by property and value
  */
@@ -426,62 +458,11 @@ jumplink.events.pushGroupedByProperty = function(events, event, groupBy) {
 };
 
 /**
- *  Get event by id to use in in update form
+ *  Get event by id and set it to the forms
  */
 jumplink.events.getById = function (id) {
     jumplink.debug.events('getById', id);
-    
-    var dbEvents = jumplink.events.getDatabaseCollection();
-    
-    try {
-        return dbEvents.doc(id).get()
-        .then(function(docRef) {
-            if (!docRef.exists) {
-                var error = new Error('Event not found!');
-                console.error(error);
-                return null;
-            }
-            jumplink.debug.events('getById start', docRef.data());
-            var event = docRef.data();
-            event.id = docRef.id;
-            return event;
-        });
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
-};
-
-/**
- *  Get calendar by id to use in in update form
- */
-jumplink.events.getCalendarById = function (id) {
-    jumplink.debug.events('getCalendarById', id);
-    
-    var db = jumplink.events.getDatabaseCalendarCollection();
-    
-    try {
-        return db.doc(id)
-        .get()
-        .then(function(docRef) {
-            if (!docRef.exists) {
-                var error = new Error('Calender not found!');
-                jumplink.debug.events(error);
-                return null;
-            }
-            jumplink.debug.events('getCalendarById start', docRef.data());
-            var calendar = docRef.data();
-            calendar.id = docRef.id;
-            return calendar;
-        });
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
+    return jumplink.events.getByIdFromApi(id);
 };
 
 /**
@@ -489,30 +470,7 @@ jumplink.events.getCalendarById = function (id) {
  */
 jumplink.events.getByTitle = function (title) {
     jumplink.debug.events('getByTitle', title);
-    
-    var ref = jumplink.events.getDatabaseCollection();
-    
-    ref = ref.where('title', "==", title);
-    
-    ref = ref.orderBy("startAt");
-    
-    try {
-        return ref.get()
-        .then(function(querySnapshot) {
-            var events = [];
-            querySnapshot.forEach(function (doc) {
-                var event = doc.data();
-                event.id = doc.id;
-                events.push(event);
-            });
-            return events;
-        });
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
+    return jumplink.events.getByTitleFromApi(title);
 };
 
 /**
@@ -527,246 +485,18 @@ jumplink.events.getByTitle = function (title) {
  * @param groupBy 'none' | 'handle'
  * @param limit {number}
  */
-jumplink.events.get = function(hasType, hasActive, hasCalendar, startTimeIs, excludeCalendar, groupBy, limit) {    
-    // delete old getted events
-    events = [];
-    var ref = jumplink.events.getDatabaseCollection();
-    
-    // set type filter
-    switch (hasType) {
-        case 'fix':
-        case 'variable':
-            ref = ref.where('type', "==", hasType);
-            break;
-        case 'all':
-            // all types
-            ref = ref;
-            break;
-        default:
-            // all types
-            ref = ref;
-            break;
-    }
-    
-    switch(hasActive) {
-        case true:
-        case false:
-            ref = ref.where('active', "==", hasActive);
-            break;
-        case 'all':
-            ref = ref;
-            break;
-        default:
-            // all
-            ref = ref;
-            break;
-    }
-    
-    // set calendar filter
-    if(jumplink.utilities.isString(hasCalendar) && hasCalendar.length && hasCalendar !== 'all') {
-        ref = ref.where('calendar', "==", hasCalendar);
-    } else {
-        // all calendars
-        ref = ref;
-    }
-    
-    // get events only in future
-    if(hasType !== 'variable') {
-        var now = new Date();
-        switch(startTimeIs) {
-            case 'future':
-                jumplink.debug.events('get events in future from', now);
-                ref = ref.where('startAt', ">=", now);
-                break;
-            case 'past':
-                jumplink.debug.events('get events from the past in reference to', now);
-                ref = ref.where('startAt', "<", now);
-                break;
-            case 'all':
-                jumplink.debug.events('get events from the past and in the future');
-                ref = ref;
-                break;
-            default:
-                jumplink.debug.events('get events from the past and in the future');
-                ref = ref;
-                break;
+jumplink.events.get = function(hasType, hasActive, hasCalendar, startTimeIs, excludeCalendar, groupBy, limit) {
+    return jumplink.events.getFromApi(hasType, hasActive, hasCalendar, startTimeIs, excludeCalendar, groupBy, limit);
+};
+
+jumplink.events.parse = function(event) {
+    // Datumsfelder der lokalen API (ISO-Strings) in Date-Objekte wandeln.
+    ['startAt', 'endAt'].forEach(function(key) {
+        var value = event[key];
+        if (!value || value.getMonth) {
+            return; // leer oder bereits ein Date-Objekt
         }
-    }
-    
-    if(!jumplink.utilities.isString(excludeCalendar)) {
-        excludeCalendar = 'none';
-    }
-    
-    /**
-     * Only set limit if no exclude is set otherwise limit is not working
-     * If excludes is set we have a client site limit implement with a counter (search for 'count')
-     */
-    if (excludeCalendar === 'none' && limit >= 1) {
-        jumplink.debug.events('set limit of orders to', limit);
-        ref = ref.limit(limit);
-    }
-
-    try {
-        // set order
-        ref = ref.orderBy("startAt");
-        
-        return ref.get()
-        .then(function(querySnapshot) {
-            //yevents = querySnapshot.data();
-            // jumplink.debug.events('event', querySnapshot);
-            var count = 0;
-            var events = [];
-            querySnapshot.forEach(function(doc) {
-                // own client site limit to make excludeCalendar working
-                if(count <= limit) {
-                    var event = doc.data();
-                    event.id = doc.id;
-                    if(event.calendar !== excludeCalendar) {
-                        count++;
-                        if(jumplink.utilities.isString(groupBy) && groupBy !== 'none') {
-                            jumplink.events.pushGroupedByProperty(events, event, groupBy);
-                        } else {
-                            events.push(event);
-                        }
-                    }
-                }
-            });
-            jumplink.debug.events('events', events);
-            return events;
-        });
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
-};
-
-/**
- * Get calendars
- * 
- */
-jumplink.events.getCalendars = function() {
-    try {
-         var dbCalendars = jumplink.events.getDatabaseCalendarCollection();
-         return dbCalendars.get()
-        .then(function(querySnapshot) {
-            jumplink.debug.events('calendars', querySnapshot);
-            var calendars = [];
-            querySnapshot.forEach(function (doc) {
-                var calendar = doc.data();
-                calendar.id = doc.id;
-                calendars.push(calendar);
-            });
-            return calendars;
-        });
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
-};
-
-/**
- * Create new event
- */
-jumplink.events.add = function(event, uploadedImages) {
-    
-    var dbEvents = jumplink.events.getDatabaseCollection();
-
-    var newEvent = jumplink.events.prepairForFirestore(event);
-    
-    if(jumplink.utilities.isArray(uploadedImages)) {
-        newEvent.images.push.apply(newEvent.images, uploadedImages);
-    }
-    
-    jumplink.debug.events('[add]', newEvent);
-
-    try {
-        return dbEvents.add(newEvent)
-        .then(function(result) {        
-            jumplink.debug.events('[add] result', result);
-            return result;
-        });
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
-
-};
-
-/**
- * Create new calendar
- */
-jumplink.events.addCalendar = function(calendar, uploadedImages) {
-    
-    var dbCalendar = jumplink.events.getDatabaseCalendarCollection();
-    var newCalendar = jumplink.events.prepairCalendarForFirestore(calendar);
-    
-    if(jumplink.utilities.isArray(uploadedImages)) {
-        newCalendar.images.push.apply(newCalendar.images, uploadedImages);
-    }
-    
-    jumplink.debug.events('[addCalendar]', newCalendar);
-
-    try {
-        return dbCalendar.add(newCalendar)
-        .then(function(result) {        
-            jumplink.debug.events('[addCalendar] result', result);
-            return result;
-        });
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
-
-};
-
-/**
- * Update existing event
- */
-jumplink.events.update = function(id, event, uploadedImages) {
-    var dbEvents = jumplink.events.getDatabaseCollection();
-    var updateEvent = jumplink.events.prepairForFirestore(event);
-    
-    if(jumplink.utilities.isArray(uploadedImages)) {
-        updateEvent.images.push.apply(updateEvent.images, uploadedImages);
-    }
-    
-    jumplink.debug.events('updateEvent', id, updateEvent);
-    try {
-        return dbEvents.doc(id).update(updateEvent);
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
-};
-
-/**
- * Update existing calendar
- */
-jumplink.events.updateCalendar = function(id, calendar, uploadedImages) {
-    var dbCalendars = jumplink.events.getDatabaseCalendarCollection();
-    var updateCalendar = jumplink.events.prepairCalendarForFirestore(calendar);
-    
-    if(jumplink.utilities.isArray(uploadedImages)) {
-        updateCalendar.images.push.apply(updateCalendar.images, uploadedImages);
-    }
-    
-    jumplink.debug.events('updateCalendar', id, updateCalendar);
-    try {
-        return dbCalendars.doc(id).update(updateCalendar);
-    }
-    catch(error) {
-        return new Promise(function(resolve, reject) {
-            reject(error);
-        });
-    }
+        event[key] = new Date(value);
+    });
+    return event;
 };

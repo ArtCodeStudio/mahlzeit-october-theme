@@ -9,7 +9,7 @@ rivets.components['firebase-event-beautiful'] = {
 
   initialize: function(el, data) {
     var controller = this;
-    controller.debug = debug('rivets:firebase-event-beautiful');
+    controller.debug = window.debug('rivets:firebase-event-beautiful');
     controller.debug('initialize', el, data);
     var $el = $(el);
 
@@ -23,8 +23,7 @@ rivets.components['firebase-event-beautiful'] = {
     controller.showBookButton = data.showBookButton;
     controller.event = data.event;
     controller.index = data.index;
-    controller.size = data.size;
-    controller.style = data.templateStyle; // choose template 'fix' | 'variable' | 'custom'
+    controller.style = data.style; // choose template 'fix' | 'variable' | 'custom'
     controller.color = 'black';
     controller.number = jumplink.utilities.rand(1, 4);
     controller.imageFilename = 'path-0' + controller.number + '.svg';
@@ -32,7 +31,7 @@ rivets.components['firebase-event-beautiful'] = {
     
     if(controller.event.images.length) {
         var image = controller.event.images[0];
-        controller.imageSrc = image.downloadURL;
+        controller.imageSrc = jumplink.events.getImageUrl(image); // lokaler CMS-Media-Ordner statt Firebase-Storage
         controller.imageAlt = image.metadata.name;
         if (image.customMetadata) {
             controller.imageW = image.customMetadata.width || 800;
@@ -88,7 +87,6 @@ rivets.components['firebase-event-beautiful'] = {
     
     var ready = function(mutationsList) {
         checkHash();
-        jumplink.utilities.hyphenate();
         observer.disconnect();
     };
     

@@ -10,7 +10,7 @@ rivets.components['firebase-events-beautiful-gallery'] = {
 
   initialize: function(el, data) {
     var controller = this;
-    controller.debug = debug('rivets:firebase-events-beautiful-gallery');
+    controller.debug = window.debug('rivets:firebase-events-beautiful-gallery');
     controller.debug('initialize', el, data);
     var $el = $(el);
     var observer;
@@ -22,54 +22,40 @@ rivets.components['firebase-events-beautiful-gallery'] = {
     controller.type = data.type;
     controller.calendar = data.calendar;
     controller.style = data.style;
-    if(data.events) {
-        controller.events = data.events;
-    }
-    
-    if(data.event) {
-        controller.event = data.event;
-    }
-    
+    controller.events = data.events;
     controller.headerTitle = data.headerTitle;
     controller.headerText = data.headerText;
     
     controller.images = [];
     
-    var getImagesFromEvent = function(event) {
-        var images = [];
-        controller.debug('event', event);
-        /** converts images to the photoswipe format */
-        event.images.forEach(function(image, index) {        
-            /** path to image */
-            image.src = image.downloadURL;
-            /** path to small image placeholder, large image will be loaded on top */
-            image.msrc = image.downloadURL;
-            if (image.customMetadata) {
-                /** image width */
-                image.w = image.customMetadata.width || 800;
-                /** image height */
-                image.h = image.customMetadata.height || 600;
-            } else {
-                /** image width */
-                image.w = 800;
-                /** image height */
-                image.h = 600;
-            }
-            /** image caption */
-            image.title = image.metadata.name;
-            image.index = index;
-            // image.ratio = image.w + ':' + image.h;
-
-            images.push(image);
-        });
-        return images;
-    };
-    
     var getImagesFromEvents = function(events) {
         var images = [];
         events.forEach(function(event) {
-            var _images = getImagesFromEvent(event);
-            images.push.apply(images, _images);
+            controller.debug('event', event);
+            /** converts images to the photoswipe format */
+            event.images.forEach(function(image, index) {
+                /** path to image (lokaler CMS-Media-Ordner statt Firebase-Storage) */
+                image.src = jumplink.events.getImageUrl(image);
+                /** path to small image placeholder, large image will be loaded on top */
+                image.msrc = image.src;
+                if (image.customMetadata) {
+                    /** image width */
+                    image.w = image.customMetadata.width || 800;
+                    /** image height */
+                    image.h = image.customMetadata.height || 600;
+                } else {
+                    /** image width */
+                    image.w = 800;
+                    /** image height */
+                    image.h = 600;
+                }
+                /** image caption */
+                image.title = image.metadata.name;
+                image.index = index;
+                // image.ratio = image.w + ':' + image.h;
+    
+                images.push(image);
+            });
         });
         return images;
     };
@@ -86,41 +72,24 @@ rivets.components['firebase-events-beautiful-gallery'] = {
 
         if(data.index >= 0) {
             // open PhotoSwipe if valid index found
-            if(controller.event) {
-                openPhotoSwipe(data.index, controller.event.id);
-            } else {
-                openPhotoSwipe(data.index);
-            }
+            openPhotoSwipe(data.index);
         }
         return false;
     };
 
-    var openPhotoSwipe = function(index, handle) {
-        var openEvent = jumplink.utilities.getOpenPhotoswipeComponentEventName(handle);
-        $.event.trigger(openEvent, [$imagesWrapper, index, controller.images]);
+    var openPhotoSwipe = function(index) {
+        $.event.trigger('rivets:photoswipe:open', [$imagesWrapper, index, controller.images]);
     };
     
     controller.ready = true;
-    
-    if (controller.events) {
-        controller.images = getImagesFromEvents(controller.events);
-    } else if(controller.event) {
-        controller.images = getImagesFromEvent(controller.event);
-    }
-    
+        
+    controller.images = getImagesFromEvents(controller.events);
     controller.debug('images', controller.images);
     
     var ready = function(mutationsList) {
-        /*
-        jumplink.dependencies.masonry()
-        .then(function() {
-            $imagesWrapper.masonry({
-              itemSelector: '.image-col',
-            });
-            observer.disconnect();
-            
+        $imagesWrapper.masonry({
+          itemSelector: '.image-col',
         });
-        */
         observer.disconnect();
     };
     

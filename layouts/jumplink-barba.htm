@@ -99,49 +99,9 @@ function onSubmitReservation() {
     }
 }
 
-
-function onReguestEvent() {
-    
-    // get request data
-    $input = Input::all();
-    
-    $vars = [
-        'name' =>          isset($input['name']) ? $input['name'] : '',
-        'lastname' =>      isset($input['lastname']) ? $input['lastname'] : '',
-        'email' =>         isset($input['email']) ? $input['email'] : '',
-        'phone' =>         isset($input['phone']) ? $input['phone'] : '',
-        'quantity' =>      isset($input['quantity']) ? $input['quantity'] : '',
-        'street' =>        isset($input['street']) ? $input['street'] : '',
-        'zip' =>           isset($input['zip']) ? $input['zip'] : '',
-        'date' =>          isset($input['date']) ? $input['date'] : '',
-        'total' =>         isset($input['total']) ? $input['total'] : '',
-        'eventID' =>       isset($input['event']['id']) ? $input['event']['id'] : '',
-        'eventTitle' =>    isset($input['event']['title']) ? $input['event']['title'] : '',
-        'eventSubtitle' => isset($input['event']['subtitle']) ? $input['event']['subtitle'] : '',
-        'eventDescription' => isset($input['event']['description']) ? $input['event']['description'] : '',
-        'eventCalendar' =>    isset($input['event']['calendar']) ? $input['event']['calendar'] : '',
-    ];
-    
-    // Debugbar::info('[onReguestEvent] $input', $input);
-    
-    Log::info('Book event, Name:'.$input['name'].' '.$input['lastname'].' E-Mail:'.$input['email'].' Event ID'.$input['event']['id'].' Menge: '.$input['quantity']);
-    
-    $buildOwnerMessage = function ($message) use ($vars) {
-        $message->to($this->theme->email_address, $this->theme->site_name);
-    };
-    
-    $buildSenderMessage = function ($message) use ($vars) {
-        $message->to($vars['email'], $vars['name'].' '.$vars['lastname']);
-    };
-    
-    // mail to site owner
-    Mail::send('frontend::event.book', $vars, $buildOwnerMessage);
-    
-    // mail to contact sender
-    Mail::send('frontend::event.book-copy', $vars, $buildSenderMessage);
-    
-    return Response::json($input);
-}
+// Hinweis: Die Event-Buchung läuft seit der Firebase->Plugin-Migration über die
+// JumpLink.Events-Plugin-API (POST /api/jumplink/events/book); der frühere
+// onReguestEvent()-Handler samt event.book*-Mailtemplates wurde entfernt.
 ?>
 ==
 <!DOCTYPE html>

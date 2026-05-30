@@ -10,11 +10,10 @@ rivets.components['firebase-events-beautiful'] = {
 
   initialize: function(el, data) {
     var controller = this;
-    controller.debug = debug('rivets:firebase-events-beautiful');
+    controller.debug = window.debug('rivets:firebase-events-beautiful');
+    controller.debug('initialize', el, data);
     var $el = $(el);
-    var db = firebase.firestore();
-    var dbEvents = db.collection('customerDomains').doc(jumplink.firebase.config.customerDomain).collection('events');
-    
+
     data.getEventByUrlIdParam = data.getEventByUrlIdParam === true || data.getEventByUrlIdParam === 'true' || data.getEventByUrlIdParam === 1 || data.getEventByUrlIdParam === '1';
     
     controller.ready = false;
@@ -33,7 +32,7 @@ rivets.components['firebase-events-beautiful'] = {
     
     // start time of the orders in the future, from the past or all
     controller.startTime = data.startTime || 'future'; // 'future' | 'past' | 'all'
-    controller.style = data.templateStyle;
+    controller.style = data.style;
     data.limit = Number(data.limit);
     if(data.limit === 0) {
         data.limit = 100;
@@ -55,26 +54,18 @@ rivets.components['firebase-events-beautiful'] = {
     controller.active = data.active;
     
     controller.events = [];
-    
-    controller.debug('initialize', el, data, controller);
             
     var getEvents = function() {
         return jumplink.events.get(controller.type, controller.active, controller.calendar, controller.startTime, controller.excludeCalendar, controller.groupBy, controller.limit)
         .then(function(events) {
-            controller.debug('events', events);
             controller.events = events;
-            return controller.events;
-        })
-        .then(function(events) {
-            jumplink.utilities.triggerResize();
         })
         .catch(function(error) {
             controller.debug('error', error);
-            var title =  'Ereignis konnte nicht geladen werden';
-            alertify.alert(title, error.message);
+            alertify.notify('Ereignis konnte nicht geladen werden.', 'error', 5, function(){});
         });
     };
-    
+
     /*
      * e.g. https://watt-land-fluss.de/event?id=I9YnPGqMpVKR9Q8qmjEI
      */
@@ -90,18 +81,13 @@ rivets.components['firebase-events-beautiful'] = {
         .then(function(event) {
             controller.debug('event', event);
             controller.events = [event];
-            return controller.events;
-        })
-        .then(function(events) {
-            jumplink.utilities.triggerResize();
         })
         .catch(function(error) {
             controller.debug('error', error);
-            var title =  'Ereignis konnte nicht geladen werden';
-            alertify.alert(title, error.message);
+            alertify.notify('Ereignis konnte nicht geladen werden.', 'error', 5, function(){});
         });
     };
-    
+
     if(data.getEventByUrlIdParam) {
         getEventByID()
         .then(function() {

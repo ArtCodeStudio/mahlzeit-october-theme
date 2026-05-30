@@ -38,7 +38,6 @@
     "rivets": "^0.9.6",
     "itemslide": "JumpLinkNetwork/itemslide.github.io#master",
     "vivus": "^0.4.3",
-    "firebase": "^4.9.0",
     "summernote": "^0.8.10",
     "pg-calendar": "^1.4.29",
     "photoswipe": "^4.1.2",

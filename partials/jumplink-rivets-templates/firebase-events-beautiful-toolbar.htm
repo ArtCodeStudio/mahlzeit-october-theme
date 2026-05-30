@@ -2,15 +2,15 @@
 ==
 <div
     class="toolbar-form px-md-3"
-    rv-class-bg-info="event.calendar | eq 'Fluss'"
-    rv-class-bg-warning="event.calendar | eq 'Watt'"
-    rv-class-bg-success="event.calendar | eq 'Land'"
+    rv-class-bg-state-info="event.calendar | eq 'Fluss'"
+    rv-class-bg-state-warning="event.calendar | eq 'Watt'"
+    rv-class-bg-state-success="event.calendar | eq 'Land'"
     rv-class-animated-gradient="event.calendar | eq 'Spezial'"
-    rv-class-bg-gradient-success-info-warning="event.calendar | eq 'Spezial'"
+    rv-class-bg-gradient-state-success-info-warning="event.calendar | eq 'Spezial'"
 >
     <div class="toolbar">
     
-        <div class="col-12 pt-1 hidden-xl-up">
+        <div class="col-xs-12 pt-1 hidden-xl-up">
             Tour anfragen
         </div>
         
@@ -29,7 +29,7 @@
             rv-class-has-error="validation.quantity.error | count"
         >
             <div class="input-group">
-                <input type="number" class="form-control" id="toolbarQuantity" rv-value="quantity" placeholder="" name="quantity" rv-on-change="onQuantityChanged" >
+                <input type="number" class="form-control" id="toolbarQuantity" rv-value="quantity" placeholder="" name="quantity" min="1" step="1" rv-on-change="onQuantityChanged" >
                 <span class="input-group-addon">Teilnehmer</span>
             </div>
             <div class="validate-tooltip" rv-html="validation.quantity.error"></div>
@@ -37,18 +37,14 @@
         
         <span class="price hidden-lg-down">{total} EUR</span>
         
-        <div class="hidden-lg-down">
-            <button class="btn btn-outline-dark" rv-disabled="validation.valid | not" rv-on-click="onBook">Tour anfragen</button>
-        </div>
-        
-        <div class="hidden-xl-up">
-            <button class="btn btn-link btn-toolbar-collapse" rv-on-click="toggleCollapse">
+        <div>
+            <button type="button" class="btn btn-link btn-toolbar-collapse" rv-on-click="toggleCollapse">
                 <span rv-show="collapsed">
                     Schließen {% partial 'jumplink-iconset' name='icon_close' color='black' class='m-0' size=32 %}
                 </span>
-                
+
                 <span rv-hide="collapsed">
-                    Anfragen {% partial 'jumplink-iconset' name='arrow_carrot' color='black' class='m-0' size=32 direction='down' %} 
+                    Anfragen {% partial 'jumplink-iconset' name='arrow_carrot' color='black' class='m-0' size=32 direction='down' %}
                 </span>
             </button>
         </div>
@@ -57,22 +53,33 @@
     
     <div class="collapse pt-md-3">
         <div class="card card-block">
-        
+
+            <div class="row" rv-show="bookingMessage">
+                <div class="col-xs-12">
+                    <div
+                        class="alert booking-feedback"
+                        rv-class-alert-success="bookingSuccess"
+                        rv-class-alert-danger="bookingSuccess | not"
+                        rv-html="bookingMessage"
+                    ></div>
+                </div>
+            </div>
+
             <div class="row hidden-xl-up">
-                <div class="col-12 col-md-4 form-group" rv-class-has-error="validation.date.error | count">
+                <div class="col-xs-12 col-md-4 form-group" rv-class-has-error="validation.date.error | count">
                      <datepicker placeholder="'Datum'" format="'DD.MM.YYYY'" lang="'de'" placeholder="'Datum'" name="'date'" on-change="onDateChanged"></datepicker>
                     <div class="validate-tooltip" rv-html="validation.date.error"></div>
                 </div>
 
-                <div class="col-12 col-sm-6 col-md-4 form-group" rv-class-has-error="validation.quantity.error | count">
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group" rv-class-has-error="validation.quantity.error | count">
                     <div class="input-group">
-                        <input type="number" class="form-control" id="toolbarQuantity" rv-value="quantity" placeholder="" name="quantity" rv-on-change="onQuantityChanged">
+                        <input type="number" class="form-control" id="toolbarQuantity" rv-value="quantity" placeholder="" name="quantity" min="1" step="1" rv-on-change="onQuantityChanged">
                         <span class="input-group-addon">Teilnehmer</span>
                     </div>
                     <div class="validate-tooltip" rv-html="validation.quantity.error"></div>
                 </div>
 
-                <div class="col-12 col-sm-6 col-md-4 form-group" rv-class-has-error="validation.total.error | count">
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group" rv-class-has-error="validation.total.error | count">
                     <div class="input-group">
                         <input type="number" class="form-control" id="toolbarTotal" rv-value="total" disabled="true" placeholder="Summe" name="total">
                         <span class="input-group-addon">€</span>
@@ -82,14 +89,14 @@
             </div>
             <div class="row">
                 <div
-                    class="col-12 col-md-4 form-group"
+                    class="col-xs-12 col-md-4 form-group"
                     rv-class-has-error="validation.name.error | count"
                 >
                     <input type="text" class="form-control" id="toolbarName" rv-value="name" placeholder="Vorname" name="name" autocomplete="given-name" rv-on-change="onFormChanged">
                     <div class="validate-tooltip" rv-html="validation.name.error"></div>
                 </div>
                 <div
-                    class="col-12 col-md-4 form-group"
+                    class="col-xs-12 col-md-4 form-group"
                     rv-class-has-error="validation.lastname.error | count"
                 >
                     <input type="text" class="form-control" id="toolbarLastname" rv-value="lastname" placeholder="Nachname" name="lastname" autocomplete="family-name" rv-on-change="onFormChanged">
@@ -97,14 +104,14 @@
                 </div>
                 
                 <div
-                    class="col-12 col-md-4 form-group"
+                    class="col-xs-12 col-md-4 form-group"
                     rv-class-has-error="validation.email.error | count"
                 >
                     <input type="email" class="form-control" id="toolbarEmail" rv-value="email" placeholder="E-Mail" name="email" autocomplete="email" rv-on-change="onFormChanged">
                     <div class="validate-tooltip" rv-html="validation.email.error"></div>
                 </div>
                 <div
-                    class="col-12 col-md-4 form-group"
+                    class="col-xs-12 col-md-4 form-group"
                     rv-class-has-error="validation.phone.error | count"
                 >
                     <input type="tel" class="form-control" id="toolbarPhone" rv-value="phone" placeholder="Telefonnummer" name="phone" autocomplete="tel" rv-on-change="onFormChanged">
@@ -112,25 +119,28 @@
                 </div>
                 
                 <div
-                    class="col-12 col-md-4 form-group"
+                    class="col-xs-12 col-md-4 form-group"
                     rv-class-has-error="validation.street.error | count"
                 >
                     <input type="text" class="form-control" id="toolbarStreet" rv-value="street" placeholder="Straße, Nr." name="street" autocomplete="shipping street-address" rv-on-change="onFormChanged">
                     <div class="validate-tooltip" rv-html="validation.street.error"></div>
                 </div>
                 <div
-                    class="col-12 col-md-4 form-group"
+                    class="col-xs-12 col-md-4 form-group"
                     rv-class-has-error="validation.zip.error | count"
                 >
                     <input type="text" class="form-control" id="toolbarZip" rv-value="zip" placeholder="PLZ" name="zip" autocomplete="shipping postal-code" rv-on-change="onFormChanged">
                     <div class="validate-tooltip" rv-html="validation.zip.error"></div>
                 </div>
                 
-                <div class="col-12 hidden-xl-up text-right">
-                    <button class="btn btn-outline-dark" rv-disabled="validation.valid | not" rv-on-click="onBook">Tour anfragen</button>
+                <div class="col-xs-12 text-right pt-2">
+                    <button type="button" class="btn btn-outline-dark" rv-on-click="onBook" rv-disabled="sending">
+                        <span rv-hide="sending">Anfrage absenden</span>
+                        <span rv-show="sending">Wird gesendet …</span>
+                    </button>
                 </div>
                 
-                <div class="col-12 pt-2">
+                <div class="col-xs-12 pt-2">
                     {% component 'contenteditor' file='buchungsinformation.htm' tools="bold,italic,link,heading,subheading,subheading3,subheading4,subheading5,paragraph,unordered-list,ordered-list,table,indent,unindent,line-break,image,video,preformatted" %}
                 <div>
             </div>

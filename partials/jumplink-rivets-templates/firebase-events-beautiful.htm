@@ -52,16 +52,18 @@ description = "Schöne Darstellung der nächsten Events jeden Kalenders für die
    
 <div rv-if="ready | and events | empty" rv-class="containerClass">
     <div class="row">
-        <div class="col-xs-12">
-            <span rv-if="startTime | eq 'future'">
-                {# Leider gibt es momentan keine zukünftige Veranstaltung. #}
-            </span>
-            <span rv-if="startTime | eq 'past'">
-                Es gibt noch keine vergangene Veranstaltung.
-            </span>
-            <span rv-if="startTime | eq 'all'">
-                Es gibt noch keine Veranstaltung, bitte haben Sie noch etwas Geduld.
-            </span>
+        <div class="col-xs-12 col-12 text-center events-empty py-5">
+            <div rv-if="startTime | eq 'future'">
+                <p class="lead mb-1">Zurzeit sind keine Veranstaltungen geplant.</p>
+                <p class="mb-0">Schauen Sie gern bald wieder vorbei – wir freuen uns auf Sie!</p>
+            </div>
+            <div rv-if="startTime | eq 'past'">
+                <p class="lead mb-0">Es gibt noch keine vergangenen Veranstaltungen.</p>
+            </div>
+            <div rv-if="startTime | eq 'all'">
+                <p class="lead mb-1">Zurzeit sind keine Veranstaltungen geplant.</p>
+                <p class="mb-0">Schauen Sie gern bald wieder vorbei – wir freuen uns auf Sie!</p>
+            </div>
         </div>
     </div>
 </div>

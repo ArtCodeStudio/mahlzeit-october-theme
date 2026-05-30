@@ -7,7 +7,7 @@
   "scripts": {
     "theme_settings": "node ./utilities/bootstrap_theme_settings.js && node ./utilities/merge_theme_settings.js",
     "doc": "node utilities/doc.js",
-    "style": "node-sass --output-style compressed assets/scss/theme.scss > assets/css/theme.css",
+    "style": "sass --style=compressed --no-source-map assets/scss/theme.scss assets/css/theme.css",
     "precommit": "echo 'TODO'",
     "prepush": "echo 'TODO' https://www.npmjs.com/package/husky"
   },

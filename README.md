@@ -75,13 +75,7 @@ bower install
 
 ### Building
 
-If you change source files or variables, generate a new `theme.yaml` with:
-
-```bash
-npm run theme_settings
-```
-
-Compile Sass to CSS:
+Compile Sass to CSS (dart-sass):
 
 ```bash
 npm run style

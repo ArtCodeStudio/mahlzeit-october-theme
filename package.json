@@ -5,7 +5,6 @@
   "main": "index.js",
   "homepage": "http://www.jumplink.eu",
   "scripts": {
-    "theme_settings": "node ./utilities/bootstrap_theme_settings.js && node ./utilities/merge_theme_settings.js",
     "doc": "node utilities/doc.js",
     "style": "sass --style=compressed --no-source-map assets/scss/theme.scss assets/css/theme.css",
     "precommit": "echo 'TODO'",
@@ -17,8 +16,6 @@
   "devDependencies": {
     "documentation": "^6.0.0",
     "husky": "^0.14.3",
-    "js-yaml": "^3.6.1",
-    "node-sass": "^9.0.0",
-    "write-yaml": "^0.2.2"
+    "sass": "^1.77.0"
   }
 }

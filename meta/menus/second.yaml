@@ -1,6 +1,15 @@
 name: second
 items:
     -
+        title: 'Täglich FRÜHSTÜCKSBUFFET 9 – 11.30 Uhr'
+        type: url
+        url: /fruhstucksbuffet
+        code: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
         title: Kontakt
         nesting: '0'
         type: static-page
@@ -13,17 +22,3 @@ items:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
-        items:
-            -
-                title: 'Ferienwohnung buchen'
-                nesting: '0'
-                type: static-page
-                url: ''
-                code: ''
-                reference: auszeit
-                cmsPage: ''
-                replace: '0'
-                viewBag:
-                    isHidden: '0'
-                    cssClass: ''
-                    isExternal: '0'

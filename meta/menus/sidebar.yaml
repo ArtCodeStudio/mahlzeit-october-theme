@@ -14,6 +14,39 @@ items:
             cssClass: ''
             isExternal: '0'
     -
+        title: Frühstücksbuffet
+        type: url
+        url: /fruhstucksbuffet
+        code: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Gutschein kaufen'
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: gutschein-kaufen
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: gutschein
+            isExternal: '0'
+    -
+        title: Reservierung
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: reservierungen
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
         title: 'Location buchen'
         nesting: '0'
         type: static-page
@@ -27,26 +60,11 @@ items:
             cssClass: ''
             isExternal: '0'
     -
-        title: Rundgang
-        nesting: '0'
-        type: static-page
-        url: ''
-        code: ''
-        reference: rundgang
-        cmsPage: ''
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: ''
-            isExternal: '0'
-    -
         title: Events
         nesting: '0'
         type: static-page
-        url: ''
         code: ''
         reference: fuehrungen-spezial
-        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '1'
@@ -54,15 +72,11 @@ items:
             isExternal: '0'
     -
         title: Team
-        nesting: ''
         type: url
         url: /team
         code: ''
-        reference: ''
-        cmsPage: ''
-        replace: ''
         viewBag:
-            isHidden: '0'
+            isHidden: '1'
             cssClass: team
             isExternal: '0'
     -
@@ -79,19 +93,6 @@ items:
             cssClass: historie
             isExternal: '0'
     -
-        title: Reservierung
-        nesting: '0'
-        type: static-page
-        url: ''
-        code: ''
-        reference: reservierungen
-        cmsPage: ''
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: ''
-            isExternal: '0'
-    -
         title: Kontakt
         nesting: '0'
         type: static-page
@@ -105,19 +106,6 @@ items:
             cssClass: ''
             isExternal: '0'
     -
-        title: 'Gutscheine kaufen'
-        nesting: '0'
-        type: static-page
-        url: ''
-        code: ''
-        reference: gutschein-kaufen
-        cmsPage: ''
-        replace: '0'
-        viewBag:
-            isHidden: '0'
-            cssClass: gutschein
-            isExternal: '0'
-    -
         title: Öffnungszeiten
         nesting: '0'
         type: static-page
@@ -128,16 +116,5 @@ items:
         replace: '0'
         viewBag:
             isHidden: '0'
-            cssClass: ''
-            isExternal: '0'
-    -
-        title: 'Auszeit Am Meer'
-        nesting: '0'
-        type: static-page
-        code: ''
-        reference: auszeit
-        replace: '0'
-        viewBag:
-            isHidden: '1'
             cssClass: ''
             isExternal: '0'

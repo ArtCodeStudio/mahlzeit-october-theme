@@ -1,10 +1,11 @@
 {# Theme-Override des JumpLink.Vouchers `voucherReturn`-Components (Bootstrap-4).
-   „Ausgestellt"-Block einmal als Quelle (set); der Poll blendet ihn in place ein. #}
+   „Ausgestellt"-Block einmal als Quelle (set); der Poll blendet ihn in place ein.
+   Beschriftungen über die Plugin-Sprachdateien (de/en). #}
 {% set issued %}
     <div class="alert alert-success text-center" role="alert">
-        <p class="mb-2">Vielen Dank! Ihr Gutschein wurde erstellt und an Ihre E-Mail-Adresse gesendet.</p>
+        <p class="mb-2">{{ 'jumplink.vouchers::lang.return.issued_thanks'|trans }}</p>
         <span class="voucher-download-wrap"{% if not __SELF__.downloadUrl %} hidden{% endif %}>
-            <a class="btn btn-outline-warning voucher-download" href="{{ __SELF__.downloadUrl ?: '#' }}">Gutschein als Bild herunterladen</a>
+            <a class="btn btn-outline-warning voucher-download" href="{{ __SELF__.downloadUrl ?: '#' }}">{{ 'jumplink.vouchers::lang.mail.download_image'|trans }}</a>
         </span>
     </div>
 {% endset %}
@@ -13,7 +14,7 @@
         {{ issued }}
     {% elseif __SELF__.order %}
         <div class="alert alert-info text-center" role="alert" data-voucher-pending>
-            Ihre Zahlung wird verarbeitet … einen Moment bitte.
+            {{ 'jumplink.vouchers::lang.return.processing'|trans }}
         </div>
         <div data-voucher-issued hidden>{{ issued }}</div>
         {# Soft client-side poll (kein Hard-Reload): blendet den Ausgestellt-Block in place ein. #}

@@ -1,6 +1,7 @@
 {# Theme-Override des JumpLink.Vouchers `voucherPurchase`-Components — Bootstrap-4-
    Markup im Mahlzeit-Look. Feldnamen, data-request und JS müssen mit dem Plugin
-   übereinstimmen; nur das Markup/Styling ist theme-spezifisch. #}
+   übereinstimmen; nur das Markup/Styling ist theme-spezifisch. Beschriftungen über
+   die Plugin-Sprachdateien (de/en), damit das Formular zweisprachig ist. #}
 <div class="voucher-purchase">
     <div id="voucherPurchaseResult"></div>
 
@@ -13,7 +14,7 @@
         style="max-width: 720px;">
 
         <div class="form-group">
-            <label class="font-weight-bold">Betrag wählen</label>
+            <label class="font-weight-bold">{{ 'jumplink.vouchers::lang.purchase.amount_choose'|trans }}</label>
             <div class="d-flex flex-wrap mb-2">
                 {% for cents in __SELF__.denominations %}
                     <button type="button" class="btn btn-outline-warning mr-2 mb-2 voucher-quick" data-amount="{{ (cents / 100)|number_format(2, '.', '') }}">
@@ -22,68 +23,68 @@
                 {% endfor %}
             </div>
             <input type="number" name="face_value" id="voucher-face-value" class="form-control" step="0.01" required
-                placeholder="Wunschbetrag in €"
+                placeholder="{{ 'jumplink.vouchers::lang.purchase.amount_placeholder'|trans }}"
                 min="{{ (__SELF__.minValueCents / 100)|number_format(2, '.', '') }}"
                 max="{{ (__SELF__.maxValueCents / 100)|number_format(2, '.', '') }}">
             <span data-validate-for="face_value" class="text-danger small"></span>
         </div>
 
         <div class="form-group">
-            <label class="font-weight-bold d-block">Zustellung</label>
+            <label class="font-weight-bold d-block">{{ 'jumplink.vouchers::lang.purchase.delivery_legend'|trans }}</label>
             <div class="custom-control custom-radio">
                 <input type="radio" id="voucher-delivery-digital" name="delivery_type" value="digital" class="custom-control-input" checked>
-                <label class="custom-control-label" for="voucher-delivery-digital">Digital (Bild mit QR-Code, sofort per E-Mail)</label>
+                <label class="custom-control-label" for="voucher-delivery-digital">{{ 'jumplink.vouchers::lang.purchase.delivery_digital'|trans }}</label>
             </div>
             <div class="custom-control custom-radio">
                 <input type="radio" id="voucher-delivery-physical" name="delivery_type" value="physical" class="custom-control-input">
-                <label class="custom-control-label" for="voucher-delivery-physical">Karte per Post (zzgl. {{ (__SELF__.serviceFeeCents / 100)|number_format(2, ',', '.') }} € Versand)</label>
+                <label class="custom-control-label" for="voucher-delivery-physical">{{ 'jumplink.vouchers::lang.purchase.delivery_physical'|trans({ fee: (__SELF__.serviceFeeCents / 100)|number_format(2, ',', '.') ~ ' €' }) }}</label>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label>Vorname</label>
+                <label>{{ 'jumplink.vouchers::lang.field.firstname'|trans }}</label>
                 <input type="text" name="firstname" class="form-control" required>
             </div>
             <div class="form-group col-md-6">
-                <label>Nachname</label>
+                <label>{{ 'jumplink.vouchers::lang.field.lastname'|trans }}</label>
                 <input type="text" name="lastname" class="form-control">
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label>E-Mail</label>
+                <label>{{ 'jumplink.vouchers::lang.field.email'|trans }}</label>
                 <input type="email" name="email" class="form-control" required>
                 <span data-validate-for="email" class="text-danger small"></span>
             </div>
             <div class="form-group col-md-6">
-                <label>Telefon <span class="text-muted">(optional, für Rückfragen)</span></label>
+                <label>{{ 'jumplink.vouchers::lang.field.phone'|trans }} <span class="text-muted">{{ 'jumplink.vouchers::lang.purchase.phone_hint'|trans }}</span></label>
                 <input type="tel" name="phone" class="form-control" autocomplete="tel">
             </div>
         </div>
 
         <div class="voucher-address form-row" hidden>
             <div class="form-group col-md-6">
-                <label>Straße &amp; Nr.</label>
+                <label>{{ 'jumplink.vouchers::lang.field.street'|trans }}</label>
                 <input type="text" name="street" class="form-control">
             </div>
             <div class="form-group col-md-3">
-                <label>PLZ</label>
+                <label>{{ 'jumplink.vouchers::lang.field.zip'|trans }}</label>
                 <input type="text" name="zip" class="form-control">
             </div>
             <div class="form-group col-md-3">
-                <label>Ort</label>
+                <label>{{ 'jumplink.vouchers::lang.field.city'|trans }}</label>
                 <input type="text" name="city" class="form-control">
             </div>
         </div>
 
         <div class="form-group">
-            <label>Empfänger (optional)</label>
+            <label>{{ 'jumplink.vouchers::lang.purchase.recipient_optional'|trans }}</label>
             <input type="text" name="recipient_name" class="form-control">
         </div>
         <div class="form-group">
-            <label>Persönliche Nachricht (optional)</label>
+            <label>{{ 'jumplink.vouchers::lang.purchase.message_optional'|trans }}</label>
             <textarea name="message" rows="3" class="form-control"></textarea>
         </div>
 
@@ -92,7 +93,7 @@
             style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
 
         <div class="text-right">
-            <button type="submit" class="btn btn-outline-warning">Weiter zur Zahlung</button>
+            <button type="submit" class="btn btn-outline-warning">{{ 'jumplink.vouchers::lang.purchase.submit'|trans }}</button>
         </div>
     </form>
 

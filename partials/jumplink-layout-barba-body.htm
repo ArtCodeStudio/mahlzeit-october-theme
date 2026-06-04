@@ -1,8 +1,6 @@
 description = "bottom html code for barba layouts"
 
 [viewBag]
-
-[googleTracker]
 ==
 <?php
 use Cms\Classes\Theme;
@@ -54,7 +52,7 @@ public function onStart()
 
 <p class="hyphenate" lang="de" style="display:none;">FORCEHYPHENOPOLY</p>
 
-{#{% component 'googleTracker' %}#}
+{# Analytics opt-in: RainLab.GoogleAnalytics installieren, [googleTracker] in Page/Layout deklarieren, dann einkommentieren: {% component 'googleTracker' %} #}
 
 {# templates for rivets.js #}
 {% partial 'jumplink-rivets-templates/index' %}

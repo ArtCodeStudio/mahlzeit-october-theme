@@ -1700,8 +1700,10 @@ require:
     - RainLab.Translate
     - RainLab.Sitemap
     - Xeor.ContentType
-    - Romanov.ClearCacheWidget
     - Samuell.ContentEditor
-    - RainLab.GoogleAnalytics
     - Renatio.SeoManager
-    - ToughDeveloper.ImageResizer
+    # Bewusst NICHT hart erforderlich:
+    #   - RainLab.GoogleAnalytics     (Analytics, opt-in/DSGVO; der googleTracker-
+    #                                  Aufruf ist deaktiviert/auskommentiert)
+    #   - ToughDeveloper.ImageResizer (ersetzt durch nativen System\Classes\ImageResizer)
+    #   - Romanov.ClearCacheWidget    (reines Backend-Widget, kein Theme-Bezug)

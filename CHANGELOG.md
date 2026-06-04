@@ -10,6 +10,21 @@ loosely follows [Keep a Changelog](https://keepachangelog.com/).
 > Winter‑compatible, so this works as‑is. Moving to WinterCMS forks is an
 > *optional* modernization (see below), not a fix.
 
+## 2026-06-04 — JumpLink.Vouchers installed on production (frontend NOT yet live)
+
+`jumplink/wn-vouchers-plugin` was installed on the live server so the theme's voucher
+integration (branch `feat/voucher-purchase-page`) can go live later without
+"component not registered" errors. **`main` is voucher-free and `/gutschein-kaufen`
+still renders the pre-voucher page** — the frontend wiring is intentionally not deployed.
+
+- **Plugin:** directory install at `plugins/jumplink/vouchers` (current `main`, plugin version **1.0.3**), kept as a git checkout for updates.
+- **Runtime deps** pulled into the app vendor via Composer (Winter has no Laravel package auto-discovery): `mollie/mollie-api-php ^3.13`, `barryvdh/laravel-dompdf ^3.1`, `endroid/qr-code ^6.0` — 16 packages total, **0 changes to the existing Laravel-9 core tree**.
+- **Migrations:** `php artisan winter:up` created `jumplink_vouchers_vouchers`, `jumplink_vouchers_voucher_orders`, `jumplink_vouchers_redemptions`.
+- **Verified:** components `voucherPurchase` / `voucherReturn` / `voucherPos` register; plugin + Mollie + DomPDF + QrCode classes autoload; backend boots; zero frontend impact.
+- **Prod environment (for plugin work):** WinterCMS 1.2.9 / Laravel 9 / PHP 8.4 / nginx + php-fpm / MySQL. Run CLI as `sudo -u www-data php artisan …`; `tinker` needs a writable `HOME` (`HOME=/tmp/h sudo -u www-data php artisan tinker --execute='…'`). Mail is native System SMTP via **smtp.strato.de** (the `.env` Mailgun values are dead). Queue is `sync`. `register()` registers the dompdf service provider guarded by `class_exists()` and sets `dompdf.public_path = base_path()` (Winter has no `public/` web root) — keep that.
+
+**Still required before the voucher feature can go live:** (1) `MOLLIE_API_KEY` in `.env` (test `test_…`, then live); (2) configure backend **Settings → Vouchers** (VAT, Mollie mode, sender/notification addresses, PDF); (3) a publicly reachable Mollie **webhook** URL (the webhook is the sole voucher-issuing authority); (4) merge `feat/voucher-purchase-page` → `main`, deploy, and test the purchase flow end-to-end with a test key.
+
 ## 2026-06-04 — Executed on production (plugin modernization)
 
 The roadmap below was carried out on the live WinterCMS install. Full backup first

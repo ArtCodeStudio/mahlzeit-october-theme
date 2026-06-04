@@ -15,7 +15,7 @@ public function OnStart() {
     $handle = $this->handle;
     $this['found_collection'] = null;
     // find image by handle
-    foreach ($this->theme->flipbooks_collection as $key => $collection) {
+    foreach (($this->theme->flipbooks_collection ?? []) as $key => $collection) {
         if($collection['handle'] == $handle) {
             // convert flipbooks to array with the right order
             $flipbooks = [];

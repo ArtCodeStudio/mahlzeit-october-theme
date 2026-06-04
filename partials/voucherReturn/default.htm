@@ -9,9 +9,31 @@
         </div>
     {% elseif __SELF__.order %}
         <div class="alert alert-info text-center" role="alert">
-            Ihre Zahlung wird verarbeitet … einen Moment bitte. Diese Seite aktualisiert sich automatisch.
+            Ihre Zahlung wird verarbeitet … einen Moment bitte.
         </div>
-        {# Framework-unabhängig: neu laden, bis der Webhook den Gutschein ausgegeben hat. #}
-        <script>setTimeout(function () { window.location.reload(); }, 4000);</script>
+        {# Soft client-side poll (kein Hard-Reload): tauscht den Block bei Ausgabe in place. #}
+        <script>
+        (function () {
+            var root = document.currentScript.closest('.voucher-return');
+            var order = {{ __SELF__.orderId }};
+            var token = '{{ __SELF__.order.access_token|e('js') }}';
+            var tries = 0;
+            function poll() {
+                if (tries++ > 75) { return; }
+                fetch('/api/jumplink/vouchers/order-status?order=' + order + '&t=' + encodeURIComponent(token), { headers: { Accept: 'application/json' } })
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        if (d && d.issued) {
+                            var dl = d.downloadUrl ? '<a class="btn btn-outline-warning" href="' + d.downloadUrl + '">Gutschein als PDF herunterladen</a>' : '';
+                            root.innerHTML = '<div class="alert alert-success text-center" role="alert"><p class="mb-2">Vielen Dank! Ihr Gutschein wurde erstellt und an Ihre E-Mail-Adresse gesendet.</p>' + dl + '</div>';
+                        } else {
+                            setTimeout(poll, 4000);
+                        }
+                    })
+                    .catch(function () { setTimeout(poll, 4000); });
+            }
+            setTimeout(poll, 4000);
+        })();
+        </script>
     {% endif %}
 </div>

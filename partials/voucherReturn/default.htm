@@ -1,17 +1,22 @@
-{# Theme-Override des JumpLink.Vouchers `voucherReturn`-Components (Bootstrap-4). #}
+{# Theme-Override des JumpLink.Vouchers `voucherReturn`-Components (Bootstrap-4).
+   „Ausgestellt"-Block einmal als Quelle (set); der Poll blendet ihn in place ein. #}
+{% set issued %}
+    <div class="alert alert-success text-center" role="alert">
+        <p class="mb-2">Vielen Dank! Ihr Gutschein wurde erstellt und an Ihre E-Mail-Adresse gesendet.</p>
+        <span class="voucher-download-wrap"{% if not __SELF__.downloadUrl %} hidden{% endif %}>
+            <a class="btn btn-outline-warning voucher-download" href="{{ __SELF__.downloadUrl ?: '#' }}">Gutschein als PDF herunterladen</a>
+        </span>
+    </div>
+{% endset %}
 <div class="voucher-return">
     {% if __SELF__.isIssued %}
-        <div class="alert alert-success text-center" role="alert">
-            <p class="mb-2">Vielen Dank! Ihr Gutschein wurde erstellt und an Ihre E-Mail-Adresse gesendet.</p>
-            {% if __SELF__.downloadUrl %}
-                <a class="btn btn-outline-warning" href="{{ __SELF__.downloadUrl }}">Gutschein als PDF herunterladen</a>
-            {% endif %}
-        </div>
+        {{ issued }}
     {% elseif __SELF__.order %}
-        <div class="alert alert-info text-center" role="alert">
+        <div class="alert alert-info text-center" role="alert" data-voucher-pending>
             Ihre Zahlung wird verarbeitet … einen Moment bitte.
         </div>
-        {# Soft client-side poll (kein Hard-Reload): tauscht den Block bei Ausgabe in place. #}
+        <div data-voucher-issued hidden>{{ issued }}</div>
+        {# Soft client-side poll (kein Hard-Reload): blendet den Ausgestellt-Block in place ein. #}
         <script>
         (function () {
             var root = document.currentScript.closest('.voucher-return');
@@ -23,12 +28,13 @@
                 fetch('/api/jumplink/vouchers/order-status?order=' + order + '&t=' + encodeURIComponent(token), { headers: { Accept: 'application/json' } })
                     .then(function (r) { return r.json(); })
                     .then(function (d) {
-                        if (d && d.issued) {
-                            var dl = d.downloadUrl ? '<a class="btn btn-outline-warning" href="' + d.downloadUrl + '">Gutschein als PDF herunterladen</a>' : '';
-                            root.innerHTML = '<div class="alert alert-success text-center" role="alert"><p class="mb-2">Vielen Dank! Ihr Gutschein wurde erstellt und an Ihre E-Mail-Adresse gesendet.</p>' + dl + '</div>';
-                        } else {
-                            setTimeout(poll, 4000);
+                        if (!d || !d.issued) { setTimeout(poll, 4000); return; }
+                        if (d.downloadUrl) {
+                            var a = root.querySelector('.voucher-download');
+                            if (a) { a.href = d.downloadUrl; a.closest('.voucher-download-wrap').hidden = false; }
                         }
+                        root.querySelector('[data-voucher-pending]').hidden = true;
+                        root.querySelector('[data-voucher-issued]').hidden = false;
                     })
                     .catch(function () { setTimeout(poll, 4000); });
             }

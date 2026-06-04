@@ -1696,7 +1696,7 @@ form:
                 commentHtml: true
                 tab: Impressum
 require:
-    - RainLab.Pages
+    - Winter.Pages
     - Xeor.ContentType
     - Samuell.ContentEditor
     - Renatio.SeoManager
@@ -1706,6 +1706,6 @@ require:
     #   - RainLab.GoogleAnalytics     (Analytics, opt-in/DSGVO; googleTracker-Aufruf auskommentiert)
     #   - ToughDeveloper.ImageResizer (ersetzt durch nativen System\Classes\ImageResizer)
     #   - Romanov.ClearCacheWidget    (reines Backend-Widget, kein Theme-Bezug)
-    # Produktiv ist WinterCMS: diese Namen sind noch die October-Namen; die
-    # Winter-Entsprechungen (z.B. RainLab.Pages -> Winter.Pages) sind in CHANGELOG.md
-    # dokumentiert und werden anhand der Produktiv-Plugin-Liste finalisiert.
+    # 2026-06 Modernisierung (produktiv WinterCMS): RainLab.Pages -> Winter.Pages und
+    # RainLab.Sitemap -> Winter.Sitemap geswappt; Mahlzeit.Compat aliast
+    # RainLab\Pages\Classes\Page -> Winter\Pages\Classes\Page für Renatio.SeoManager (siehe CHANGELOG.md).

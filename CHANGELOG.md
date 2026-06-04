@@ -10,6 +10,34 @@ loosely follows [Keep a Changelog](https://keepachangelog.com/).
 > Winter‑compatible, so this works as‑is. Moving to WinterCMS forks is an
 > *optional* modernization (see below), not a fix.
 
+## 2026-06-04 — Executed on production (plugin modernization)
+
+The roadmap below was carried out on the live WinterCMS install. Full backup first
+(Proxmox `vzdump` of the container + DB dump + files tarball); `cache:clear` and HTTP
+checks (home, `/datenschutz`, `/sitemap.xml`, backend) after every phase.
+
+**Removed (unused / superseded):**
+- `ToughDeveloper.ImageResizer` — native `System\Classes\ImageResizer` + `|resize` already in use.
+- `Romanov.ClearCacheWidget` — backend-only button; use `php artisan cache:clear`.
+- `RainLab.Builder` — dev/scaffolding tool, not needed on production.
+- `RainLab.GoogleAnalytics` — frontend tracking is off (commented out).
+- `Jumplink.ThemeSettings` — was disabled; `this.theme.*` is backed by the native `theme.yaml` `form:`.
+- `October.Drivers` — empty stub; mail is native System SMTP, queue `sync`, storage `local` (no S3/SES/Mailgun-API).
+- `Renatio.BackupManager` — was disabled; host-level Proxmox backups used instead.
+
+**Swapped to Winter forks (composer):**
+- `RainLab.Sitemap` → `winter/wn-sitemap-plugin` (Winter.Sitemap 2.2.2).
+- `RainLab.Pages` → `winter/wn-pages-plugin` (Winter.Pages 2.2.1). Static-page content lives in theme files (no DB migration). Performed under maintenance mode.
+
+**Added:**
+- `Mahlzeit.Compat` (`plugins/mahlzeit/compat`) — aliases `RainLab\Pages\Classes\Page` → `Winter\Pages\Classes\Page` so the kept `Renatio.SeoManager` still attaches its SEO fields to static pages after the Pages swap. Guarded no-op when not applicable.
+
+**Notes:**
+- `theme.yaml` `require:` updated `RainLab.Pages` → `Winter.Pages`.
+- `Winter.Sitemap` uses a new table (`winter_sitemap_definitions`); an **empty** definition was recreated so `/sitemap.xml` returns 200. It has **no URLs yet** — populate it (CMS + static pages) for real SEO value.
+- Per-static-page SEO `viewBag` fields were exported to a machine-readable JSON backup before the swap.
+- Plugin count 14 → 7 (+ Mahlzeit.Compat). Kept unchanged: `Renatio.SeoManager`, `Samuell.ContentEditor`, `Xeor.ContentType`, `JumpLink.Events`, `JumpLink.Forms`.
+
 ## 2026-06-04 — Dependency cleanup (`theme.yaml` `require:`)
 
 Trimmed `require:` to the plugins the theme template actually uses:

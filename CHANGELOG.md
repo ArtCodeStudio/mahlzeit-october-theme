@@ -10,6 +10,27 @@ loosely follows [Keep a Changelog](https://keepachangelog.com/).
 > Winter‑compatible, so this works as‑is. Moving to WinterCMS forks is an
 > *optional* modernization (see below), not a fix.
 
+## 2026-06-04 — Voucher purchase page integration
+
+`content/static-pages/gutschein-kaufen.htm` now uses the **JumpLink.Vouchers**
+plugin instead of the static `jumplink-contact` form:
+
+- New snippet partial `partials/jumplink-voucher-purchase.htm` renders the
+  `voucherPurchase` (buy form → Mollie checkout) and `voucherReturn` (post-payment
+  status + PDF download) components.
+- `layouts/jumplink-barba.htm` attaches `[voucherPurchase]` + `[voucherReturn]`
+  (same pattern as the existing `[eventList]`), so the snippet's `{% component %}`
+  calls resolve and the AJAX handlers (`voucherPurchase::onPurchase`) route.
+- The `jumplink-contact` figure on `gutschein-kaufen` was replaced with
+  `data-snippet="jumplink-voucher-purchase.htm"`.
+
+**Production requirement:** the **JumpLink.Vouchers** plugin must be installed
+(provides `voucherPurchase`/`voucherReturn` + Mollie/PDF/QR; needs
+`MOLLIE_API_KEY` + `VOUCHER_TOKEN_SECRET` in `.env`). Verify the full purchase
+flow on the live page after deploy. (Component render verified locally on a
+minimal layout; the full theme could not be rendered in the Winter dev because
+of the SEO/contentType plugins.)
+
 ## 2026-06-04 — Dependency cleanup (`theme.yaml` `require:`)
 
 Trimmed `require:` to the plugins the theme template actually uses:

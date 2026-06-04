@@ -1697,13 +1697,15 @@ form:
                 tab: Impressum
 require:
     - RainLab.Pages
-    - RainLab.Translate
-    - RainLab.Sitemap
     - Xeor.ContentType
     - Samuell.ContentEditor
     - Renatio.SeoManager
-    # Bewusst NICHT hart erforderlich:
-    #   - RainLab.GoogleAnalytics     (Analytics, opt-in/DSGVO; der googleTracker-
-    #                                  Aufruf ist deaktiviert/auskommentiert)
+    # Bewusst NICHT (mehr) hart erforderlich — Details in CHANGELOG.md:
+    #   - RainLab.Translate           (im Theme nicht genutzt — keine _()/__()-Filter, keine Mehrsprachigkeit)
+    #   - RainLab.Sitemap             (liefert /sitemap.xml als Route, keine Theme-Komponente -> optional)
+    #   - RainLab.GoogleAnalytics     (Analytics, opt-in/DSGVO; googleTracker-Aufruf auskommentiert)
     #   - ToughDeveloper.ImageResizer (ersetzt durch nativen System\Classes\ImageResizer)
     #   - Romanov.ClearCacheWidget    (reines Backend-Widget, kein Theme-Bezug)
+    # Produktiv ist WinterCMS: diese Namen sind noch die October-Namen; die
+    # Winter-Entsprechungen (z.B. RainLab.Pages -> Winter.Pages) sind in CHANGELOG.md
+    # dokumentiert und werden anhand der Produktiv-Plugin-Liste finalisiert.

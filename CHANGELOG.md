@@ -23,6 +23,11 @@ plugin instead of the static `jumplink-contact` form:
   calls resolve and the AJAX handlers (`voucherPurchase::onPurchase`) route.
 - The `jumplink-contact` figure on `gutschein-kaufen` was replaced with
   `data-snippet="jumplink-voucher-purchase.htm"`.
+- The buy/return forms are styled to match the theme via **component partial
+  overrides** (`partials/voucherPurchase/default.htm`,
+  `partials/voucherReturn/default.htm`) using the theme's Bootstrap-4 classes
+  (`form-control`, `btn btn-outline-warning`, grid) — the JumpLink.Vouchers
+  plugin markup stays generic.
 
 **Production requirement:** the **JumpLink.Vouchers** plugin must be installed
 (provides `voucherPurchase`/`voucherReturn` + Mollie/PDF/QR; needs

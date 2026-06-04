@@ -1,0 +1,113 @@
+{# Theme-Override des JumpLink.Vouchers `voucherPurchase`-Components — Bootstrap-4-
+   Markup im Mahlzeit-Look. Feldnamen, data-request und JS müssen mit dem Plugin
+   übereinstimmen; nur das Markup/Styling ist theme-spezifisch. #}
+<div class="voucher-purchase">
+    <div id="voucherPurchaseResult"></div>
+
+    <form
+        data-request="{{ __SELF__ }}::onPurchase"
+        data-request-validate
+        accept-charset="utf-8"
+        autocomplete="on"
+        class="mx-auto"
+        style="max-width: 720px;">
+
+        <div class="form-group">
+            <label class="font-weight-bold">Betrag wählen</label>
+            <div class="d-flex flex-wrap mb-2">
+                {% for cents in __SELF__.denominations %}
+                    <button type="button" class="btn btn-outline-warning mr-2 mb-2 voucher-quick" data-amount="{{ (cents / 100)|number_format(2, '.', '') }}">
+                        {{ (cents / 100)|number_format(2, ',', '.') }} €
+                    </button>
+                {% endfor %}
+            </div>
+            <input type="number" name="face_value" id="voucher-face-value" class="form-control" step="0.01" required
+                placeholder="Wunschbetrag in €"
+                min="{{ (__SELF__.minValueCents / 100)|number_format(2, '.', '') }}"
+                max="{{ (__SELF__.maxValueCents / 100)|number_format(2, '.', '') }}">
+            <span data-validate-for="face_value" class="text-danger small"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold d-block">Zustellung</label>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="voucher-delivery-digital" name="delivery_type" value="digital" class="custom-control-input" checked>
+                <label class="custom-control-label" for="voucher-delivery-digital">Digital (PDF mit QR-Code, sofort per E-Mail)</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="voucher-delivery-physical" name="delivery_type" value="physical" class="custom-control-input">
+                <label class="custom-control-label" for="voucher-delivery-physical">Karte per Post (zzgl. {{ (__SELF__.serviceFeeCents / 100)|number_format(2, ',', '.') }} € Versand)</label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Vorname</label>
+                <input type="text" name="firstname" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Nachname</label>
+                <input type="text" name="lastname" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>E-Mail</label>
+            <input type="email" name="email" class="form-control" required>
+            <span data-validate-for="email" class="text-danger small"></span>
+        </div>
+
+        <div class="voucher-address form-row" hidden>
+            <div class="form-group col-md-6">
+                <label>Straße &amp; Nr.</label>
+                <input type="text" name="street" class="form-control">
+            </div>
+            <div class="form-group col-md-3">
+                <label>PLZ</label>
+                <input type="text" name="zip" class="form-control">
+            </div>
+            <div class="form-group col-md-3">
+                <label>Ort</label>
+                <input type="text" name="city" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Empfänger (optional)</label>
+            <input type="text" name="recipient_name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Persönliche Nachricht (optional)</label>
+            <textarea name="message" rows="3" class="form-control"></textarea>
+        </div>
+
+        {# Honeypot: für Menschen unsichtbar; Bots füllen es und erhalten harmlosen Erfolg. #}
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"
+            style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-outline-warning">Weiter zur Zahlung</button>
+        </div>
+    </form>
+
+    <script>
+    (function () {
+        var root = document.currentScript.closest('.voucher-purchase');
+        var amount = root.querySelector('#voucher-face-value');
+
+        root.querySelectorAll('.voucher-quick').forEach(function (btn) {
+            btn.addEventListener('click', function () { amount.value = btn.dataset.amount; });
+        });
+
+        var address = root.querySelector('.voucher-address');
+        function syncAddress() {
+            var sel = root.querySelector('input[name="delivery_type"]:checked');
+            address.hidden = !sel || sel.value !== 'physical';
+        }
+        root.querySelectorAll('input[name="delivery_type"]').forEach(function (r) {
+            r.addEventListener('change', syncAddress);
+        });
+        syncAddress();
+    })();
+    </script>
+</div>

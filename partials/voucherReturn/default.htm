@@ -1,0 +1,17 @@
+{# Theme-Override des JumpLink.Vouchers `voucherReturn`-Components (Bootstrap-4). #}
+<div class="voucher-return">
+    {% if __SELF__.isIssued %}
+        <div class="alert alert-success text-center" role="alert">
+            <p class="mb-2">Vielen Dank! Ihr Gutschein wurde erstellt und an Ihre E-Mail-Adresse gesendet.</p>
+            {% if __SELF__.downloadUrl %}
+                <a class="btn btn-outline-warning" href="{{ __SELF__.downloadUrl }}">Gutschein als PDF herunterladen</a>
+            {% endif %}
+        </div>
+    {% elseif __SELF__.order %}
+        <div class="alert alert-info text-center" role="alert">
+            Ihre Zahlung wird verarbeitet … einen Moment bitte. Diese Seite aktualisiert sich automatisch.
+        </div>
+        {# Framework-unabhängig: neu laden, bis der Webhook den Gutschein ausgegeben hat. #}
+        <script>setTimeout(function () { window.location.reload(); }, 4000);</script>
+    {% endif %}
+</div>

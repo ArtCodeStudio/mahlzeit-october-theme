@@ -140,6 +140,9 @@ public function onStart()
 {% framework %}
 {% scripts %}
 
+{# Voucher purchase form behaviour — delegated on document so it survives barba swaps. #}
+{% partial 'jumplink-voucher-purchase-init' %}
+
  {# start script #}
 <script src="{{ [
     'assets/javascript/app.js',

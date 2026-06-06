@@ -96,25 +96,7 @@
             <button type="submit" class="btn btn-outline-warning">{{ 'jumplink.vouchers::lang.purchase.submit'|trans }}</button>
         </div>
     </form>
-
-    <script>
-    (function () {
-        var root = document.currentScript.closest('.voucher-purchase');
-        var amount = root.querySelector('#voucher-face-value');
-
-        root.querySelectorAll('.voucher-quick').forEach(function (btn) {
-            btn.addEventListener('click', function () { amount.value = btn.dataset.amount; });
-        });
-
-        var address = root.querySelector('.voucher-address');
-        function syncAddress() {
-            var sel = root.querySelector('input[name="delivery_type"]:checked');
-            address.hidden = !sel || sel.value !== 'physical';
-        }
-        root.querySelectorAll('input[name="delivery_type"]').forEach(function (r) {
-            r.addEventListener('change', syncAddress);
-        });
-        syncAddress();
-    })();
-    </script>
+    {# Behaviour (quick-pick amount, address toggle) is wired globally and barba-
+       safe by the `jumplink-voucher-purchase-init` partial in the layout body —
+       an inline script here would not run after an in-site (barba) navigation. #}
 </div>

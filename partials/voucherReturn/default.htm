@@ -26,7 +26,11 @@
             var tries = 0;
             function poll() {
                 if (tries++ > 75) { return; }
-                fetch('/api/jumplink/vouchers/order-status?order=' + order + '&t=' + encodeURIComponent(token), { headers: { Accept: 'application/json' } })
+                fetch('/api/jumplink/vouchers/order-status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+                        body: 'order=' + encodeURIComponent(order) + '&t=' + encodeURIComponent(token)
+                    })
                     .then(function (r) { return r.json(); })
                     .then(function (d) {
                         if (!d || !d.issued) { setTimeout(poll, 4000); return; }

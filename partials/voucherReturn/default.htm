@@ -5,7 +5,11 @@
     <div class="alert alert-success text-center" role="alert">
         <p class="mb-2">{{ 'jumplink.vouchers::lang.return.issued_thanks'|trans }}</p>
         <span class="voucher-download-wrap"{% if not __SELF__.downloadUrl %} hidden{% endif %}>
-            <a class="btn btn-outline-warning voucher-download" href="{{ __SELF__.downloadUrl ?: '#' }}">{{ 'jumplink.vouchers::lang.mail.download_image'|trans }}</a>
+            {# `download` both triggers a real download (not an in-tab view) and
+               makes barba.js ignore the click — otherwise barba tries to load the
+               binary image endpoint as an in-site page ("no container found") and
+               blanks the screen. #}
+            <a class="btn btn-outline-warning voucher-download" href="{{ __SELF__.downloadUrl ?: '#' }}" download>{{ 'jumplink.vouchers::lang.mail.download_image'|trans }}</a>
         </span>
     </div>
 {% endset %}
@@ -44,6 +48,37 @@
                     .catch(function () { setTimeout(poll, 4000); });
             }
             setTimeout(poll, 4000);
+        })();
+        </script>
+    {% endif %}
+
+    {% if __SELF__.order %}
+        {# Rückkehr von Mollie: das Fenster steht oben auf dem großen Header-Bild.
+           Zur Überschrift „Gutschein bestellen" springen, damit der Bestellstatus
+           sofort sichtbar ist (Header übersprungen). Läuft beim vollen Seitenladen
+           nach dem Mollie-Redirect. #}
+        <script>
+        (function () {
+            var t = document.getElementById('gutschein-bestellen');
+            if (!t || !t.scrollIntoView) { return; }
+            // Re-pin the title near the top on return until the layout settles.
+            // Two things make a single jump unreliable: (1) the page scrolls inside
+            // an inner container, so window.scrollY stays 0; (2) the big header image
+            // and web fonts reflow AFTER load, pushing the title from ~100px down to
+            // ~950px well after first paint. So we re-pin every frame for a short
+            // window, or until the visitor scrolls. scroll-margin-top on the title
+            // clears the fixed-top navbar.
+            var stop = false;
+            ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) {
+                window.addEventListener(ev, function () { stop = true; }, { once: true, passive: true });
+            });
+            var until = performance.now() + 2500;
+            function tick() {
+                if (stop || performance.now() > until) { return; }
+                t.scrollIntoView({ block: 'start' });
+                requestAnimationFrame(tick);
+            }
+            tick();
         })();
         </script>
     {% endif %}

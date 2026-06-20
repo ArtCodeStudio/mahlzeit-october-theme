@@ -16,6 +16,25 @@
 <div class="voucher-return">
     {% if __SELF__.isIssued %}
         {{ issued }}
+    {% elseif __SELF__.isBankTransfer %}
+        {# Überweisung (Vorkasse): Zahlungsanleitung, kein Poll — der Gutschein wird
+           ausgestellt, sobald das Personal den Zahlungseingang bestätigt. #}
+        {% set bank = __SELF__.bankDetails %}
+        <div class="alert alert-info" role="alert">
+            <p class="mb-2">{{ 'jumplink.vouchers::lang.return.bt_intro'|trans }}</p>
+            <table class="table table-sm mb-2">
+                <tbody>
+                    <tr><th scope="row" class="border-0 pl-0">{{ 'jumplink.vouchers::lang.return.bt_amount'|trans }}</th><td class="border-0"><strong>{{ bank.amount }}</strong></td></tr>
+                    <tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_holder'|trans }}</th><td>{{ bank.holder }}</td></tr>
+                    <tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_iban'|trans }}</th><td>{{ bank.iban }}</td></tr>
+                    {% if bank.bic %}<tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_bic'|trans }}</th><td>{{ bank.bic }}</td></tr>{% endif %}
+                    {% if bank.bank %}<tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_bank'|trans }}</th><td>{{ bank.bank }}</td></tr>{% endif %}
+                    <tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_reference'|trans }}</th><td><strong>{{ bank.reference }}</strong></td></tr>
+                </tbody>
+            </table>
+            <p class="mb-0">{{ 'jumplink.vouchers::lang.return.bt_after'|trans }}</p>
+            {% if bank.note %}<p class="mb-0 mt-2 text-muted">{{ bank.note }}</p>{% endif %}
+        </div>
     {% elseif __SELF__.order %}
         <div class="alert alert-info text-center" role="alert" data-voucher-pending>
             {{ 'jumplink.vouchers::lang.return.processing'|trans }}

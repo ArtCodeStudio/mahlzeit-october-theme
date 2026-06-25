@@ -3,6 +3,76 @@
    übereinstimmen; nur das Markup/Styling ist theme-spezifisch. Beschriftungen über
    die Plugin-Sprachdateien (de/en), damit das Formular zweisprachig ist. #}
 <div class="voucher-purchase px-3">
+    {# Segmented "pill" chooser (Zustellung + Zahlart). A visually-hidden real
+       radio drives a styled <label>; the existing data-request/validation and the
+       address/hint toggling (jumplink-voucher-purchase-init) keep working because
+       the inputs stay real radios with the same name/value. Active half is filled
+       in the theme gold ($warning #b7ad8d); the pill border matches the gold form
+       inputs. A <style> injected via barba's innerHTML applies fine (unlike a
+       <script>), so co-locating it here is barba-safe. #}
+    <style>
+    .voucher-purchase {
+        --vchr-accent: #b7ad8d;
+        --vchr-accent-ink: #fff;
+        --vchr-muted: #6c757d;
+    }
+    .voucher-purchase .vchr-seg-group {
+        display: flex;
+        width: 100%;
+        max-width: 460px;
+        border: 1px solid var(--vchr-accent);
+        border-radius: 999px;
+        overflow: hidden;
+        background: #fff;
+    }
+    .voucher-purchase .vchr-seg-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+    }
+    .voucher-purchase .vchr-seg {
+        flex: 1 1 0;
+        min-width: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .45rem;
+        margin: 0;
+        padding: .6rem .65rem;
+        font-weight: 600;
+        color: var(--vchr-muted);
+        line-height: 1.2;
+        text-align: center;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background-color .15s ease, color .15s ease;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    .voucher-purchase .vchr-seg > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .voucher-purchase .vchr-seg svg {
+        width: 1.2em;
+        height: 1.2em;
+        flex: none;
+    }
+    .voucher-purchase .vchr-seg-input:checked + .vchr-seg {
+        background: var(--vchr-accent);
+        color: var(--vchr-accent-ink);
+    }
+    .voucher-purchase .vchr-seg-input:focus-visible + .vchr-seg {
+        box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .18);
+    }
+    .voucher-purchase .vchr-seg-hint {
+        display: block;
+        margin-top: .4rem;
+    }
+    </style>
+
     <div id="voucherPurchaseResult"></div>
 
     <form
@@ -29,16 +99,28 @@
             <span data-validate-for="face_value" class="text-danger small"></span>
         </div>
 
+        {% set deliveryPhysicalHint = 'jumplink.vouchers::lang.purchase.delivery_physical_hint'|trans({ fee: (__SELF__.serviceFeeCents / 100)|number_format(2, ',', '.') ~ ' €' }) %}
         <div class="form-group">
             <label class="font-weight-bold d-block">{{ 'jumplink.vouchers::lang.purchase.delivery_legend'|trans }}</label>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="voucher-delivery-digital" name="delivery_type" value="digital" class="custom-control-input" checked>
-                <label class="custom-control-label" for="voucher-delivery-digital">{{ 'jumplink.vouchers::lang.purchase.delivery_digital'|trans }}</label>
+            <div class="vchr-seg-group" role="radiogroup" aria-label="{{ 'jumplink.vouchers::lang.purchase.delivery_legend'|trans }}">
+                <input type="radio" id="voucher-delivery-digital" name="delivery_type" value="digital" class="vchr-seg-input" checked>
+                <label class="vchr-seg" for="voucher-delivery-digital">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
+                        <path d="M14 14h3v3"/><path d="M21 14v7h-7"/><path d="M17.5 17.5h.01"/>
+                    </svg>
+                    <span>{{ 'jumplink.vouchers::lang.purchase.delivery_digital_short'|trans }}</span>
+                </label>
+                <input type="radio" id="voucher-delivery-physical" name="delivery_type" value="physical" class="vchr-seg-input">
+                <label class="vchr-seg" for="voucher-delivery-physical">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+                    </svg>
+                    <span>{{ 'jumplink.vouchers::lang.purchase.delivery_physical_short'|trans }}</span>
+                </label>
             </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="voucher-delivery-physical" name="delivery_type" value="physical" class="custom-control-input">
-                <label class="custom-control-label" for="voucher-delivery-physical">{{ 'jumplink.vouchers::lang.purchase.delivery_physical'|trans({ fee: (__SELF__.serviceFeeCents / 100)|number_format(2, ',', '.') ~ ' €' }) }}</label>
-            </div>
+            <small class="vchr-seg-hint text-muted" data-hint-for="delivery_type" data-hint-value="digital">{{ 'jumplink.vouchers::lang.purchase.delivery_digital_hint'|trans }}</small>
+            <small class="vchr-seg-hint text-muted" data-hint-for="delivery_type" data-hint-value="physical" hidden>{{ deliveryPhysicalHint }}</small>
         </div>
 
         <div class="form-row">
@@ -92,11 +174,25 @@
         {% if __SELF__.showPaymentChooser %}
         <div class="form-group">
             <label class="font-weight-bold d-block">{{ 'jumplink.vouchers::lang.purchase.payment_legend'|trans }}</label>
+            <div class="vchr-seg-group" role="radiogroup" aria-label="{{ 'jumplink.vouchers::lang.purchase.payment_legend'|trans }}">
+                {% for m in __SELF__.paymentMethods %}
+                    <input type="radio" id="voucher-pay-{{ m }}" name="payment_method" value="{{ m }}" class="vchr-seg-input"{% if loop.first %} checked{% endif %}>
+                    <label class="vchr-seg" for="voucher-pay-{{ m }}">
+                        {% if m == 'banktransfer' %}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M3 10l9-6 9 6"/><path d="M4 10v8M9 10v8M15 10v8M20 10v8"/><path d="M3 21h18"/>
+                            </svg>
+                        {% else %}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+                            </svg>
+                        {% endif %}
+                        <span>{{ ('jumplink.vouchers::lang.payment_method_short.' ~ m)|trans }}</span>
+                    </label>
+                {% endfor %}
+            </div>
             {% for m in __SELF__.paymentMethods %}
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="voucher-pay-{{ m }}" name="payment_method" value="{{ m }}" class="custom-control-input"{% if loop.first %} checked{% endif %}>
-                    <label class="custom-control-label" for="voucher-pay-{{ m }}">{{ ('jumplink.vouchers::lang.payment_method_choice.' ~ m)|trans }}</label>
-                </div>
+                <small class="vchr-seg-hint text-muted" data-hint-for="payment_method" data-hint-value="{{ m }}"{% if not loop.first %} hidden{% endif %}>{{ ('jumplink.vouchers::lang.payment_method_hint.' ~ m)|trans }}</small>
             {% endfor %}
         </div>
         {% endif %}

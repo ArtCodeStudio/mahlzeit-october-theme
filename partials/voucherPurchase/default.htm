@@ -71,6 +71,20 @@
         display: block;
         margin-top: .4rem;
     }
+    /* Quick-pick amount with an optional label (e.g. a named menu price): stack the
+       label above the amount inside the button. Unlabeled buttons are unchanged. */
+    .voucher-purchase .voucher-quick--labeled {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.15;
+    }
+    .voucher-purchase .voucher-quick-label {
+        font-size: .72em;
+        font-weight: 600;
+        opacity: .85;
+    }
     </style>
 
     <div id="voucherPurchaseResult"></div>
@@ -86,9 +100,10 @@
         <div class="form-group">
             <label class="font-weight-bold">{{ 'jumplink.vouchers::lang.purchase.amount_choose'|trans }}</label>
             <div class="d-flex flex-wrap mb-2">
-                {% for cents in __SELF__.denominations %}
-                    <button type="button" class="btn btn-outline-warning mr-2 mb-2 voucher-quick" data-amount="{{ (cents / 100)|number_format(2, '.', '') }}">
-                        {{ (cents / 100)|number_format(2, ',', '.') }} €
+                {% for d in __SELF__.denominations %}
+                    <button type="button" class="btn btn-outline-warning mr-2 mb-2 voucher-quick{% if d.label %} voucher-quick--labeled{% endif %}" data-amount="{{ (d.cents / 100)|number_format(2, '.', '') }}">
+                        {% if d.label %}<span class="voucher-quick-label">{{ d.label }}</span>{% endif %}
+                        <span class="voucher-quick-amount">{{ (d.cents / 100)|number_format(2, ',', '.') }} €</span>
                     </button>
                 {% endfor %}
             </div>

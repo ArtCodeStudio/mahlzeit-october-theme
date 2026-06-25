@@ -1,0 +1,26 @@
+description = "Kasse/POS – schlankes Vollbild-Layout (jQuery + Winter-AJAX-Framework, ohne Site-Chrome)"
+==
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{{ this.page.title }}</title>
+    <style>
+        html, body { margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+    {% styles %}
+</head>
+<body>
+    {% page %}
+
+    {# jQuery + the Winter AJAX framework are required for the POS data-request
+       handlers (lookup / sell). The site's "info" layout omits them, so this
+       standalone till layout loads them itself. #}
+    <script src="{{ ['assets/vendor/jquery/dist/jquery.js'] | theme }}"></script>
+    {% framework extras %}
+    {% scripts %}
+</body>
+</html>

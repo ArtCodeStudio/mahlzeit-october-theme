@@ -28,6 +28,12 @@ live" note in the 2026-06-04 entry below.
 - **Mail:** the centred-body + top/side-padding fixes were applied to the live mail
   layout in the database earlier; the theme `email-templates/email-layout.htm`
   source now matches.
+- **Locale:** set `config/app.php` `'locale' => 'de'` on production (was `'en'`;
+  `fallback_locale` stays `'en'`). The site content is hardcoded German, but the
+  voucher form is the first thing using Laravel `trans()`, which follows the
+  framework locale — so on the default `'en'` it rendered English. Not a
+  git-tracked file (Winter app skeleton), so noted here: a rebuilt prod app must
+  set this again. Staging (CT 214) was already `'de'`.
 
 ## 2026-06-04 — JumpLink.Vouchers installed on production (frontend NOT yet live)
 

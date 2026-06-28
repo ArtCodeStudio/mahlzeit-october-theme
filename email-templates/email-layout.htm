@@ -20,6 +20,20 @@
     {{ css|raw }}
   </style>
 
+  <!-- Centre the Markdown mail body (greeting, code/value, closing) to match the
+       brand's other, hand-written (centred) e-mails. The contact mail is unaffected:
+       its paragraphs already carry an explicit inline text-align, and its left labels
+       are <div>s, not <p>. -->
+  <style type="text/css">
+    .email-content p,
+    .email-content li,
+    .email-content h1,
+    .email-content h2,
+    .email-content h3 { text-align: center !important; }
+    .email-content ul,
+    .email-content ol { list-style: none !important; margin: 0 !important; padding: 0 !important; }
+  </style>
+
 </head>
 
 <body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #FFFFFF">
@@ -90,7 +104,7 @@
           {% partial 'header' %}
 
           <!-- content -->
-          <div class="" style="text-align: center;">
+          <div class="email-content" style="text-align: center; padding-top: 32px; padding-left: 28px; padding-right: 28px;">
             {{ content|raw }}
           </div>
 

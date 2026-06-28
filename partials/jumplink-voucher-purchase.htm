@@ -1,0 +1,9 @@
+description = "Gutschein-Kauf (JumpLink.Vouchers-Plugin)"
+
+[viewBag]
+snippetCode = "jumplink-voucher-purchase.htm"
+snippetName = "Gutschein-Kauf (Plugin)"
+==
+{# Nach der Mollie-Zahlung zeigt voucherReturn den Status (?order=&t=); sonst nichts. #}
+{% component 'voucherReturn' %}
+{% component 'voucherPurchase' %}

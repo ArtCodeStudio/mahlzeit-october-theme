@@ -1,0 +1,52 @@
+{# Client-side behaviour for the JumpLink.Vouchers purchase form.
+
+   Rendered once from the barba body partial (OUTSIDE #barba-wrapper), so it runs
+   on a full page load and survives barba's async page swaps. The handlers are
+   delegated on `document` — like Winter's data-request — because barba replaces
+   the page content via innerHTML and never executes scripts inside it, so a
+   script living in the form partial would not run after an in-site navigation
+   (that was the "clicking 50 € does nothing" bug). #}
+<script>
+(function () {
+    if (window.__voucherPurchaseInit) { return; }
+    window.__voucherPurchaseInit = true;
+
+    // Quick-pick amount buttons fill the "Wunschbetrag" field. A bare .value
+    // assignment fires no event, so we dispatch input/change too — otherwise the
+    // AJAX framework's client-side validation keeps the field marked invalid from
+    // an earlier submit and blocks "Weiter zur Zahlung".
+    document.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('.voucher-quick') : null;
+        if (!btn) { return; }
+        var form = btn.closest('.voucher-purchase');
+        var amount = form && form.querySelector('#voucher-face-value');
+        if (!amount) { return; }
+        amount.value = btn.dataset.amount;
+        amount.dispatchEvent(new Event('input', { bubbles: true }));
+        amount.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
+    // Segmented choosers (Zustellung, Zahlart): swap the hint line under the pill
+    // to the selected option, and — for delivery — reveal the postal address only
+    // for "physical". Markup carries the correct defaults, so this only reacts to
+    // changes (no initial pass needed).
+    function syncGroup(form, name) {
+        var sel = form.querySelector('input[name="' + name + '"]:checked');
+        var val = sel ? sel.value : '';
+        form.querySelectorAll('[data-hint-for="' + name + '"]').forEach(function (hint) {
+            hint.hidden = hint.getAttribute('data-hint-value') !== val;
+        });
+        if (name === 'delivery_type') {
+            var address = form.querySelector('.voucher-address');
+            if (address) { address.hidden = val !== 'physical'; }
+        }
+    }
+
+    document.addEventListener('change', function (e) {
+        if (!e.target.matches || !e.target.matches('input[name="delivery_type"], input[name="payment_method"]')) { return; }
+        var form = e.target.closest('.voucher-purchase');
+        if (!form) { return; }
+        syncGroup(form, e.target.name);
+    });
+})();
+</script>

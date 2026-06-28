@@ -1,0 +1,104 @@
+{# Theme-Override des JumpLink.Vouchers `voucherReturn`-Components (Bootstrap-4).
+   „Ausgestellt"-Block einmal als Quelle (set); der Poll blendet ihn in place ein.
+   Beschriftungen über die Plugin-Sprachdateien (de/en). #}
+{% set issued %}
+    <div class="alert alert-success text-center" role="alert">
+        <p class="mb-2">{{ 'jumplink.vouchers::lang.return.issued_thanks'|trans }}</p>
+        <span class="voucher-download-wrap"{% if not __SELF__.downloadUrl %} hidden{% endif %}>
+            {# `download` both triggers a real download (not an in-tab view) and
+               makes barba.js ignore the click — otherwise barba tries to load the
+               binary image endpoint as an in-site page ("no container found") and
+               blanks the screen. #}
+            <a class="btn btn-outline-warning voucher-download" href="{{ __SELF__.downloadUrl ?: '#' }}" download>{{ 'jumplink.vouchers::lang.mail.download_image'|trans }}</a>
+        </span>
+    </div>
+{% endset %}
+<div class="voucher-return px-3">
+    {% if __SELF__.isIssued %}
+        {{ issued }}
+    {% elseif __SELF__.isBankTransfer %}
+        {# Überweisung (Vorkasse): Zahlungsanleitung, kein Poll — der Gutschein wird
+           ausgestellt, sobald das Personal den Zahlungseingang bestätigt. #}
+        {% set bank = __SELF__.bankDetails %}
+        <div class="alert alert-info" role="alert">
+            <p class="mb-2">{{ 'jumplink.vouchers::lang.return.bt_intro'|trans }}</p>
+            <table class="table table-sm mb-2">
+                <tbody>
+                    <tr><th scope="row" class="border-0 pl-0">{{ 'jumplink.vouchers::lang.return.bt_amount'|trans }}</th><td class="border-0"><strong>{{ bank.amount }}</strong></td></tr>
+                    <tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_holder'|trans }}</th><td>{{ bank.holder }}</td></tr>
+                    <tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_iban'|trans }}</th><td>{{ bank.iban }}</td></tr>
+                    {% if bank.bic %}<tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_bic'|trans }}</th><td>{{ bank.bic }}</td></tr>{% endif %}
+                    {% if bank.bank %}<tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_bank'|trans }}</th><td>{{ bank.bank }}</td></tr>{% endif %}
+                    <tr><th scope="row" class="pl-0">{{ 'jumplink.vouchers::lang.return.bt_reference'|trans }}</th><td><strong>{{ bank.reference }}</strong></td></tr>
+                </tbody>
+            </table>
+            <p class="mb-0">{{ 'jumplink.vouchers::lang.return.bt_after'|trans }}</p>
+            {% if bank.note %}<p class="mb-0 mt-2 text-muted">{{ bank.note }}</p>{% endif %}
+        </div>
+    {% elseif __SELF__.order %}
+        <div class="alert alert-info text-center" role="alert" data-voucher-pending>
+            {{ 'jumplink.vouchers::lang.return.processing'|trans }}
+        </div>
+        <div data-voucher-issued hidden>{{ issued }}</div>
+        {# Soft client-side poll (kein Hard-Reload): blendet den Ausgestellt-Block in place ein. #}
+        <script>
+        (function () {
+            var root = document.currentScript.closest('.voucher-return');
+            var order = {{ __SELF__.orderId }};
+            var token = '{{ __SELF__.order.access_token|e('js') }}';
+            var tries = 0;
+            function poll() {
+                if (tries++ > 75) { return; }
+                fetch('/api/jumplink/vouchers/order-status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+                        body: 'order=' + encodeURIComponent(order) + '&t=' + encodeURIComponent(token)
+                    })
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        if (!d || !d.issued) { setTimeout(poll, 4000); return; }
+                        if (d.downloadUrl) {
+                            var a = root.querySelector('.voucher-download');
+                            if (a) { a.href = d.downloadUrl; a.closest('.voucher-download-wrap').hidden = false; }
+                        }
+                        root.querySelector('[data-voucher-pending]').hidden = true;
+                        root.querySelector('[data-voucher-issued]').hidden = false;
+                    })
+                    .catch(function () { setTimeout(poll, 4000); });
+            }
+            setTimeout(poll, 4000);
+        })();
+        </script>
+    {% endif %}
+
+    {% if __SELF__.order %}
+        {# Rückkehr von Mollie: das Fenster steht oben auf dem großen Header-Bild.
+           Zur Überschrift „Gutschein bestellen" springen, damit der Bestellstatus
+           sofort sichtbar ist (Header übersprungen). Läuft beim vollen Seitenladen
+           nach dem Mollie-Redirect. #}
+        <script>
+        (function () {
+            var t = document.getElementById('gutschein-bestellen');
+            if (!t || !t.scrollIntoView) { return; }
+            // Re-pin the title near the top on return until the layout settles.
+            // Two things make a single jump unreliable: (1) the page scrolls inside
+            // an inner container, so window.scrollY stays 0; (2) the big header image
+            // and web fonts reflow AFTER load, pushing the title from ~100px down to
+            // ~950px well after first paint. So we re-pin every frame for a short
+            // window, or until the visitor scrolls. scroll-margin-top on the title
+            // clears the fixed-top navbar.
+            var stop = false;
+            ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) {
+                window.addEventListener(ev, function () { stop = true; }, { once: true, passive: true });
+            });
+            var until = performance.now() + 2500;
+            function tick() {
+                if (stop || performance.now() > until) { return; }
+                t.scrollIntoView({ block: 'start' });
+                requestAnimationFrame(tick);
+            }
+            tick();
+        })();
+        </script>
+    {% endif %}
+</div>

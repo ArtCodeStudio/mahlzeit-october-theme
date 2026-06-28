@@ -10,6 +10,25 @@ loosely follows [Keep a Changelog](https://keepachangelog.com/).
 > Winter‑compatible, so this works as‑is. Moving to WinterCMS forks is an
 > *optional* modernization (see below), not a fix.
 
+## 2026-06-28 — Voucher purchase page live on production
+
+`feat/voucher-purchase-page` merged to `main` and deployed to production
+(`mahlzeit-am-meer.de`). `/gutschein-kaufen` now renders the **JumpLink.Vouchers**
+buy form instead of the old static page — this supersedes the "frontend NOT yet
+live" note in the 2026-06-04 entry below.
+
+- **Deployed:** the voucher theme files — `voucherPurchase`/`voucherReturn`
+  component-partial overrides, the buy-page snippet + `jumplink-barba` component
+  wiring, the segmented delivery/payment chooser, labelled quick-pick amounts, and
+  the voucher background/preview assets. `theme.yaml` (`require: Winter.Pages`) and
+  this CHANGELOG were already current on production and were left untouched.
+- **Plugin:** JumpLink.Vouchers **1.0.23** (already installed on production).
+- **Payments:** Mollie **live** key configured in `.env`; `APP_URL` is the public
+  HTTPS domain, so per-payment webhook URLs resolve.
+- **Mail:** the centred-body + top/side-padding fixes were applied to the live mail
+  layout in the database earlier; the theme `email-templates/email-layout.htm`
+  source now matches.
+
 ## 2026-06-04 — JumpLink.Vouchers installed on production (frontend NOT yet live)
 
 `jumplink/wn-vouchers-plugin` was installed on the live server so the theme's voucher
@@ -52,6 +71,31 @@ checks (home, `/datenschutz`, `/sitemap.xml`, backend) after every phase.
 - `Winter.Sitemap` uses a new table (`winter_sitemap_definitions`); an **empty** definition was recreated so `/sitemap.xml` returns 200. It has **no URLs yet** — populate it (CMS + static pages) for real SEO value.
 - Per-static-page SEO `viewBag` fields were exported to a machine-readable JSON backup before the swap.
 - Plugin count 14 → 7 (+ Mahlzeit.Compat). Kept unchanged: `Renatio.SeoManager`, `Samuell.ContentEditor`, `Xeor.ContentType`, `JumpLink.Events`, `JumpLink.Forms`.
+## 2026-06-04 — Voucher purchase page integration
+
+`content/static-pages/gutschein-kaufen.htm` now uses the **JumpLink.Vouchers**
+plugin instead of the static `jumplink-contact` form:
+
+- New snippet partial `partials/jumplink-voucher-purchase.htm` renders the
+  `voucherPurchase` (buy form → Mollie checkout) and `voucherReturn` (post-payment
+  status + PDF download) components.
+- `layouts/jumplink-barba.htm` attaches `[voucherPurchase]` + `[voucherReturn]`
+  (same pattern as the existing `[eventList]`), so the snippet's `{% component %}`
+  calls resolve and the AJAX handlers (`voucherPurchase::onPurchase`) route.
+- The `jumplink-contact` figure on `gutschein-kaufen` was replaced with
+  `data-snippet="jumplink-voucher-purchase.htm"`.
+- The buy/return forms are styled to match the theme via **component partial
+  overrides** (`partials/voucherPurchase/default.htm`,
+  `partials/voucherReturn/default.htm`) using the theme's Bootstrap-4 classes
+  (`form-control`, `btn btn-outline-warning`, grid) — the JumpLink.Vouchers
+  plugin markup stays generic.
+
+**Production requirement:** the **JumpLink.Vouchers** plugin must be installed
+(provides `voucherPurchase`/`voucherReturn` + Mollie/PDF/QR; needs
+`MOLLIE_API_KEY` + `VOUCHER_TOKEN_SECRET` in `.env`). Verify the full purchase
+flow on the live page after deploy. (Component render verified locally on a
+minimal layout; the full theme could not be rendered in the Winter dev because
+of the SEO/contentType plugins.)
 
 ## 2026-06-04 — Dependency cleanup (`theme.yaml` `require:`)
 

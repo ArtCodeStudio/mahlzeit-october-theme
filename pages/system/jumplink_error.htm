@@ -10,13 +10,15 @@ meta_description = "Fehler"
 robot_index = "index"
 robot_follow = "follow"
 ==
-{# header #}
-<header class="pt-5 pb-4 gradient-info-success-info-success-bg animated-gradient text-white">
+{# header — solid brand background with an explicit colour so the text stays
+   readable even when the theme's gradient utility classes are unavailable
+   (they were missing here, which left white text on the white page). #}
+<header class="pt-5 pb-4 text-white" style="background-color: #1a3a5a; color: #ffffff;">
     <div class="container">
         <div class="row">
             <div class="col-xs-6">
-                <h1 class="text-left">Es ist ein Fehler aufgetreten</h1>
-                <p class="lead">Das tut uns leid, wir werden versuchen den Fehler schnellstmöglich zu beheben, bei bedarf melde dich bitte bei <a href="mailto:hello@jumplink.me">hello@jumplink.me</a>.</p>
+                <h1 class="text-left" style="color: #ffffff;">Es ist ein Fehler aufgetreten</h1>
+                <p class="lead" style="color: #ffffff;">Das tut uns leid, wir werden versuchen den Fehler schnellstmöglich zu beheben, bei bedarf melde dich bitte bei <a href="mailto:hello@jumplink.me" style="color: #ffffff; text-decoration: underline;">hello@jumplink.me</a>.</p>
                 <img src="{{'assets/jumplink_images/jumplink_error_opt.svg'|theme}}" alt="">
             </div>
         </div>
